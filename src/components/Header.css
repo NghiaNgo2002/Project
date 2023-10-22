@@ -1,0 +1,182 @@
+.header{
+  max-width: 100%;
+  max-height:3000px;
+  margin: 0 auto; /* Center the header horizontally */
+  padding: 0 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff; /* Add a background color if needed */
+  z-index: 999; /* Ensure it's on top of other content */
+  /* Additional styles for the header */
+  box-sizing: border-box;
+}
+
+
+
+
+.header-container {
+  background: white;
+  display: flex;
+  top: 0;
+  left: 0;  
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  position: relative;
+  border-bottom: 0.1px solid #cccccc;
+}
+
+
+
+.icon {
+  display: flex;
+  justify-content: left;
+  width: auto;
+}
+
+.icon h1 {
+  width: 150px;
+  height: 50px;
+  padding-left: 150px;
+  padding-right: -50px;
+  padding-top: 25px;
+  font: 30px Marcellus;
+  
+  color:black;  
+
+}
+
+.icon img {
+  margin-left: 100px;
+  height: 80px;
+  width: 70px;
+}
+
+.contact {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  font-family: "Jost", sans-serif;
+}
+.content-contact {
+  padding-top: 3px;
+}
+.contact img {
+  height: 30px;
+  width: 30px;
+  padding-top: 10px;
+}
+.content-contact span {
+  color: rgb(190, 190, 190);
+  font: 25px Jost;
+}
+
+.content-contact p {
+  height: 20px;
+  margin-top: 5px;
+  color: rgb(0,0,0);
+  font: 16px Jost;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 100px;
+}
+
+.header-right img {
+  padding-left: 10px;
+  font: 12px Jost;
+}
+
+.below-header-container {
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+  width: auto;
+  font-family: "Jost", sans-serif;
+}
+
+.language select {
+  border: 0px solid #cccccc;
+  margin-top: 35px;
+  margin-right: 120px;
+  font-size: 18px;
+  font: 18px Jost;
+  border: 0px;
+  outline: 0px;
+}
+.language option {
+  font-size: 15px;
+  font-family: "Jost", sans-serif;
+}
+.menu-bar {
+  background: white;
+  text-align: center;
+  font-family: "Jost", sans-serif;
+}
+
+.menu-bar ul {
+  display: inline-flex;
+  list-style: none;
+  color: black;
+}
+
+.menu-bar ul li {
+  width: auto;
+  margin: 15px;
+  padding: 15px;
+  font: 20px Jost;
+}
+
+.sub-menu-1 {
+  display: none;
+  border: 1px solid #cccccc;
+  text-align: mid;
+  padding-left: 10px;
+  padding-right:10px;
+  padding-top:20px;
+  font-family: "Jost", sans-serif;
+
+}
+
+
+.menu-bar ul li:hover .sub-menu-1 {
+  display: inline-block;
+  position: absolute;
+  margin-top: 65px;
+  margin-left: -50px;
+  font-family: "Jost", sans-serif;
+}
+
+.menu-bar ul li:hover .sub-menu-1 ul {
+  display: inline-block;
+  margin:0%
+}
+
+
+.custom-style {
+  color: rgb(14, 12, 12); 
+  font-weight: bold; 
+  font: 12px Jost;
+}
+
+.below {
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+  width: auto;
+  margin-left: 33px;
+}
+
+.small-line {
+
+  margin-left: 100px;
+  margin-right: 70px;
+}
