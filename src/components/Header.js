@@ -79,6 +79,7 @@ function Header() {
                     <li className ="custom-style" >Style 1</li>
                     <li className ="custom-style" >Style 1</li>
                   </ul>
+
                 </div>
               </li>
               <li>
