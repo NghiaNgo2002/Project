@@ -152,7 +152,27 @@ body {
 }
 
 /* Styles from NewIn.css */
-.NewIn-container {
-    padding-top: 1000px;
-    margin-top: 500px;
+
+.shoppable-new-in {
+    padding: 126px 0 0;
+}
+
+.NewIn-container{
+    max-width: 1640px;
+}
+
+
+.shoppable-title-and-action {
+    display: flex;
+}
+
+.shoppable-title {
+    font-weight: 400;
+    padding: 0 0 54px;
+    margin: 0;
+}
+
+.shoppable-new-in-action {
+    margin-left: auto;
+    padding: 15px 0 0 20px;
 }

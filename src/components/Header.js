@@ -45,6 +45,7 @@ function Header() {
               <li>
                 HOME
                 <div className="sub-menu-1">
+                  <div className="meo">
                   <ul>
                     Style
                     <li className ="custom-style"  >Default</li>
@@ -57,6 +58,8 @@ function Header() {
                     <li className ="custom-style"  >Minimal</li>
                     <li className ="custom-style"  >Shoppable</li> 
                   </ul>
+                  </div>
+                  <div className ="meo">
                   <ul>
                     Topic
                     <li className ="custom-style" >Furniture 1</li>
@@ -73,13 +76,15 @@ function Header() {
                     <li className ="custom-style" >Wine</li>
                     <li className ="custom-style" >Bakery</li>
                   </ul>
+                  </div>
+                  <div className ="meo">     
                   <ul>
                     Brands
                     <li className ="custom-style" >Style 1</li>
                     <li className ="custom-style" >Style 1</li>
                     <li className ="custom-style" >Style 1</li>
                   </ul>
-
+                  </div>
                 </div>
               </li>
               <li>
