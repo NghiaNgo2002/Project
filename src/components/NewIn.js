@@ -5,7 +5,6 @@ function NewIn(){
     return (
         <div>
             <div className="shoppable-new-in">
-                <h1>New In</h1>
             <div className="NewIn-container">
                 <div className="shoppable-title-and-action">
                     <h4 className ="shoppable-title">New In</h4>

@@ -154,25 +154,28 @@ body {
 /* Styles from NewIn.css */
 
 .shoppable-new-in {
-    padding: 126px 0 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 0; /* You can adjust the padding as needed */
 }
 
-.NewIn-container{
+.NewIn-container {
     max-width: 1640px;
+    margin: 0 auto; /* Center the container horizontally */
 }
-
 
 .shoppable-title-and-action {
     display: flex;
+    justify-content: space-between; /* Push the title and action to opposite ends */
 }
 
 .shoppable-title {
     font-weight: 400;
-    padding: 0 0 54px;
     margin: 0;
 }
 
 .shoppable-new-in-action {
-    margin-left: auto;
-    padding: 15px 0 0 20px;
+    padding: 0 20px; /* Adjust the padding as needed */
 }

@@ -11,10 +11,10 @@ function App() {
       <header className="App-header">
         <Header/>
       </header>
-      <body className="body-1">
+      <div className="body-1">
         <Slider/>
         <NewIn/>
-      </body>
+      </div>
     </div>
   );
 }
