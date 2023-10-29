@@ -13,6 +13,8 @@ function App() {
       </header>
       <div className="body-1">
         <Slider/>
+      </div>
+      <div className="body-2">
         <NewIn/>
       </div>
     </div>
