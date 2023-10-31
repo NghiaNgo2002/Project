@@ -8,13 +8,16 @@ import NewIn from './components/NewIn';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-header">
         <Header/>
-      </header>
+      </div>
       <div className="body-1">
         <Slider/>
       </div>
       <div className="body-2">
+        <NewIn/>
+      </div>
+      <div className="body-3">
         <NewIn/>
       </div>
     </div>
