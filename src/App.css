@@ -35,3 +35,12 @@
     transform: rotate(360deg);
   }
 }
+
+.slider{
+  position: relative;
+  top: -15px;
+}
+
+.newin{
+  position: relative;
+}

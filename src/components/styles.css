@@ -14,24 +14,18 @@
 }
 
 body {
-    background-color: #0e0d0d;
+    background-color: #eee4e4;
     overflow: auto;
 }
 
 .slider-container {
-    display: block;
+    display: flex;
     max-width: 100%;
+    align-items: center;
     object-fit: cover;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 3000px;
     height: 600px;
-    padding: 50px;
     background-color: #f5f5f5;
     box-shadow: 0 30px 50px #a9a8a8;
-    margin-bottom: 500px;
 }
 
 #slide {
@@ -156,14 +150,10 @@ body {
 
 .shoppable-new-in {
     position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
     padding: 20px 0; /* You can adjust the padding as needed */
     color: #666666;
     font: 18px Jost;
-    padding: 126px 0px 0px;
-    margin-top: px;
 }
 
 .NewIn-container {
@@ -198,6 +188,12 @@ body {
     margin: 0 -5px;
 }
 
+.shoppable-new-in__category {
+    display: block;
+    margin: 10px 0 0;
+    overflow: hidden;
+    position: relative;
+}
 
 .shoppable-new-in__category img {
     height: 190px;

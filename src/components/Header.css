@@ -3,7 +3,7 @@
   max-height:3000px;
   margin: 0 auto; /* Center the header horizontally */
   padding: 0 70px;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -26,10 +26,9 @@
   width: 100%;
   box-sizing: border-box;
   align-items: center;
-  position: relative;
   border-bottom: 0.1px solid #cccccc;
 }
-
+  
 
 
 .icon {
