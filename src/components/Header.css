@@ -89,9 +89,9 @@
   margin: 0 0 0 100px;
 }
 
-.header-right img {
-  padding-left: 10px;
-  font: 12px Jost;
+.header-right * {
+  margin:10px;
+  font: 25px Jost;
 }
 
 .below-header-container {
@@ -176,11 +176,6 @@
   text-align: left;
   
 }
-
-
-
-
-
 
 .custom-style {
   color: rgb(14, 12, 12); 
