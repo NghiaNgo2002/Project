@@ -38,7 +38,6 @@ function Header() {
         </div>
       </div>
 
-      <div className="small-line"></div>
       <div className="below">
         <div className="below-header-container">
           <div className="menu-bar">

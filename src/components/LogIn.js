@@ -41,7 +41,7 @@ function LogIn() {
               </div>
             </div>
             <div className="login__button">
-              <input className="button" type="submit" value="Sign in" />
+              <input className="button" type="submit" value="SIGN IN" />
             </div>
             <div className="login__forgot-password" id="forgot-password">
               <a href="#recover" className="js-go-to-forgotten-password">
