@@ -1,5 +1,6 @@
 import React from 'react';
 import "./Footer.css";
+import Name from "./Name";
 
 const Footer = () => {
   return (
@@ -34,7 +35,7 @@ const Footer = () => {
         {/* First column */}
         <div className="col-lg-3 footer__first-column">
           {/* Footer logo */}
-          <h5 className="footer__logo">DURIAN</h5>
+          <h5 className="footer__logo"><Name/></h5>
           {/* End footer logo */}
           {/* Footer address */}
           <ul className="footer__address">
@@ -123,25 +124,7 @@ const Footer = () => {
             </div>
             {/* End description */}
             {/* Instagram feed */}
-            <ul className="instagram_feed">
-              {/* Feed (You can repeat this block for each Instagram item) */}
-              <li>
-                <a href="https://instagram.com" target="_blank">
-                  <img
-                    alt="Image"
-                    data-sizes="auto"
-                    data-srcset="//durotan-fashion.myshopify.com/cdn/shop/files/instagram_1_678451e9-d92f-4366-b2ca-c7743689f24f_3000x.jpg?v=1655031285 400w, //durotan-fashion.myshopify.com/cdn/shop/files/instagram_1_678451e9-d92f-4366-b2ca-c7743689f24f_3000x.jpg?v=1655031285 800w"
-                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                    className="lazyautosizes ls-is-cached lazyloaded"
-                    sizes="130px"
-                    srcset="//durotan-fashion.myshopify.com/cdn/shop/files/instagram_1_678451e9-d92f-4366-b2ca-c7743689f24f_3000x.jpg?v=1655031285 400w, //durotan-fashion.myshopify.com/cdn/shop/files/instagram_1_678451e9-d92f-4366-b2ca-c7743689f24f_3000x.jpg?v=1655031285 800w"
-                  />
-                  <i className="lnil lnil-Instagram"></i>
-                </a>
-              </li>
-              {/* End feed */}
-              {/* (Repeat the above block for other Instagram items) */}
-            </ul>
+
             {/* End Instagram feed */}
           </div>
           {/* End widget content */}
