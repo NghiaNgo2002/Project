@@ -5,7 +5,7 @@ import Footer from "./Footer";
 function LogIn() {
   return (
     <div>
-        <div className = "login-header">
+        <div className = "p-2 header">
        <Header/>
        </div>
     <div className="login js-login">
@@ -57,7 +57,7 @@ function LogIn() {
         </div>
       </div>
     </div>
-    <div className = "login-footer">
+    <div className = "p-2 footer">
        <Footer/>
        </div>
     </div>

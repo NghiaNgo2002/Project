@@ -149,7 +149,6 @@ body {
 /* Styles from NewIn.css */
 
 .shoppable-new-in {
-    position: absolute;
     width: 100%;
     padding: 20px 0; /* You can adjust the padding as needed */
     color: #666666;

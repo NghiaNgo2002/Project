@@ -13,7 +13,9 @@
 
 .row>div {
     padding: 0 15px;
-}
+}   
+
+
 
 
 .blog-newsletter {
@@ -35,6 +37,15 @@
 .footer__address li {
     margin-bottom: 15px;
     font: 18px Jost;
+    color: #666;
+}
+
+.col-lg-3.footer__second-column a{
+    text-decoration: none;
+    color: #666;
+}
+.col-lg-3.footer__third-column a{
+    text-decoration: none;
     color: #666;
 }
 
@@ -177,6 +188,10 @@ hr {
 }
 .footer__fourth-column {
     width: 30%;
+}
+
+.footer__menu {
+       padding: 0px;
 }
 
 .copyright {

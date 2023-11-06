@@ -9,11 +9,11 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <Stack gap={3}>
+    <Stack gap={4} className ="stack">
       <div className="p-2 header"><Header /></div>
       <div className="p-2 slider"><Slider /></div>
       <div className="p-2 newin"><NewIn /></div>
-      <div className="p-2 footer"><Footer /></div>
+      <footer ><Footer /></footer>
     </Stack>
   );
 }

@@ -40,7 +40,7 @@ const Footer = () => {
           <ul className="footer__address">
             <li>268 Elizaberth Ave Str, Brooklyn,<br />CA, 90025</li>
             <li>+0082 561 43 34</li>
-            <li>support@durotan.com</li>
+            <li>support@durian.com</li>
           </ul>
           {/* End footer address */}
           {/* Footer socials */}
@@ -95,7 +95,7 @@ const Footer = () => {
           {/* Footer menu */}
           <ul className="footer__menu">
             <li>
-              <a href="#">About Durotan</a>
+              <a href="#">About Durian</a>
             </li>
             <li>
               <a href="#">Contact</a>
@@ -119,7 +119,7 @@ const Footer = () => {
           <div className="blog-widget__content">
             {/* Description */}
             <div className="instagram__description">
-              Following or tag us withs <a href="#">#durotan</a>, <a href="#">@durotan</a>
+              Following or tag us withs <a href="#">#durian</a>, <a href="#">@durian</a>
             </div>
             {/* End description */}
             {/* Instagram feed */}
