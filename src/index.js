@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import{createBrowserRouter,RouterProvider} from "react-router-dom";
 import LogIn from './components/LogIn'; 
 import ErrorPage from "./ErrorPage";
-import Footer from "./components/Footer";
+import Register from "./components/Register";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     element: <App/>,
   },
   {
-    path: "/Footer",
-    element: <Footer/>,
+    path: "/register",
+    element: <Register/>,
   },
 ]);
 

@@ -59,7 +59,9 @@ function Header() {
           <div className="menu-bar">
             <ul>
               <li>
-                HOME
+              <Link to="/" className="home-link">
+              HOME
+             </Link> 
                 <div className="sub-menu-1">
                   <div className="meo">
                   <ul>

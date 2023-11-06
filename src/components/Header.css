@@ -79,6 +79,11 @@
   font: 12px Jost;
 }
 
+.home-link {
+  color: black;
+  font: 16px Jost;
+}
+
 .header__right {
   display: flex;
   align-items: center;
@@ -115,6 +120,13 @@
   font-size: 15px;
   font-family: "Jost", sans-serif;
 }
+
+.language select {
+  font-family: 18px Jost;
+  text-transform: uppercase;
+}
+
+
 .menu-bar {
   background: white;
   text-align: center;

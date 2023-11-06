@@ -2,12 +2,14 @@ import React from "react";
 import "./LogIn.css";
 import Header from "./Header";
 import Footer from "./Footer";
+import {Link} from "react-router-dom";
 function LogIn() {
   return (
     <div>
         <div className = "p-2 header">
        <Header/>
        </div>
+       <hr className="custom-hr" />
     <div className="login js-login">
       <div className="login-container1">
         <div className="login__container2">
@@ -50,7 +52,10 @@ function LogIn() {
               </a>
             </div>
             <div className="login__register">
-              <a href="/account/register">I don’t have an account</a>
+            <Link to="/register" >
+            <a>I don’t have an account</a>
+          </Link>
+              
             </div>
             <input type="hidden" name="return_url" value="/account" />
           </form>

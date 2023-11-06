@@ -1,6 +1,5 @@
 /*Log In */
 
-
 .login {
     padding: 140px 0;
     position: relative;
@@ -32,6 +31,12 @@ h1 {
     color: #000;
 
 }
+
+.custom-hr {
+    width: 86%; /* Adjust the width as needed (e.g., 50% of the parent container's width) */
+    margin: 0 auto; /* Center the <hr> element horizontally (optional) */
+  }
+  
 .login__inputs {
     border: 1px solid #d0d0d0;
 }
