@@ -137,7 +137,7 @@ const Footer = () => {
       <div className="row">
         {/* Copyright first column */}
         <div className="col-lg-6">
-          © 2022 <span>DUROTAN</span>. All rights reserved
+          © 2023 <span><Name/></span>. All rights reserved
         </div>
         {/* End copyright first column */}
         {/* Copyright payments */}
