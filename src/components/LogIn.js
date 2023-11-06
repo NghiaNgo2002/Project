@@ -1,6 +1,7 @@
 import React from "react";
 import "./LogIn.css";
 import Header from "./Header";
+import Footer from "./Footer";
 function LogIn() {
   return (
     <div>
@@ -56,6 +57,9 @@ function LogIn() {
         </div>
       </div>
     </div>
+    <div className = "login-footer">
+       <Footer/>
+       </div>
     </div>
   );
 }

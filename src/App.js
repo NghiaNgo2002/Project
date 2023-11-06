@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Slider from './components/Slider';
 import NewIn from './components/NewIn';
 import Stack from 'react-bootstrap/Stack';
-import LogIn from './components/LogIn'; 
+import Footer from './components/Footer';
 
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
       <div className="p-2 header"><Header /></div>
       <div className="p-2 slider"><Slider /></div>
       <div className="p-2 newin"><NewIn /></div>
+      <div className="p-2 footer"><Footer /></div>
     </Stack>
   );
 }

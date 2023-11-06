@@ -29,7 +29,6 @@
 }
   
 
-
 .icon {
   display: flex;
   justify-content: left;
@@ -70,14 +69,14 @@
 }
 .content-contact span {
   color: rgb(190, 190, 190);
-  font: 25px Jost;
+  font: 12px Jost;
 }
 
 .content-contact p {
   height: 20px;
   margin-top: 5px;
   color: rgb(0,0,0);
-  font: 16px Jost;
+  font: 12px Jost;
 }
 
 .header__right {
@@ -89,8 +88,10 @@
 }
 
 .header-right * {
-  margin:10px;
-  font: 25px Jost;
+  margin:5px;
+  font: 20px;
+  display: inline-block;
+  color: rgb(45, 44, 44);
 }
 
 .below-header-container {
@@ -106,7 +107,7 @@
   margin-top: 35px;
   margin-right: 120px;
   font-size: 18px;
-  font: 18px Jost;
+  font: 16px Jost;
   border: 0px;
   outline: 0px;
 }
@@ -140,7 +141,7 @@
   width: auto;
   margin: 0px;
   padding: 15px;
-  font: 20px Jost;
+  font: 16px Jost;
 }
 
 .sub-menu-1 {

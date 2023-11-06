@@ -2,6 +2,7 @@ import "./Header.css";
 import Name from "./Name";
 import React from "react";
 import { Search, Person, Cart} from 'react-bootstrap-icons';
+import {Link} from "react-router-dom";
 
 
 
@@ -32,9 +33,24 @@ function Header() {
           </div>
         </div>
         <div className="header-right">
-        <Search />
-        <Person/>
-        <Cart/>
+        <div className="link">
+          {/* Wrap the Search component with Link */}
+          <Link to="/" className="horizontal-link">
+          <Search/>
+          </Link>
+          </div>
+        <div className="link" >
+          {/* Wrap the Search component with Link */}
+          <Link to="/login" className="horizontal-link">
+          <Person/>
+          </Link>
+          </div>
+          <div className="link">
+          {/* Wrap the Search component with Link */}
+          <Link to="/" className="horizontal-link">
+          <Cart/>
+          </Link>
+          </div>
         </div>
       </div>
 
