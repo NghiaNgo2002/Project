@@ -158,7 +158,17 @@ body {
 .NewIn-container {
     max-width: 1640px;
     margin: 0 auto; /* Center the container horizontally */
+    padding: 0 100px;
 }
+
+.shoppable-new-in .row>div {
+    padding: 0 5px;
+}
+
+.col-lg-3 {
+    flex: 0 0 auto;
+    width: 25%;
+}   
 
 .shoppable-title-and-action {
     display: flex;
@@ -221,3 +231,15 @@ img {
     overflow: clip;
 }
 
+.hover-scale {
+    transition: transform 0.3s; /* Add a transition for smooth hover effect */
+  
+    /* Initial styles (no hover) */
+    transform: scale(1);
+  }
+  
+  .hover-scale:hover {
+    /* Styles on hover */
+    transform: scale(1.2); /* Adjust the scale factor as needed */
+  }
+  
