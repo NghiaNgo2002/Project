@@ -3,6 +3,7 @@ import "./Features.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShirt } from '@fortawesome/free-solid-svg-icons';
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons';
+import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 const AboutFeatures = () => {
   return (
     <div className="about-page__features shoppable-features">
@@ -39,7 +40,7 @@ const AboutFeatures = () => {
         <div className="col-lg-4">
           <div className="about-feature">
             <div className="about-feature__icon">
-              <i className="lnil lnil-money-protection"></i>
+            <FontAwesomeIcon icon={faCreditCard} />
             </div>
             <div className="about-feature__text">
               <h3 className="about-feature__title">Secure payment</h3>
