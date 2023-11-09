@@ -54,7 +54,7 @@ function LogIn() {
         // Redirect to the home page after a delay
       setTimeout(() => {
         setMessage('');
-        window.location.href = '/'; // Redirect to the common home page
+        window.location.href = '/Home'; // Redirect to the common home page
       }, 3000);
   
       } else {
