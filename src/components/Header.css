@@ -82,6 +82,7 @@
 .home-link {
   color: black;
   font: 16px Jost;
+  text-decoration: none;
 }
 
 .header__right {

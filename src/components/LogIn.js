@@ -1,19 +1,87 @@
 import React from "react";
 import "./LogIn.css";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import {Link} from "react-router-dom";
+import { useState } from "react";
+
+function Modal({ message, onClose }) {
+  // Log to see if this component renders
+  console.log('Modal rendering with message:', message);
+
+  // Now, the modal visibility is controlled by inline style based on the `message`.
+  return (
+    <div className="modal" style={{ display: message ? 'flex' : 'none' }}>
+      <div className="modal-content">
+        <span className="close" onClick={onClose}>&times;</span>
+        <p>{message}</p>
+      </div>
+    </div>
+  );
+}
+
 function LogIn() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  // Construct the URL from the environment variable or default to a local URL
+ 
+
+  async function handleLogin(event) {
+    event.preventDefault();
+    console.log('Handle login called');
+  
+    try {
+      const response = await fetch("http://localhost:3001/api/login", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        console.log('Login successful, setting message');
+        setMessage('Login successful! Redirecting...');
+  
+        // Save the token to localStorage or sessionStorage
+        localStorage.setItem('token', data.token);
+  
+        // Redirect to the home page after a delay
+      setTimeout(() => {
+        setMessage('');
+        window.location.href = '/'; // Redirect to the common home page
+      }, 3000);
+  
+      } else {
+        console.log('Login failed, setting error message');
+        let errorMessage = data.message || 'Login Failed: username or password is not correct';
+        setError(errorMessage);
+        setMessage(errorMessage);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+      setError('An error occurred');
+      setMessage('An error occurred: ' + error.message);
+    }
+  }
+
   return (
     <div>
         <div className = "p-2 header">
        <Header/>
        </div>
        <hr className="custom-hr" />
-    <div className="login js-login">
+       <Modal message={message} onClose={() => setMessage('')} />
+    <div className="login js-login" onSubmit={handleLogin}>
       <div className="login-container1">
         <div className="login__container2">
           <h1 className="login__title">Sign in</h1>
+          {error && <div className="error-message">{error}</div>}
           <form
             method="post"
             action="/account/login"
@@ -31,6 +99,8 @@ function LogIn() {
                   name="customer[email]"
                   placeholder="Email address"
                   id="input-email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="form-group required">
@@ -40,6 +110,8 @@ function LogIn() {
                   name="customer[password]"
                   placeholder="Password"
                   id="input-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>

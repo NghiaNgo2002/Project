@@ -35,21 +35,21 @@ function Header() {
         <div className="header-right">
         <div className="link">
           {/* Wrap the Search component with Link */}
-          <Link to="/" className="horizontal-link">
+          <div className="horizontal-link">
           <Search/>
-          </Link>
+          </div>
           </div>
         <div className="link" >
           {/* Wrap the Search component with Link */}
-          <Link to="/login" className="horizontal-link">
+          <Link to="/" className="horizontal-link">
           <Person/>
           </Link>
           </div>
           <div className="link">
           {/* Wrap the Search component with Link */}
-          <Link to="/" className="horizontal-link">
+          <div className="horizontal-link">
           <Cart/>
-          </Link>
+          </div>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@ function Header() {
           <div className="menu-bar">
             <ul>
               <li>
-              <Link to="/" className="home-link">
+              <Link to="/home" className="home-link">
               HOME
              </Link> 
                 <div className="sub-menu-1">
