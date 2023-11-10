@@ -1,12 +1,47 @@
+import user from '../img/user.png';
+import edit from '../img/edit.png';
+import inbox from '../img/envelope.png';
+import settings from '../img/settings.png';
+import help from '../img/question.png';
+import logout from '../img/log-out.png';
 import "./Header.css";
 import Name from "./Name";
-import React from "react";
+import React, {useState, useRef, useEffect} from "react";
 import { Search, Person, Cart} from 'react-bootstrap-icons';
 import {Link} from "react-router-dom";
 
+function DropdownItem(props){
+  return(
+    <li className = 'dropdownItem'>
+      <img src={props.img}></img>
+      <a> {props.text} </a>
+    </li>
+  );
+}
 
 
 function Header() {
+  const [open, setOpen] = useState(false);
+
+  const menuRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+      // Add a console.log statement to check if the event listener is working
+      console.log("Adding event listener");
+  
+    document.addEventListener("mousedown", handleClickOutside);
+  
+    return () => {
+      console.log("Removing event listener");
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
+
   return (
       <div>
       <div className="header-container">
@@ -33,18 +68,31 @@ function Header() {
           </div>
         </div>
         <div className="header-right">
-        <div className="link">
+        <div className="link" >
           {/* Wrap the Search component with Link */}
           <div className="horizontal-link">
           <Search/>
           </div>
           </div>
-        <div className="link" >
-          {/* Wrap the Search component with Link */}
-          <Link to="/" className="horizontal-link">
+          <div className="link">
+          <div className="horizontal-link">
+          <div className='menu-container' >
+        <div className='menu-trigger' onClick={()=>{setOpen(!open)}}>
           <Person/>
-          </Link>
+        </div>
+        <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} ref={menuRef}>
+        <ul>
+            <DropdownItem  img = {user} text = {"My Profile"}/>
+            <DropdownItem  img = {edit} text = {"Edit Profile"}/>
+            <DropdownItem  img = {inbox} text = {"Inbox"}/>
+            <DropdownItem  img = {settings} text = {"Settings"}/>
+            <DropdownItem  img = {help} text = {"Helps"}/>
+           <Link to = "/" style={{ textDecoration: 'none' }}><DropdownItem  img = {logout}  text = {"Logout"}/></Link> 
+          </ul>
           </div>
+          </div>
+      </div>
+    </div>
           <div className="link">
           {/* Wrap the Search component with Link */}
           <div className="horizontal-link">

@@ -1,6 +1,5 @@
 import React from "react";
 import "./LogIn.css";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {Link} from "react-router-dom";
 import { useState } from "react";
@@ -25,6 +24,8 @@ function LogIn() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  // inside the functional component
+const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Construct the URL from the environment variable or default to a local URL
  
@@ -47,6 +48,7 @@ function LogIn() {
       if (response.ok) {
         console.log('Login successful, setting message');
         setMessage('Login successful! Redirecting...');
+        setIsLoggedIn(true); // Set the isLoggedIn state to true
   
         // Save the token to localStorage or sessionStorage
         localStorage.setItem('token', data.token);
@@ -114,6 +116,7 @@ function LogIn() {
             <div className="login__button">
               <input className="button" type="submit" value="SIGN IN" />
             </div>
+            {isLoggedIn && <Modal message="Login successful! Redirecting ...." onClose={() => setIsLoggedIn(false)} />} 
             <div className="login__forgot-password" id="forgot-password">
               <a href="#recover" className="js-go-to-forgotten-password">
                 Forgotten your password?
