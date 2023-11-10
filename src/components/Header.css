@@ -144,10 +144,24 @@
 }
 
 
+.menu-brand-item {
+  opacity: .4;
+  transition: all .3s ease-in;
+  -webkit-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  margin-right: 35px;
+  margin-bottom: 34px;
+}
 
 .meo{
   width: 285px;
   padding-right: 25px;
+}
+.custom-style-header {
+  color: #aba3a3;
+  font: 16px Jost;
+  text-transform: uppercase;
+
 }
 
 .menu-bar ul li {
@@ -174,6 +188,7 @@
   margin-top: 65px;
   margin-left: -50px;
   font-family: "Jost", sans-serif;
+  background-color: white;
 }
 
 .menu-bar ul li:hover .sub-menu-1 ul {

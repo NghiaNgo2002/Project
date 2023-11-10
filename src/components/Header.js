@@ -41,7 +41,7 @@ function Header() {
           </div>
         <div className="link" >
           {/* Wrap the Search component with Link */}
-          <Link to="/" className="horizontal-link">
+          <Link to="/login" className="horizontal-link">
           <Person/>
           </Link>
           </div>
@@ -65,7 +65,7 @@ function Header() {
                 <div className="sub-menu-1">
                   <div className="meo">
                   <ul>
-                    Style
+                  <li className="custom-style-header">Styles</li>
                     <li className ="custom-style"  >Default</li>
                     <li className ="custom-style"  >Full Width</li>
                     <li className ="custom-style"  >Collection</li>
@@ -79,7 +79,7 @@ function Header() {
                   </div>
                   <div className ="meo">
                   <ul>
-                    Topic
+                  <li className="custom-style-header">Topic</li>
                     <li className ="custom-style" >Furniture 1</li>
                     <li className ="custom-style" >Furniture 2</li>
                     <li className ="custom-style" >Decoration</li>
@@ -97,10 +97,27 @@ function Header() {
                   </div>
                   <div className ="meo">     
                   <ul>
-                    Brands
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
+                  <li className="custom-style-header">Brands</li>
+                    <div className="menu-brand-item">
+                         <a href="#">
+                   <img
+                   alt="Image"
+                  src="//durotan-fashion.myshopify.com/cdn/shop/files/menu_brand_1_017e69bb-a2c2-41d0-ae73-13cba43d25bc_2000x.png?v=1654940131"
+                   />
+                  </a>
+                   </div>
+                   <div class="menu-brand-item">
+                        <a href="#">
+                          <img 
+                          alt="Image" 
+                          src="//durotan-fashion.myshopify.com/cdn/shop/files/brand_2_83694859-9b15-477a-a7c0-b3f374ef37a8_2000x.png?v=1654940144"/>
+                        </a>
+                      </div>
+                      <div class="menu-brand-item">
+                        <a href="#">
+                          <img alt="Image" src="//durotan-fashion.myshopify.com/cdn/shop/files/menu_brand_3_0d5624de-c74d-4e7f-a373-c775105204b1_2000x.png?v=1654940154"/>
+                        </a>
+                      </div>
                   </ul>
                   </div>
                 </div>
@@ -178,23 +195,17 @@ function Header() {
                 PAGES
                 <div className="sub-menu-1">
                   <ul>
-                    Style
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                  <ul>
-                    Topic
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                  <ul>
-                    Branches
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
+                  <Link to="/error" className="home-link">
+                  <li className ="custom-style" >404 Page</li>
+             </Link>  
+               
+                    <li className ="custom-style" >About</li>
+                    <li className ="custom-style" >Cart</li>
+                    <li className ="custom-style" >Checkout</li>
+                    <li className ="custom-style" >Faq</li>
+                    <li className ="custom-style" >Contact</li>
+
+                    </ul>
                 </div>
               </li>
             </ul>
