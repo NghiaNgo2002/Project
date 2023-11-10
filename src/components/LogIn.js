@@ -1,102 +1,140 @@
-import React, { useState } from "react";
+import React from "react";
 import "./LogIn.css";
-import Header from "./Header";
-import Footer from "./Footer";
-import { Link } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import {Link} from "react-router-dom";
+import { useState } from "react";
 
-function Register() {
+function Modal({ message, onClose }) {
+  // Log to see if this component renders
+  console.log('Modal rendering with message:', message);
+
+  // Now, the modal visibility is controlled by inline style based on the `message`.
+  return (
+    <div className="modal" style={{ display: message ? 'flex' : 'none' }}>
+      <div className="modal-content">
+        <span className="close" onClick={onClose}>&times;</span>
+        <p>{message}</p>
+      </div>
+    </div>
+  );
+}
+
+function LogIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
-  async function handleSignUp(event) {
+  // Construct the URL from the environment variable or default to a local URL
+ 
+
+  async function handleLogin(event) {
     event.preventDefault();
-
+    console.log('Handle login called');
+  
     try {
-      const response = await fetch("http://localhost:3001/api/register", {
+      const response = await fetch("http://localhost:3001/api/login", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
+      const data = await response.json();
+  
       if (response.ok) {
-        // Handle successful registration, e.g., redirect to login page
-        window.location.href = '/';
+        console.log('Login successful, setting message');
+        setMessage('Login successful! Redirecting...');
+  
+        // Save the token to localStorage or sessionStorage
+        localStorage.setItem('token', data.token);
+  
+        // Redirect to the home page after a delay
+      setTimeout(() => {
+        setMessage('');
+        window.location.href = '/Home'; // Redirect to the common home page
+      }, 3000);
+  
       } else {
-        // Handle sign-up failure, show an error message
-        const errorData = await response.json();
-        setError(errorData.message);
+        console.log('Login failed, setting error message');
+        let errorMessage = data.message || 'Login Failed: username or password is not correct';
+        setError(errorMessage);
+        setMessage(errorMessage);
       }
     } catch (error) {
-      // Handle network errors, request failures, etc.
+      console.error('An error occurred:', error);
       setError('An error occurred');
-      console.error('An error occurred', error);
+      setMessage('An error occurred: ' + error.message);
     }
   }
 
   return (
     <div>
-      <div className="p-2 header">
-        <Header />
-      </div>
-      <hr className="custom-hr" />
-      <div className="login">
-        <div className="login-container1">
-          <div className="login__container2">
-            <h1 className="login__title">Register</h1>
-            {error && <div className="error">{error}</div>}
-            <form onSubmit={handleSignUp}>
-              <div className="login__inputs">
-                <div className="form-group">
-                  <input type="text" name="customer[first_name]" placeholder="First name" id="input-email" />
-                </div>
-                <div className="form-group">
-                  <input type="text" name="customer[last_name]" placeholder="Last name" id="input-lastname" />
-                </div>
-                <div className="form-group required">
-                  <input
-                    type="email"
-                    required="required"
-                    name="customer[email]"
-                    placeholder="Email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div className="form-group required">
-                  <input
-                    type="password"
-                    required="required"
-                    name="customer[password]"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
+       <Modal message={message} onClose={() => setMessage('')} />
+    <div className="login js-login" onSubmit={handleLogin}>
+      <div className="login-container1">
+        <div className="login__container2">
+          <h1 className="login__title">Sign in</h1>
+          {error && <div className="error-message">{error}</div>}
+          <form
+            method="post"
+            action="/account/login"
+            id="customer_login"
+            acceptCharset="UTF-8"
+            data-login-with-shop-sign-in="true"
+          >
+            <input type="hidden" name="form_type" value="customer_login" />
+            <input type="hidden" name="utf8" value="✓" />
+            <div className="login__inputs">
+              <div className="form-group required">
+                <input
+                  type="email"
+                  required="required"
+                  name="customer[email]"
+                  placeholder="Email address"
+                  id="input-email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
-              <div className="login__button">
-                <button type="submit" className="button">Register</button>
+              <div className="form-group required">
+                <input
+                  type="password"
+                  required="required"
+                  name="customer[password]"
+                  placeholder="Password"
+                  id="input-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
-            </form>
-            <div className="login__forgot-password">
-              By creating your account, you agree to our<br />
-              <a href="/pages/terms">Terms & conditions</a> and <a href="/pages/privacy">Privacy policy</a>
+            </div>
+            <div className="login__button">
+              <input className="button" type="submit" value="SIGN IN" />
+            </div>
+            <div className="login__forgot-password" id="forgot-password">
+              <a href="#recover" className="js-go-to-forgotten-password">
+                Forgotten your password?
+              </a>
             </div>
             <div className="login__register">
-              <Link to="/">
-                <a>I already have an account</a>
-              </Link>
+            <Link to="/register" >
+            <a>I don’t have an account</a>
+          </Link>
+              
             </div>
-          </div>
+            <input type="hidden" name="return_url" value="/account" />
+          </form>
         </div>
       </div>
-      <div className="p-2 footer">
-        <Footer />
-      </div>
+    </div>
+    <div className = "p-2 footer">
+       <Footer/>
+       </div>
     </div>
   );
 }
 
-export default Register;
+export default LogIn;

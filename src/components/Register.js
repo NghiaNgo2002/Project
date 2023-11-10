@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./LogIn.css";
-import Header from "./Header";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 
 function Register() {
+  const [firstname,SetFirstName] = useState('');
+  const[lastname,SetLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -38,10 +39,6 @@ function Register() {
 
   return (
     <div>
-      <div className="p-2 header">
-        <Header />
-      </div>
-      <hr className="custom-hr" />
       <div className="login">
         <div className="login-container1">
           <div className="login__container2">
@@ -50,10 +47,24 @@ function Register() {
             <form onSubmit={handleSignUp}>
               <div className="login__inputs">
                 <div className="form-group">
-                  <input type="text" name="customer[first_name]" placeholder="First name" id="input-email" />
+                  <input 
+                  type="text" 
+                  name="customer[first_name]"
+                   placeholder="First name" 
+                   id="input-email"
+                   value={firstname}
+                    onChange={(e) => SetFirstName(e.target.value)}
+                   />
                 </div>
                 <div className="form-group">
-                  <input type="text" name="customer[last_name]" placeholder="Last name" id="input-lastname" />
+                  <input 
+                  type="text" 
+                  name="customer[last_name]"
+                   placeholder="Last name" 
+                   id="input-lastname"
+                   value={lastname}
+                    onChange={(e) => SetLastName(e.target.value)}
+                   />
                 </div>
                 <div className="form-group required">
                   <input
