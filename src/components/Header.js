@@ -41,7 +41,7 @@ function Header() {
           </div>
         <div className="link" >
           {/* Wrap the Search component with Link */}
-          <Link to="/login" className="horizontal-link">
+          <Link to="/" className="horizontal-link">
           <Person/>
           </Link>
           </div>
