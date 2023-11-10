@@ -85,8 +85,6 @@ function Header() {
             <DropdownItem  img = {user} text = {"My Profile"}/>
             <DropdownItem  img = {edit} text = {"Edit Profile"}/>
             <DropdownItem  img = {inbox} text = {"Inbox"}/>
-            <DropdownItem  img = {settings} text = {"Settings"}/>
-            <DropdownItem  img = {help} text = {"Helps"}/>
            <Link to = "/" style={{ textDecoration: 'none' }}><DropdownItem  img = {logout}  text = {"Logout"}/></Link> 
           </ul>
           </div>
@@ -217,27 +215,9 @@ function Header() {
                 </div>
               </li>
               <li>
-                BLOG
-                <div className="sub-menu-1">
-                  <ul>
-                    Style
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                  <ul>
-                    Topic
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                  <ul>
-                    Branches
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                </div>
+              <Link to="/blog" className="home-link">
+             BLOG
+             </Link>
               </li>
               <li>
                 PAGES
