@@ -24,7 +24,7 @@ function Register() {
 
       if (response.ok) {
         // Handle successful registration, e.g., redirect to login page
-        window.location.href = '/login';
+        window.location.href = '/';
       } else {
         // Handle sign-up failure, show an error message
         const errorData = await response.json();
