@@ -5,7 +5,7 @@ import Name from "./Name";
 const Footer = () => {
   return (
     <footer class="footer shoppable-footer">
-<div className="container container--type-4">
+<div className="footer-container container">
       {/* Newsletter */}
       <div className="blog-with-sidebar__newsletter">
         {/* Row */}

@@ -11,10 +11,17 @@
   
   .banners{
     position:relative;
+    
   }
   
   .features{
     position: relative;
+    
+  }
+
+
+  .footer{
+    background-color: #f3f3f6;
   }
   
   

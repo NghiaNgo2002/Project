@@ -3,7 +3,7 @@ import "./Banners.css";
 
 const Banners = () => {
   return (
-    <div className="shoppable-banners">
+    <div className="shoppable-banners ">
       <div className="container container--type-4">
         <div className="row">
           {/* Featured product 1 */}

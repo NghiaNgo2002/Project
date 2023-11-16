@@ -168,60 +168,17 @@ function Header() {
                   </div>
                 </div>
               </li>
-              <li>
-                SHOP
-                <div className="sub-menu-1">
-                  <ul>
-                    Style
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                  <ul>
-                    Topic
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                  <ul>
-                    Branches
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                </div>
-              </li>
-              <li>
-                PRODUCT
-                <div className="sub-menu-1">
-                  <ul>
-                    Style
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                  <ul>
-                    Topic
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                  <ul>
-                    Branches
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                    <li className ="custom-style" >Style 1</li>
-                  </ul>
-                </div>
+              <li> 
+                <Link to = '/shop' className="home-link">SHOP </Link>
               </li>
               <li>
               <Link to="/blog" className="home-link">
              BLOG
              </Link>
               </li>
-              <li>
-                PAGES
-                <div className="sub-menu-1">
+                <li>
+                  PAGES
+                  <div className="sub-menu-1">
                   <ul>
                   <Link to="/error" className="home-link">
                   <li className ="custom-style" >404 Page</li>

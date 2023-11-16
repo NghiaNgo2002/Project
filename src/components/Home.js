@@ -15,9 +15,9 @@ function Home() {
       <div className="p-2 header"><Header /></div>
       <div className="p-2 slider"><Slider /></div>
       <div className="p-2 newin"><NewIn /></div>
-      <div className="p-2 banners"><Banners /></div>
+      <div className="p-2 banners "><Banners /></div>
       <div className="p-2 features"><Features /></div>
-      <footer><Footer /></footer>
+      <div className="p-2 footer d-flex align-items-center justify-content-center"><Footer/></div>
     </Stack>
   );
 }
