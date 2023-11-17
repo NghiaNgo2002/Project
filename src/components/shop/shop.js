@@ -6,7 +6,6 @@ import Title from "./title";
 import Linebar from "./linebar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Stack from 'react-bootstrap/Stack';
-import BlogList from "../Blog";
 
 function Shop() {
   return (

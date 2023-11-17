@@ -1,8 +1,6 @@
 import user from '../img/user.png';
 import edit from '../img/edit.png';
 import inbox from '../img/envelope.png';
-import settings from '../img/settings.png';
-import help from '../img/question.png';
 import logout from '../img/log-out.png';
 import "./Header.css";
 import Name from "./Name";
@@ -94,7 +92,7 @@ function Header() {
           <div className="link">
           {/* Wrap the Search component with Link */}
           <div className="horizontal-link">
-          <Cart/>
+          <Link to = '/cart'><Cart/></Link>
           </div>
           </div>
         </div>
@@ -175,23 +173,6 @@ function Header() {
               <Link to="/blog" className="home-link">
              BLOG
              </Link>
-              </li>
-                <li>
-                  PAGES
-                  <div className="sub-menu-1">
-                  <ul>
-                  <Link to="/error" className="home-link">
-                  <li className ="custom-style" >404 Page</li>
-             </Link>  
-               
-                    <li className ="custom-style" >About</li>
-                    <li className ="custom-style" >Cart</li>
-                    <li className ="custom-style" >Checkout</li>
-                    <li className ="custom-style" >Faq</li>
-                    <li className ="custom-style" >Contact</li>
-
-                    </ul>
-                </div>
               </li>
             </ul>
           </div>
