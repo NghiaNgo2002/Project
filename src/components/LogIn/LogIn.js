@@ -56,7 +56,13 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
         // Redirect to the home page after a delay
       setTimeout(() => {
         setMessage('');
-        window.location.href = '/Home'; // Redirect to the common home page
+
+        const userRole = data.accounts.role;
+        if (userRole === 'admin') {
+          window.location.href = '/home-admin';
+        } else {
+          window.location.href = '/home';
+        }
       }, 3000);
   
       } else {
