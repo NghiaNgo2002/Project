@@ -4,13 +4,14 @@ import Register from './components/LogIn/Register';
 import LogIn from './components/LogIn/LogIn';
 import BlogList from './components/Blog/Blog';
 import Shop from './components/shop/shop';
-import Header from './components/Header';
-import Productdetail from './components/Product/productdetail';
-import Footer from './components/Footer';
-import Cart from './components/Product/Cart';
-
+import Header from './Layout/Header';
+import Productdetail from './components/Cart/productdetail';
+import Footer from './Layout/Footer';
+import Cart from './components/Cart/Cart';
 import HomeAdmin from './components/Home-Admin/Home-Admin';
-
+import ProfileUser from './components/Profile-User/ProfileUser';
+import ProfileUserUpdate from './components/Profile-User/ProfileUserUpdate';
+import Password from './components/Profile-User/Password';
 import './App.css';
 
 function App() {
@@ -27,10 +28,12 @@ function App() {
             element={[<Header />, <Productdetail />, <Footer />]}
           ></Route>
           <Route
-            path="/Cart"
-            element={[<Header />, <Cart />, <Footer />]}
+            path="/Cart" element={[ <Cart />]}
           ></Route>
            <Route path="/home-admin" element={<HomeAdmin />}  />
+           <Route path="/Profile-user" element={<ProfileUser />}  />
+           <Route path="/Profile-Update" element={<ProfileUserUpdate />}  />
+           <Route path="/Password" element ={<Password/>}/>
         </Routes>
     </Router>
   );

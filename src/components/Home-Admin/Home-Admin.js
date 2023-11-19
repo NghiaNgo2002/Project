@@ -3,7 +3,7 @@ import Header from './Header-Admin';
 import Slider from './Slider';
 import NewIn from './NewIn';
 import Stack from 'react-bootstrap/Stack';
-import Footer from '../Footer';
+import Footer from '../../Layout/Footer';
 import Banners from './Banners';
 import Features from './Features';
 import 'bootstrap/dist/css/bootstrap.min.css';

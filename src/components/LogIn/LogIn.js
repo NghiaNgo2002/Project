@@ -1,6 +1,6 @@
 import React from "react";
 import "./LogIn.css";
-import Footer from "../Footer";
+import Footer from "../../Layout/Footer";
 import {Link} from "react-router-dom";
 import { useState } from "react";
 

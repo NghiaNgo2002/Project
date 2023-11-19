@@ -3,7 +3,7 @@ import edit from '../../img/edit.png';
 import inbox from '../../img/envelope.png';
 import logout from '../../img/log-out.png';
 import "./Header-Admin.css";
-import Name from "../Name";
+import Name from "../../Layout/Name";
 import React, {useState, useRef, useEffect} from "react";
 import {PersonFill, TextCenter} from 'react-bootstrap-icons';
 import {Link} from "react-router-dom";

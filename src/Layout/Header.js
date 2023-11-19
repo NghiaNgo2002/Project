@@ -1,7 +1,7 @@
 import user from '../img/user.png';
 import edit from '../img/edit.png';
-import inbox from '../img/envelope.png';
 import logout from '../img/log-out.png';
+import password from '../img/password.png';
 import "./Header.css";
 import Name from "./Name";
 import React, {useState, useRef, useEffect} from "react";
@@ -66,12 +66,6 @@ function Header() {
           </div>
         </div>
         <div className="header-right">
-        <div className="link" >
-          {/* Wrap the Search component with Link */}
-          <div className="horizontal-link">
-          <Search/>
-          </div>
-          </div>
           <div className="link">
           <div className="horizontal-link">
           <div className='menu-container' >
@@ -80,10 +74,10 @@ function Header() {
         </div>
         <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} ref={menuRef}>
         <ul>
-            <DropdownItem  img = {user} text = {"My Profile"}/>
-            <DropdownItem  img = {edit} text = {"Edit Profile"}/>
-            <DropdownItem  img = {inbox} text = {"Inbox"}/>
-           <Link to = "/" style={{ textDecoration: 'none' }}><DropdownItem  img = {logout}  text = {"Logout"}/></Link> 
+           <Link to ="/Profile-User" style={{ textDecoration: 'none',textAlign:'center' }}><DropdownItem  img = {user} text = {"My Profile"}/></Link>
+           <Link to = "/Profile-Update"style={{ textDecoration: 'none',textAlign:'center'}}><DropdownItem  img = {edit} text = {"Edit Profile"}/></Link>
+           <Link to = "/Password"style={{ textDecoration: 'none',textAlign:'center' }}><DropdownItem  img = {password} text = {"Change Password"}/></Link>
+           <Link to = "/" style={{ textDecoration: 'none',textAlign:'center' }}><DropdownItem  img = {logout}  text = {"Logout"}/></Link> 
           </ul>
           </div>
           </div>

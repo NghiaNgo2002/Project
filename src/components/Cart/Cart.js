@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./Cart.css";
 import { Link } from "react-router-dom";
+import Header from "../../Layout/Header";
+import Footer from "../../Layout/Footer";
 
 function Cart() {
   const [clicked, setClicked] = useState(false);
@@ -11,6 +13,11 @@ function Cart() {
   };
 
   return (
+    <div>
+      <div className = "p-2 header">
+        <Header/>
+      </div>
+  
     <div className="cart">
       <div className="shopping-cart">
         <h1>Shopping cart</h1>
@@ -39,6 +46,10 @@ function Cart() {
       <Link to="/Shop" onClick={handleLinkClick}>
         <p>CONTINUE SHOPPING</p>
       </Link>
+    </div>
+    <div className = "p-2 footer d-flex align-items-center justify-content-center">
+      <Footer/>
+    </div>
     </div>
   );
 }
