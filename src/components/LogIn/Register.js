@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 function Register() {
   const [firstname,SetFirstName] = useState('');
   const[lastname,SetLastName] = useState('');
+  const[phone,SetPhone] = useState('');
+  const[address,SetAddress] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -64,6 +66,26 @@ function Register() {
                    id="input-lastname"
                    value={lastname}
                     onChange={(e) => SetLastName(e.target.value)}
+                   />
+                </div>
+                <div className="form-group">
+                  <input 
+                  type="text" 
+                  name="customer[phone]"
+                   placeholder="Phone" 
+                   id="input-phone"
+                   value={phone}
+                    onChange={(e) => SetPhone(e.target.value)}
+                   />
+                </div>
+                <div className="form-group">
+                  <input 
+                  type="text" 
+                  name="customer[address]"
+                   placeholder="Address" 
+                   id="input-address"
+                   value={address}
+                    onChange={(e) => SetAddress(e.target.value)}
                    />
                 </div>
                 <div className="form-group required">
