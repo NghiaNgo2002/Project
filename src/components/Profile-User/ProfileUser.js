@@ -19,7 +19,6 @@ import Footer from '../../Layout/Footer';
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
-
 export default function ProfilePage() {
   const [profile, setProfile] = useState({
     firstname:'',
@@ -28,29 +27,41 @@ export default function ProfilePage() {
     address:'',
     email:''
   });
-  const [userEmail, setUserEmail] = useState('');
+  const [id, setID] = useState("");
+  const [token, setToken] = useState("");
+
   useEffect(() => {
+    const User = JSON.parse(localStorage.getItem('User'));
+    setToken(User.token);
+    setID(User.accounts.id);
     // Function to fetch user profile data from your API
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch('${backendUrl}/api/profile/:email'); 
+        if (!id) return; // If userEmail is empty, exit early
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}` // Add authorization header with token
+          }
+        };
+
+        
+        const response = await fetch(`${backendUrl}/api/profile/${id}`, requestOptions);
         if (response.ok) {
           const data = await response.json();
           setProfile(data);
+          console.log(data);
         } else {
           throw new Error('Failed to fetch profile data');
         }
       } catch (error) {
         console.error('Error fetching profile:', error);
-      }
+      } 
     };
 
     fetchUserProfile();
-  }, [userEmail]); // Add userEmail as a dependency to useEffect
-
-  const handleEmailChange = (e) => {
-    setUserEmail(e.target.value);
-  };
+  }, [id]); // Add userEmail as a dependency to useEffect
 
   return (
     <div>

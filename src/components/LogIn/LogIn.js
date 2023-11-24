@@ -51,8 +51,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
         setIsLoggedIn(true); // Set the isLoggedIn state to true
   
         // Save the token to localStorage or sessionStorage
-        localStorage.setItem('token', data.token);
-  
+        localStorage.setItem('User', JSON.stringify(data));
         // Redirect to the home page after a delay
       setTimeout(() => {
         setMessage('');
