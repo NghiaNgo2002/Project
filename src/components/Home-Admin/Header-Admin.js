@@ -91,11 +91,7 @@ function Header() {
             </div>
             <div className={`dropdown-menu ${openMenu1 ? 'active' : 'inactive'}`} ref={menuRef1}>
               <ul>
-                <DropdownItem img={user} text={"Manage Product"} />
-                <DropdownItem img={user} text={"Manage Customer"} />
-                <DropdownItem img={user} text={"Manage Employee"} />
-                <DropdownItem img={user} text={"Manage Order"} />
-                <DropdownItem img={user} text={"Manage Invoice"} />
+                <Link to = "/Dashboard" style={{ textDecoration: 'none' }} ><DropdownItem img={user} text={"Manage Dashboard"} /></Link>
               </ul>
             </div>
           </div>

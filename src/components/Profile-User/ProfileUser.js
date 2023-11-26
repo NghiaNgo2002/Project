@@ -1,17 +1,7 @@
 import React,{ useState, useEffect }  from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './custom-styles.css'; // Import your custom CSS file
-import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBBreadcrumb,
-  MDBBreadcrumbItem,
-} from 'mdb-react-ui-kit';
+import { MDBCol,MDBContainer,MDBRow, MDBCard,MDBCardText, MDBCardBody,MDBCardImage,MDBBreadcrumb, MDBBreadcrumbItem} from 'mdb-react-ui-kit';
 import Header from '../../Layout/Header';
 import Footer from '../../Layout/Footer';
 

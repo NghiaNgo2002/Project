@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../../Layout/Header';
 import Footer from '../../Layout/Footer';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -8,7 +10,17 @@ function Password() {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [id, setID] = useState("");
+  const [id, setID] = useState('');
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('User'));
+    if (user && user.accounts && user.accounts.id) {
+      setID(user.accounts.id);
+      setToken(user.token);
+    }
+  }, []);
+
   const handleOldPasswordChange = (e) => {
     setOldPassword(e.target.value);
   };
@@ -20,19 +32,24 @@ function Password() {
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
+  const resetFormFields = () => {
+    setOldPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+  };
 
-  const User = JSON.parse(localStorage.getItem('User'));
-  setID(User.accounts.id);
-  const handleConfirmChange = async () => { // Mark the function as async
+
+  const handleConfirmChange = async () => {
     if (newPassword === confirmPassword) {
       try {
-        const response = await fetch(`${backendUrl}/api/profile/password`, {
+        const response = await fetch(`${backendUrl}/api/password`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify({
-            id: id, // Replace userId with the actual user ID
+            id: id,
             oldPassword,
             newPassword,
           }),
@@ -41,30 +58,27 @@ function Password() {
         const data = await response.json();
 
         if (response.ok) {
-          // Password updated successfully
-          console.log(data.message); // or show a success message to the user
+          toast.success(data.message); // Display success toast notification
+          resetFormFields(); // Reset form fields on successful password update
+        } else if (response.status === 401) {
+          toast.error('Old password is incorrect'); // Display toast for incorrect old password}else {
         } else {
-          // Handle different error scenarios
-          console.error(data.message); // or display an error message to the user
-        }
+        toast.error(data.message); // Display error toast notification
+        } 
       } catch (error) {
         console.error('Error changing password:', error);
-        // Handle network errors or other exceptions
       }
     } else {
-      // Handle password mismatch error
-      console.error('New password and confirm password must match');
-      // Show an error message to the user indicating password mismatch
+      toast.error('New password and confirm password must match');
     }
-  }; // Ensure that the function ends here
-  
+  };
 
   return (
     <div>
       <div className="p-2 header">
         <Header />
       </div>
-
+      <ToastContainer />
       <div className="my-5 d-flex justify-content-center">
         <div className="col-xxl-6">
           <div className="bg-secondary-soft px-4 py-5 rounded">

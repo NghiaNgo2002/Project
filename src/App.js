@@ -12,6 +12,7 @@ import HomeAdmin from './components/Home-Admin/Home-Admin';
 import ProfileUser from './components/Profile-User/ProfileUser';
 import ProfileUserUpdate from './components/Profile-User/ProfileUserUpdate';
 import Password from './components/Profile-User/Password';
+import Dashboard from './components/Dashboard/Dashboard';
 import './App.css';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
            <Route path="/Profile-user" element={<ProfileUser />}  />
            <Route path="/Profile-Update" element={<ProfileUserUpdate />}  />
            <Route path="/Password" element ={<Password/>}/>
+           <Route path="/Dashboard" element = {<Dashboard/>}/>
         </Routes>
     </Router>
   );
