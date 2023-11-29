@@ -1,4 +1,4 @@
-// UserProfilePage.js
+
 import React, { useState, useEffect } from 'react';
 import './Listprofile.css'; // Import the CSS file
 import Sidebar from '../Dashboard/sidebar';
@@ -75,6 +75,7 @@ const UserProfileList = () => {
       toast.error('Error updating profile');
     }
   };
+
   return (
     <div>
         <Header />

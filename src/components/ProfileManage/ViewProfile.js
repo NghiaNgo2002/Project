@@ -7,19 +7,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCheck, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { DeleteProfileByID, ViewProfileByID,UpdateProfileByID } from '../../Service/UserService'; // Adjust the path as needed
 import { ToastContainer, toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const UserProfileList = () => {
   const [userData, setUserData] = useState([]);
   const [editableFields, setEditableFields] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const { id } = useParams();
 
+
+
+  const { id } = useParams();
   useEffect(() => {
     // Make an API call using the 'id' parameter
     const fetchData = async () => {
       try {
         const response = await ViewProfileByID(id);
+        setUserData(response.data); // Assuming 'response.data' contains the user information
         console.log('Profile data:', response.data);
       } catch (error) {
         console.error('Error fetching profile:', error);
@@ -30,44 +33,38 @@ const UserProfileList = () => {
     fetchData();
   }, [id]); // Re-run the effect whenever 'id' changes
 
+
+  const navigate = useNavigate();
   const handleDelete = async (id) => {
     try {
       await DeleteProfileByID(id);
       const updatedUserList = userData.filter(user => user.id !== id);
-      setUserData(updatedUserList); // Update the state with the new user list (excluding the deleted user)
-      toast.success('Profile deleted successfully'); // Display success toast
+      setUserData(updatedUserList);
+      toast.success('Profile deleted successfully');
+      
+      // Redirect to '/profile-list' after successful deletion
+      navigate('/profile-list');
     } catch (error) {
       console.error('Error deleting profile:', error);
-      toast.error('Error deleting profile'); // Display error toast
+      toast.error('Error deleting profile: Unable to delete the profile');
     }
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = () => {
     setIsEditing(true);
-    const userToEdit = userData.find(user => user.id === id);
-    setEditableFields({ ...editableFields, [id]: { ...userToEdit } });
+    setEditableFields({ ...editableFields});
   };
 
-  const handleSave = async (event, id) => {
+  const handleSave = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
-
+    const id = userData.id; // Get the ID from userData
+  
     try {
-      // Handle save functionality for the specific user (e.g., update user data in the backend)
-      const updatedUserData = userData.map(user => {
-        if (user.id === id) {
-          return { ...user, ...editableFields[id] };
-        }
-        return user;
-      });
-
-      // Update the user data state
-      setUserData(updatedUserData);
-      console.log(updatedUserData);
-      await UpdateProfileByID(id, editableFields[id]);
-
-      // Perform API call to update user data here if needed
-      // Example: await updateProfileById(id, editableFields[id]);
-
+      const updatedUserData = { ...userData, ...editableFields };
+      setUserData(updatedUserData); // Update userData with the changes from editableFields
+  
+      await UpdateProfileByID(id, updatedUserData); // Perform the update API call
+  
       setIsEditing(false);
       toast.success('Profile updated successfully');
     } catch (error) {
@@ -77,158 +74,138 @@ const UserProfileList = () => {
   };
   return (
     <div>
-        <Header />
-        <ToastContainer />
+    <Header />
+    <ToastContainer />
     <div className="container-profile">
-    
       <div className="user-profile">
         <hr />
-
         <h2>User Profiles</h2>
         <ul className="user-list">
-        {userData.map((user) => (
-          <li key={user.id}>
-          <form onSubmit={(event) => handleSave(event, user.id)}>
+          {Object.keys(userData).length > 0 && (
+            <form onSubmit={handleSave}>
               <div>
                 <strong>ID: </strong>
-                <span onClick={() => handleEdit(user.id)}>
-                  {`${user.id}`}
+                <span onClick={() => handleEdit(userData.id)}>
+                  {`${userData.id}`}
                 </span>
-              </div>   
+              </div> 
               <div>
                 <strong> First Name: </strong>
-                {isEditing && editableFields[user.id] ? (
+                {isEditing ? (
                   <input
                     type="text"
-                    value={editableFields[user.id].firstname || ''}
+                    value={editableFields.firstname || ''}
                     onChange={(e) =>
                       setEditableFields({
                         ...editableFields,
-                        [user.id]: {
-                          ...editableFields[user.id],
-                          firstname: e.target.value,
-                        },
+                        firstname: e.target.value,
                       })
                     }
                   />
                 ) : (
-                  `${user.firstname}`
+                  `${userData.firstname}`
                 )}
               </div>
               <div>
                 <strong> Last Name: </strong>
-                {isEditing && editableFields[user.id] ? (
+                {isEditing ? (
                   <input
                     type="text"
-                    value={editableFields[user.id].lastname || ''}
+                    value={editableFields.lastname || ''}
                     onChange={(e) =>
                       setEditableFields({
                         ...editableFields,
-                        [user.id]: {
-                          ...editableFields[user.id],
-                          lastname: e.target.value,
-                        },
+                        lastname: e.target.value,
                       })
                     }
                   />
                 ) : (
-                  `${user.lastname}`
-                )}
-              </div>
-              <div>
-                <strong> Email: </strong>
-                {isEditing && editableFields[user.id] ? (
-                  <input
-                    type="text"
-                    value={editableFields[user.id].email || ''}
-                    onChange={(e) =>
-                      setEditableFields({
-                        ...editableFields,
-                        [user.id]: {
-                          ...editableFields[user.id],
-                          email: e.target.value,
-                        },
-                      })
-                    }
-                  />
-                ) : (
-                  `${user.email}`
+                  `${userData.lastname}`
                 )}
               </div>
               <div>
                 <strong> Phone: </strong>
-                {isEditing && editableFields[user.id] ? (
+                {isEditing ? (
                   <input
                     type="text"
-                    value={editableFields[user.id].phone|| ''}
+                    value={editableFields.phone || ''}
                     onChange={(e) =>
                       setEditableFields({
                         ...editableFields,
-                        [user.id]: {
-                          ...editableFields[user.id],
-                          phone: e.target.value,
-                        },
+                        phone: e.target.value,
                       })
                     }
                   />
                 ) : (
-                  `${user.phone}`
+                  `${userData.phone}`
+                )}
+              </div>
+              <div>
+                <strong> Email: </strong>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={editableFields.email|| ''}
+                    onChange={(e) =>
+                      setEditableFields({
+                        ...editableFields,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  `${userData.email}`
                 )}
               </div>
               <div>
                 <strong> Address: </strong>
-                {isEditing && editableFields[user.id] ? (
+                {isEditing ? (
                   <input
                     type="text"
-                    value={editableFields[user.id].address|| ''}
+                    value={editableFields.address|| ''}
                     onChange={(e) =>
                       setEditableFields({
                         ...editableFields,
-                        [user.id]: {
-                          ...editableFields[user.id],
-                          address: e.target.value,
-                        },
+                       address: e.target.value,
                       })
                     }
                   />
                 ) : (
-                  `${user.address}`
+                  `${userData.address}`
                 )}
               </div>
-                  <div className="action-buttons">
+             
+
+              <div className="action-buttons">
                 {!isEditing ? (
                   <>
                     <button
                       className="action-button delete"
-                      onClick={() => handleDelete(user.id)}
+                      onClick={() => handleDelete(userData.id)}
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
                     <button
                       className="action-button update"
-                      onClick={() => handleEdit(user.id)}
+                      onClick={() => handleEdit(userData.id)}
                     >
                       <FontAwesomeIcon icon={faEdit} />
                     </button>
                   </>
                 ) : (
-                  <button
-                    className="action-button confirm"
-                    type="submit"
-                  >
+                  <button className="action-button confirm" type="submit">
                     <FontAwesomeIcon icon={faCheck} />
                   </button>
                 )}
               </div>
-              </form>
-            </li>
-          ))}
+            </form>
+          )}
         </ul>
       </div>
       <Sidebar />
     </div>
-    </div>
-  );
+  </div>
+);
 };
 
 export default UserProfileList;

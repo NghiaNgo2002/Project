@@ -32,7 +32,7 @@ export const ListAllProfile = async () => {
 };
 
 export const ViewProfileByID = async (id) => {
-  return await axios.get(`${backendUrl}/api/profile/${id}`, { headers: getAuthHeaders() });
+  return await axios.get(`${backendUrl}/api/profile-admin/${id}`, { headers: getAuthHeaders() });
 };
 
 export const AddNewUser = async (firstname, lastname, phone, address, email, password) => {

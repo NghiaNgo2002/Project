@@ -14,7 +14,7 @@ const ProfileManage = () => {
   const [id, setID] = useState('');
 
   const handleViewUser = () => {
-    console.log(setID);
+   
 
   };
   
