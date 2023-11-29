@@ -1,39 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LogIn.css";
 import Footer from "../../Layout/Footer";
-import {Link} from "react-router-dom";
-import { useState } from "react";
-
-function Modal({ message, onClose }) {
-  // Log to see if this component renders
-  console.log('Modal rendering with message:', message);
-
-  // Now, the modal visibility is controlled by inline style based on the `message`.
-  return (
-    <div className="modal" style={{ display: message ? 'flex' : 'none' }}>
-      <div className="modal-content">
-        <span className="close" onClick={onClose}>&times;</span>
-        <p>{message}</p>
-      </div>
-    </div>
-  );
-}
+import { Link } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
 
 function LogIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  // inside the functional component
-const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Construct the URL from the environment variable or default to a local URL
- 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   async function handleLogin(event) {
     event.preventDefault();
-    console.log('Handle login called');
-  
     try {
       const response = await fetch("http://localhost:3001/api/login", {
         method: 'POST',
@@ -42,50 +21,41 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
         },
         body: JSON.stringify({ email, password }),
       });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        console.log('Login successful, setting message');
-        setMessage('Login successful! Redirecting...');
-        setIsLoggedIn(true); // Set the isLoggedIn state to true
-  
-        // Save the token to localStorage or sessionStorage
-        localStorage.setItem('User', JSON.stringify(data));
-        // Redirect to the home page after a delay
-      setTimeout(() => {
-        setMessage('');
 
-        const userRole = data.accounts.role;
-        if (userRole === 'admin') {
-          window.location.href = '/home-admin';
-        } else {
-          window.location.href = '/home';
-        }
-      }, 3000);
-  
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsLoggedIn(true);
+        localStorage.setItem('User', JSON.stringify(data));
+        toast.success('Login successful! Redirecting...', {
+          autoClose: 3000,
+          onClose: () => {
+            const userRole = data.accounts.role;
+            if (userRole === 'admin') {
+              window.location.href = '/home-admin';
+            } else {
+              window.location.href = '/home';
+            }
+          }
+        });
       } else {
-        console.log('Login failed, setting error message');
-        let errorMessage = data.message || 'Login Failed: username or password is not correct';
-        setError(errorMessage);
-        setMessage(errorMessage);
+        setError(data.message || 'Login Failed: username or password is not correct');
+        setMessage(data.message || 'Login Failed: username or password is not correct');
       }
     } catch (error) {
-      console.error('An error occurred:', error);
       setError('An error occurred');
       setMessage('An error occurred: ' + error.message);
     }
   }
-
   return (
     <div>
-       <Modal message={message} onClose={() => setMessage('')} />
-    <div className="login js-login" onSubmit={handleLogin}>
-      <div className="login-container1">
-        <div className="login__container2">
-          <h1 className="login__title">Sign in</h1>
-          {error && <div className="error-message">{error}</div>}
-          <form
+        <ToastContainer /> {/* Add this to initialize toast notifications */}
+        <div className="login js-login">
+        <div className="login-container1">
+          <div className="login__container2">
+            <h1 className="login__title">Sign in</h1>
+            {error && <div className="error-message">{error}</div>}
+            <form onSubmit={handleLogin} 
             method="post"
             action="/account/login"
             id="customer_login"
@@ -121,7 +91,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
             <div className="login__button">
               <input className="button" type="submit" value="SIGN IN" />
             </div>
-            {isLoggedIn && <Modal message="Login successful! Redirecting ...." onClose={() => setIsLoggedIn(false)} />} 
+          
             <div className="login__forgot-password" id="forgot-password">
               <a href="#recover" className="js-go-to-forgotten-password">
                 Forgotten your password?

@@ -1,14 +1,16 @@
-import Header from "./header";
-import { useState } from "react";
-import Nav from "./nav";
+import Sidebar from "./sidebar";
+import Header from "./Header-Admin";
 
-function Dashboard() {
-    const [openNav, setOpenNav] = useState(false);
-    return (
-        <>
-        <Header onOpenNav={() => setOpenNav(true)} />
-        <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
-        </>
+function Dashboard(){
+    const containerStyle = {
+        backgroundColor: '#363535', // Set the background color here
+      };
+    return(
+        <div style={containerStyle}>
+        <Sidebar/>
+        <Header/>
+        </div>
+
     );
 }
 

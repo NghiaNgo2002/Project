@@ -14,6 +14,9 @@ import ProfileUserUpdate from './components/Profile-User/ProfileUserUpdate';
 import Password from './components/Profile-User/Password';
 import Dashboard from './components/Dashboard/Dashboard';
 import './App.css';
+import UserProfileList from './components/ProfileManage/ListProfile';
+import UserProfileManage from './components/ProfileManage/ProfileManage';
+import ViewProfile from './components/ProfileManage/ViewProfile';
 
 function App() {
   return (
@@ -36,6 +39,9 @@ function App() {
            <Route path="/Profile-Update" element={<ProfileUserUpdate />}  />
            <Route path="/Password" element ={<Password/>}/>
            <Route path="/Dashboard" element = {<Dashboard/>}/>
+           <Route path="/profile-manage" element = {<UserProfileManage/>}/>
+           <Route path="/profile-list" element = {<UserProfileList/>}/>
+           <Route path="/view-profile/:id" element = {<ViewProfile/>}/>
         </Routes>
     </Router>
   );
