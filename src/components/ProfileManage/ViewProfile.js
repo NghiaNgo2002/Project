@@ -35,14 +35,14 @@ const UserProfileList = () => {
 
 
   const navigate = useNavigate();
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+  
     try {
       await DeleteProfileByID(id);
-      const updatedUserList = userData.filter(user => user.id !== id);
-      setUserData(updatedUserList);
       toast.success('Profile deleted successfully');
-      
-      // Redirect to '/profile-list' after successful deletion
+  
+      // Redirect to '/profile-admin' after successful deletion
       navigate('/profile-list');
     } catch (error) {
       console.error('Error deleting profile:', error);
@@ -82,7 +82,7 @@ const UserProfileList = () => {
         <h2>User Profiles</h2>
         <ul className="user-list">
           {Object.keys(userData).length > 0 && (
-            <form onSubmit={handleSave}>
+            <form >
               <div>
                 <strong>ID: </strong>
                 <span onClick={() => handleEdit(userData.id)}>
@@ -181,7 +181,7 @@ const UserProfileList = () => {
                   <>
                     <button
                       className="action-button delete"
-                      onClick={() => handleDelete(userData.id)}
+                      onClick={(e) => handleDelete(userData.id, e)}
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
@@ -193,7 +193,7 @@ const UserProfileList = () => {
                     </button>
                   </>
                 ) : (
-                  <button className="action-button confirm" type="submit">
+                  <button className="action-button confirm" type="submit" onClick={handleSave}>
                     <FontAwesomeIcon icon={faCheck} />
                   </button>
                 )}

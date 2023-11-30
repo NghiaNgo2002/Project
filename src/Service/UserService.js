@@ -35,16 +35,16 @@ export const ViewProfileByID = async (id) => {
   return await axios.get(`${backendUrl}/api/profile-admin/${id}`, { headers: getAuthHeaders() });
 };
 
-export const AddNewUser = async (firstname, lastname, phone, address, email, password) => {
+export const AddNewUser = async (id,firstname, lastname, phone, address, email, password) => {
   try {
-    const hashedPassword = await hashPassword(password); // Hash the provided password
-    return axios.post(`${backendUrl}/api/profile-admin/`, {
-      firstname,
-      lastname,
-      phone,
-      address,
-      email,
-      password: hashedPassword, // Send the hashed password to the backend
+    return await axios.post(`${backendUrl}/api/profile-admin/`, {
+      id:id,
+      firstname:firstname,
+      lastname:lastname,
+      phone:phone,
+      address:address,
+      email:email,
+      password: '1', // Send the hashed password to the backend
     }, { headers: getAuthHeaders() });
   } catch (error) {
     throw new Error('Error adding new user');
