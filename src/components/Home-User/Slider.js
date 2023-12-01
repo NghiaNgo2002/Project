@@ -21,22 +21,22 @@ const Slider = () => {
     {
       id: 1,
       imgUrl: "https://i.postimg.cc/PrMGqZwx/pexels-m-venter-1659437.jpg",
-      desc: "Some beautiful roads cannot be discovered without getting loss.",
-      name: "EXPLORE NATURE",
+      desc: "The cold morning air welcomes you and wrapping up in a light coat and the soft texture of wool become your only shield.",
+      name: "ATUMN VIBES",
     },
     {
       id: 2,
       imgUrl:
         "https://i.postimg.cc/bw6KxhLf/pexels-eberhard-grossgasteiger-1062249.jpg",
-      desc: "Some beautiful roads cannot be discovered without getting loss.",
-      name: "EXPLORE NATURE",
+      desc: "While the season may contrast the autumn chill, our light and breathable clothing mirror the comfort of wrapping up in a light coat..",
+      name: "SPRING VIBES",
     },
     {
       id: 3,
       imgUrl:
         "https://i.postimg.cc/CMkTW9Mb/pexels-eberhard-grossgasteiger-572897.jpg",
-      desc: "Some beautiful roads cannot be discovered without getting loss.",
-      name: "EXPLORE NATURE",
+      desc: "Wrap yourself in our cozy, woolen coats, and soft knitwear, just like the feeling of being enveloped in the cold morning air. .",
+      name: "WINTER VIBES",
     },
     {
       id: 5,
@@ -48,8 +48,8 @@ const Slider = () => {
       id: 6,
       imgUrl:
         "https://i.postimg.cc/RVm59Gqy/pexels-roberto-nickson-2559941.jpg",
-      desc: "Some beautiful roads cannot be discovered without getting loss.",
-      name: "EXPLORE NATURE",
+      desc: "Experience the freshness of spring with our collection! Similar to the feeling of transitioning from autumn",
+      name: "SUMMER VIBES ",
     },
   ];
 

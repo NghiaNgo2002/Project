@@ -125,65 +125,7 @@ function Header() {
               <Link to="/home" className="home-link">
               HOME
              </Link> 
-                <div className="sub-menu-1">
-                  <div className="meo">
-                  <ul>
-                  <li className="custom-style-header">Styles</li>
-                    <li className ="custom-style"  >Default</li>
-                    <li className ="custom-style"  >Full Width</li>
-                    <li className ="custom-style"  >Collection</li>
-                    <li className ="custom-style"  >Dark Skins</li>
-                    <li className ="custom-style"  >Classic</li>
-                    <li className ="custom-style"  >Best Selling</li>
-                    <li className ="custom-style"  >Side Bar</li>
-                    <li className ="custom-style"  >Minimal</li>
-                    <li className ="custom-style"  >Shoppable</li> 
-                  </ul>
-                  </div>
-                  <div className ="meo">
-                  <ul>
-                  <li className="custom-style-header">Topic</li>
-                    <li className ="custom-style" >Furniture 1</li>
-                    <li className ="custom-style" >Furniture 2</li>
-                    <li className ="custom-style" >Decoration</li>
-                    <li className ="custom-style" >Cosmetic</li>
-                    <li className ="custom-style" >Jewellry</li>
-                    <li className ="custom-style" >Bags</li>
-                    <li className ="custom-style" >Shoes</li>
-                    <li className ="custom-style" >Gadgets</li>
-                    <li className ="custom-style" >Plants</li>
-                    <li className ="custom-style" >Perfume</li>
-                    <li className ="custom-style" >Single Product</li>
-                    <li className ="custom-style" >Wine</li>
-                    <li className ="custom-style" >Bakery</li>
-                  </ul>
-                  </div>
-                  <div className ="meo">     
-                  <ul>
-                  <li className="custom-style-header">Brands</li>
-                    <div className="menu-brand-item">
-                         <a href="#">
-                   <img
-                   alt="Image"
-                  src="//durotan-fashion.myshopify.com/cdn/shop/files/menu_brand_1_017e69bb-a2c2-41d0-ae73-13cba43d25bc_2000x.png?v=1654940131"
-                   />
-                  </a>
-                   </div>
-                   <div class="menu-brand-item">
-                        <a href="#">
-                          <img 
-                          alt="Image" 
-                          src="//durotan-fashion.myshopify.com/cdn/shop/files/brand_2_83694859-9b15-477a-a7c0-b3f374ef37a8_2000x.png?v=1654940144"/>
-                        </a>
-                      </div>
-                      <div class="menu-brand-item">
-                        <a href="#">
-                          <img alt="Image" src="//durotan-fashion.myshopify.com/cdn/shop/files/menu_brand_3_0d5624de-c74d-4e7f-a373-c775105204b1_2000x.png?v=1654940154"/>
-                        </a>
-                      </div>
-                  </ul>
-                  </div>
-                </div>
+              
               </li>
               <li> 
                 <Link to = '/shop' className="home-link">SHOP </Link>
@@ -191,6 +133,11 @@ function Header() {
               <li>
               <Link to="/blog" className="home-link">
              BLOG
+             </Link>
+              </li>
+              <li>
+              <Link to="/about" className="home-link">
+             ABOUT
              </Link>
               </li>
             </ul>

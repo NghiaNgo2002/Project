@@ -1,6 +1,6 @@
 import React from 'react';
 import "./Banners.css";
-
+import {Link} from "react-router-dom";
 const Banners = () => {
   return (
     <div className="shoppable-banners ">
@@ -35,7 +35,7 @@ const Banners = () => {
                 {/* End product description */}
                 {/* Button */}
                 <div className="featured-product__button">
-                  <a href="/collections/all">Shop now</a>
+                <Link to ='/Shop'> <a href>Shop now</a></Link>
                 </div>
                 {/* End button */}
               </div>
@@ -71,7 +71,7 @@ const Banners = () => {
                 {/* End product description */}
                 {/* Button */}
                 <div className="featured-product__button">
-                  <a href="/collections/all">Shop now</a>
+                <Link to ='/Shop'> <a href>Shop now</a></Link>
                 </div>
                 {/* End button */}
               </div>

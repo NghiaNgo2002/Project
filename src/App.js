@@ -17,6 +17,7 @@ import './App.css';
 import UserProfileList from './components/ProfileManage/ListProfile';
 import UserProfileManage from './components/ProfileManage/ProfileManage';
 import ViewProfile from './components/ProfileManage/ViewProfile';
+import About from './components/Home-User/About';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
            <Route path="/profile-manage" element = {<UserProfileManage/>}/>
            <Route path="/profile-list" element = {<UserProfileList/>}/>
            <Route path="/view-profile/:id" element = {<ViewProfile/>}/>
+           <Route path="/about" element = {<About/>}/>
         </Routes>
     </Router>
   );
