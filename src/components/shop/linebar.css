@@ -5,14 +5,6 @@
   padding-left: 0px;
 }
 
-.linebar{
-  max-width: 1640px;
-}
-
-.column{
-  justify-content: center;
-}
-
 .btn-success:hover {
   background-color: white;
   color: gray;
@@ -29,7 +21,7 @@
 #btn-1 {
   width: 120px;
 }
-.linebar-container {
+.containerlinebar {
   padding-left: 100px;
   margin-left: 0px;
   margin-right: 0px;

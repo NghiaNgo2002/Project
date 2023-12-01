@@ -48,141 +48,6 @@ button:hover {
   margin-bottom: 5px;
 }
 
-.qview .info-1 {
-  opacity: 0;
-  position: absolute;
-  bottom: -15px; /* Bắt đầu ẩn phần tử bên dưới */
-  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
-  background-color: rgb(0, 0, 0);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  margin-left: 190px;
-  margin-bottom: 5px;
-}
-
-.qview .info-2 {
-  opacity: 0;
-  position: absolute;
-  bottom: -15px; /* Bắt đầu ẩn phần tử bên dưới */
-  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
-  background-color: rgb(0, 0, 0);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  margin-left: 190px;
-  margin-bottom: 5px;
-}
-
-#name {
-  margin-top: 40px;
-}
-
-#price {
-  margin-top: 10px;
-}
-.qview .info-3 {
-  opacity: 0;
-  position: absolute;
-  bottom: -15px; /* Bắt đầu ẩn phần tử bên dưới */
-  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
-  background-color: rgb(0, 0, 0);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  margin-left: 190px;
-  margin-bottom: 5px;
-}
-
-.qview .info-4 {
-  opacity: 0;
-  position: absolute;
-  bottom: -15px; /* Bắt đầu ẩn phần tử bên dưới */
-  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
-  background-color: rgb(0, 0, 0);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  margin-left: 190px;
-  margin-bottom: 5px;
-}
-
-.qview .info-5 {
-  opacity: 0;
-  position: absolute;
-  bottom: -15px; /* Bắt đầu ẩn phần tử bên dưới */
-  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
-  background-color: rgb(0, 0, 0);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  margin-left: 190px;
-  margin-bottom: 5px;
-}
-
-.qview .info-6 {
-  opacity: 0;
-  position: absolute;
-  bottom: -15px; /* Bắt đầu ẩn phần tử bên dưới */
-  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
-  background-color: rgb(0, 0, 0);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  margin-left: 190px;
-  margin-bottom: 5px;
-}
-
-.qview .info-7 {
-  opacity: 0;
-  position: absolute;
-  bottom: -15px; /* Bắt đầu ẩn phần tử bên dưới */
-  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
-  background-color: rgb(0, 0, 0);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  margin-left: 190px;
-  margin-bottom: 5px;
-}
-
-.qview .info-8 {
-  opacity: 0;
-  position: absolute;
-  bottom: -15px; /* Bắt đầu ẩn phần tử bên dưới */
-  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
-  background-color: rgb(0, 0, 0);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  margin-left: 190px;
-  margin-bottom: 5px;
-}
-
 .imge img {
   height: 470px;
   width: 400px;
@@ -207,78 +72,6 @@ button:hover {
   transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
 }
 
-.quickviewpage :hover .info-1 {
-  opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
-  color: white;
-  background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
-}
-
-.quickviewpage :hover .info-2 {
-  opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
-  color: white;
-  background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
-}
-
-.quickviewpage :hover .info-3 {
-  opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
-  color: white;
-  background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
-}
-
-.quickviewpage :hover .info-4 {
-  opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
-  color: white;
-  background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
-}
-
-.quickviewpage :hover .info-5 {
-  opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
-  color: white;
-  background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
-}
-
-.quickviewpage :hover .info-6 {
-  opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
-  color: white;
-  background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
-}
-
-.quickviewpage :hover .info-7 {
-  opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
-  color: white;
-  background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
-}
-
-.quickviewpage :hover .info-8 {
-  opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
-  color: white;
-  background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
-}
-
-.quickviewpage :hover .info-1 {
-  opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
-  color: white;
-  background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
-}
-
 .slick-arrow.slick-prev::before {
   background: white;
   color: black;
@@ -287,4 +80,14 @@ button:hover {
 .slick-arrow.slick-next::before {
   background: white;
   color: black;
+}
+
+.description #price {
+  font-weight: 100;
+  font-size: 20px;
+}
+
+.description #name  {
+  font-weight: 100;
+  font-size: 24px;
 }

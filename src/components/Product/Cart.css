@@ -12,17 +12,18 @@
 }
 
 .payment-cart {
-  padding-left: 4%;
-  width: 31%;
+  padding-left: 1.5%;
+  width: auto;
   background-color: #f0f1f4;
-  margin-left: 57%;
+  margin-left: -3%;
+  margin-right: 2%;
 }
 .payment-cart h4 {
   padding: 20px 0px;
 }
 .small-line-main {
   border-bottom: 0.01rem solid grey;
-  width: 1000%;
+  width: 78%;
 }
 .total-money {
   display: flex;
@@ -49,12 +50,12 @@
 
 .small-line-payment {
   border-bottom: 0.01rem solid grey;
-  width: 77%;
+  width: 94%;
 }
 
 .small-line-payment-icon {
   border-bottom: 0.01rem solid grey;
-  width: 77%;
+  width: 94%;
   margin-bottom: 10px;
 }
 
@@ -64,5 +65,46 @@
 
 .cart p {
   margin-top: 20px;
-  padding-left: 75%;
+  padding-left: 82%;
+}
+
+#idcart {
+  padding-right: 100px;
+}
+
+#namecart {
+  padding-right: 300px;
+}
+
+#typecart {
+  padding-right: 300px;
+}
+
+#pricecart {
+  padding-right: 50px;
+}
+
+#btncart {
+  display: flex;
+  padding-right: 50px;
+}
+
+#updatecart {
+  margin-right: 10px;
+  border: none;
+  text-decoration: none;
+  background-color: white;
+  &:hover {
+    color: green;
+  }
+}
+
+#deletecart {
+  margin-right: 10px;
+  border: none;
+  text-decoration: none;
+  background-color: white;
+  &:hover {
+    color: red;
+  }
 }

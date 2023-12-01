@@ -193,7 +193,6 @@ export default function ProfileUserUpdate() {
             </div> {/* Row END */}
             {/* button */}
             <div className="gap-3 d-md-flex justify-content-md-end text-center">
-              <button type="button" className="btn btn-danger btn-lg">Delete profile</button>
               <button type="button" className="btn btn-primary btn-lg " onClick={handleConfirmChange} >  Update profile</button>
             </div>
           </form> {/* Form END */}

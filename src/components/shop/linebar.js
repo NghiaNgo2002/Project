@@ -1,13 +1,10 @@
 import React from "react";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import "./linebar.css";
 function linebar() {
   return (
     <div>
-      <div className="linebar">
-        <Row>
-          <Col className="column d-flex align-items-center justify-content-center">
+      <div className="linebbar">
+        <div class="containerlinebar">
           <p>
             <a
               class="btn btn-success"
@@ -25,8 +22,6 @@ function linebar() {
               &nbsp; FILTER
             </a>
           </p>
-          </Col>
-          <Col className="column d-flex align-items-center justify-content-center">
           <div className="sort-grid">
             <div className="sortby">
               <p>SORT BY</p>
@@ -42,10 +37,6 @@ function linebar() {
               </select>
             </div>
           </div>
-          </Col>
-        </Row>
-        <div class="linerbar-container">
-          
         </div>
       </div>
       <div class="collapse" id="example_1">
