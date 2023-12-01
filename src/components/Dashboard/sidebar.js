@@ -37,9 +37,7 @@ function Sidebar() {
                 <li><Link to="/payment-refund">Payment Management</Link></li>
                 <li><Link to="/">Sign Out</Link></li>
             </ul>
-            <li>
-                <button onClick={toggleTheme}>Dark Mode</button>
-            </li>
+
         </div>
     );
 }
