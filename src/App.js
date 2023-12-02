@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { useState } from 'react';
 import Home from "./components/Home-User/Home-User";
 import Register from './components/LogIn/Register';
 import LogIn from './components/LogIn/LogIn';
@@ -18,21 +19,24 @@ import UserProfileManage from './components/ProfileManage/ProfileManage';
 import ViewProfile from './components/ProfileManage/ViewProfile';
 import About from './components/Home-User/About';
 import Productdetail from './components/Product/productdetail';
-
+import PrivateRoutes from './components/PrivateRoute';
 
 function App() {
+
   return (
     <Router>
         <Routes>
           <Route path="/" element={<LogIn />} />
-          <Route path="/Home" element={<Home />}  />
+          <Route element={<Home/>} path="/home"/>
+          <Route element={<HomeAdmin/>} path="/home-admin" />
           <Route path="/register" element={<Register />} />
-          <Route path="/blog" element={<BlogList />} />
+         
           <Route path="/Shop" element={<Shop/>}/>
           <Route path="/detail" element={[<Header />, <Productdetail />, <Footer />]}
           ></Route>
           <Route path="/Cart" element={[ <Cart />]} ></Route>
-           <Route path="/home-admin" element={<HomeAdmin />}  />
+     
+    
            <Route path="/Profile-user" element={<ProfileUser />}  />
            <Route path="/Profile-Update" element={<ProfileUserUpdate />}  />
            <Route path="/Password" element ={<Password/>}/>
