@@ -57,6 +57,11 @@ function Header() {
     setOpenMenu1(false);
   };
 
+  const handleLogout = () => {
+    // Remove 'User' from localStorage
+    localStorage.removeItem('User');
+    // Additional logic (if needed) such as redirecting to another page after logout
+  };
   return (
       <div>
       <div className="header-container">
@@ -106,7 +111,7 @@ function Header() {
             <div className={`dropdown-menu ${openMenu2 ? 'active' : 'inactive'}`} ref={menuRef2}>
               <ul>
                 <DropdownItem img={user} text={"My Profile"} />
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/" style={{ textDecoration: 'none' }} onClick={handleLogout}>
                   <DropdownItem img={logout} text={"Logout"} />
                 </Link>
               </ul>

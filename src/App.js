@@ -19,7 +19,7 @@ import UserProfileManage from './components/ProfileManage/ProfileManage';
 import ViewProfile from './components/ProfileManage/ViewProfile';
 import About from './components/Home-User/About';
 import Productdetail from './components/Product/productdetail';
-import PrivateRoutes from './components/PrivateRoute';
+import PrivateRoutes from './components/utils/PrivateRoute';
 
 function App() {
 
@@ -27,24 +27,24 @@ function App() {
     <Router>
         <Routes>
           <Route path="/" element={<LogIn />} />
-          <Route element={<Home/>} path="/home"/>
-          <Route element={<HomeAdmin/>} path="/home-admin" />
-          <Route path="/register" element={<Register />} />
-         
+          <Route element={<PrivateRoutes />}>
+          <Route element={<Home/>} path="/home" exact/>
+          <Route element={<HomeAdmin/>} path="/home-admin" exact/>
+          <Route path="/register" element={<Register />} exact/>
           <Route path="/Shop" element={<Shop/>}/>
-          <Route path="/detail" element={[<Header />, <Productdetail />, <Footer />]}
-          ></Route>
-          <Route path="/Cart" element={[ <Cart />]} ></Route>
-     
-    
-           <Route path="/Profile-user" element={<ProfileUser />}  />
-           <Route path="/Profile-Update" element={<ProfileUserUpdate />}  />
-           <Route path="/Password" element ={<Password/>}/>
-           <Route path="/Dashboard" element = {<Dashboard/>}/>
-           <Route path="/profile-manage" element = {<UserProfileManage/>}/>
-           <Route path="/profile-list" element = {<UserProfileList/>}/>
-           <Route path="/view-profile/:id" element = {<ViewProfile/>}/>
-           <Route path="/about" element = {<About/>}/>
+          <Route path="/detail" element={[<Header />, <Productdetail />, <Footer />]} exact ></Route>
+          <Route path="/Cart" element={[ <Cart />]} exact></Route>
+          <Route path="/Blog" element={[ <BlogList/>]} exact ></Route>
+          <Route path="/Profile-user" element={<ProfileUser />} exact />
+          <Route path="/Profile-Update" element={<ProfileUserUpdate />} exact />
+          <Route path="/Password" element ={<Password/>} exact/>
+          <Route path="/Dashboard" element = {<Dashboard/>} exact/>
+          <Route path="/profile-manage" element = {<UserProfileManage/>} exact/>
+          <Route path="/profile-list" element = {<UserProfileList/>} exact/>
+          <Route path="/view-profile/:id" element = {<ViewProfile/>} exact/>
+          <Route path="/about" element = {<About/>} exact/>
+            </Route>
+          
         </Routes>
     </Router>
   );

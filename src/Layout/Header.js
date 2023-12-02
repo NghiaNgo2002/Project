@@ -40,6 +40,11 @@ function Header() {
     };
   }, [menuRef]);
 
+  const handleLogout = () => {
+    // Remove 'User' from localStorage
+    localStorage.removeItem('User');
+    // Additional logic (if needed) such as redirecting to another page after logout
+  };
   return (
       <div>
       <div className="header-container">
@@ -77,7 +82,7 @@ function Header() {
            <Link to ="/Profile-User" style={{ textDecoration: 'none',textAlign:'center' }}><DropdownItem  img = {user} text = {"My Profile"}/></Link>
            <Link to = "/Profile-Update"style={{ textDecoration: 'none',textAlign:'center'}}><DropdownItem  img = {edit} text = {"Edit Profile"}/></Link>
            <Link to = "/Password"style={{ textDecoration: 'none',textAlign:'center' }}><DropdownItem  img = {password} text = {"Change Password"}/></Link>
-           <Link to = "/" style={{ textDecoration: 'none',textAlign:'center' }}><DropdownItem  img = {logout}  text = {"Logout"}/></Link> 
+           <Link to="/" style={{ textDecoration: 'none' }} onClick={handleLogout}><DropdownItem  img = {logout}  text = {"Logout"}/></Link> 
           </ul>
           </div>
           </div>

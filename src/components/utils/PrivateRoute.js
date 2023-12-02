@@ -1,9 +1,9 @@
 import { Outlet, Navigate } from 'react-router-dom'
 
 const PrivateRoutes = () => {
-    let auth = {'token':false}
+    const User = JSON.parse(localStorage.getItem('User'));
     return(
-        auth.token ? <Outlet/> : <Navigate to="/"/>
+        User ? <Outlet/> : <Navigate to="/"/>
     )
 }
 
