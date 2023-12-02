@@ -1,10 +1,11 @@
-// GridView.js
+// gridView.js
 import React, { useState, useEffect } from "react";
 import "./gridview.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import * as productService from "../../Service/productService";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -37,46 +38,48 @@ function GridView() {
     prevArrow: <SamplePrevArrow />,
   };
 
-  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/product");
+        const response = await productService.getAllProducts();
+        console.log("Response:", response);
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const json = await response.json();
-        console.log("jsonnn", json);
-
-        if (json.items && Array.isArray(json.items)) {
-          setProduct(json.items);
+        if (response.status === 200) {
+          setProducts(response.data.items);
+          setLoading(false);
         } else {
-          setError("Data structure is not as expected");
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
       } catch (error) {
         console.error("Error fetching data:", error.message);
-        setError("Error fetching data");
+        setError("Error fetching data: " + error.message);
+        setLoading(false);
       }
     };
-
-    console.log("Carts state:", product);
-
-    if (error) {
-      return <div>Error: {error}</div>;
-    }
 
     fetchData();
   }, []);
 
   const renderProducts = () => {
-    // Split products into groups of 3
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    if (error) {
+      return <div>Error: {error}</div>;
+    }
+
+    if (products.length === 0) {
+      return <div>No products available.</div>;
+    }
+
     const groupedProducts = [];
-    for (let i = 0; i < product.length; i += 2) {
-      groupedProducts.push(product.slice(i, i + 2));
+    for (let i = 0; i < products.length; i += 2) {
+      groupedProducts.push(products.slice(i, i + 2));
     }
 
     return groupedProducts.map((group, index) => (
@@ -86,10 +89,10 @@ function GridView() {
             <div className="imge">
               <Slider {...settings}>
                 <div>
-                  <img src="https://durotan-fashion.myshopify.com/cdn/shop/products/12a_1200x.jpg?v=1652958367" />
+                  <img src="#" alt="product" />
                 </div>
                 <div>
-                  <img src="https://durotan-fashion.myshopify.com/cdn/shop/products/12a_1200x.jpg?v=1652958367" />
+                  <img src="#" alt="product" />
                 </div>
               </Slider>
               <div className="info">
@@ -98,10 +101,10 @@ function GridView() {
             </div>
             <div className="description">
               <Link to={`/productdetail/${item.id}`}>
-                <p id="name">Name : {item.name} </p>
+                <p id="name">Name: {item.name} </p>
               </Link>
               <Link to={`/productdetail/${item.id}`}>
-                <p id="price">Price : {item.price} </p>
+                <p id="price">Price: {item.price} </p>
               </Link>
             </div>
           </div>

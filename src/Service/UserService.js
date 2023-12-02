@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
-import axios from 'axios';
+import bcrypt from "bcryptjs";
+import axios from "axios";
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -10,55 +10,76 @@ const hashPassword = async (password) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     return hashedPassword;
   } catch (error) {
-    throw new Error('Error hashing password');
+    throw new Error("Error hashing password");
   }
 };
 
-const getToken = () =>{
-  return JSON.parse(localStorage.getItem('User')).token;
-}
-
+const getToken = () => {
+  return JSON.parse(localStorage.getItem("User")).token;
+};
 
 const getAuthHeaders = () => {
   const token = getToken();
   return {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
 };
 
 export const ListAllProfile = async () => {
-  return await axios.get(`${backendUrl}/api/profile-admin`, { headers: getAuthHeaders() });
+  return await axios.get(`${backendUrl}/api/profile-admin`, {
+    headers: getAuthHeaders(),
+  });
 };
 
 export const ViewProfileByID = async (id) => {
-  return await axios.get(`${backendUrl}/api/profile-admin/${id}`, { headers: getAuthHeaders() });
+  return await axios.get(`${backendUrl}/api/profile-admin/${id}`, {
+    headers: getAuthHeaders(),
+  });
 };
 
-export const AddNewUser = async (id,firstname, lastname, phone, address, email, password) => {
+export const AddNewUser = async (
+  id,
+  firstname,
+  lastname,
+  phone,
+  address,
+  email,
+  password
+) => {
   try {
-    return await axios.post(`${backendUrl}/api/profile-admin/`, {
-      id:id,
-      firstname:firstname,
-      lastname:lastname,
-      phone:phone,
-      address:address,
-      email:email,
-      password: '1', // Send the hashed password to the backend
-    }, { headers: getAuthHeaders() });
+    return await axios.post(
+      `${backendUrl}/api/profile-admin/`,
+      {
+        id: id,
+        firstname: firstname,
+        lastname: lastname,
+        phone: phone,
+        address: address,
+        email: email,
+        password: "1", // Send the hashed password to the backend
+      },
+      { headers: getAuthHeaders() }
+    );
   } catch (error) {
-    throw new Error('Error adding new user');
+    throw new Error("Error adding new user");
   }
 };
 
 export const UpdateProfileByID = async (id, updatedData) => {
   try {
-    return await axios.put(`${backendUrl}/api/profile-admin/${id}`, updatedData, { headers: getAuthHeaders() });
+    return await axios.put(
+      `${backendUrl}/api/profile-admin/${id}`,
+      updatedData,
+      { headers: getAuthHeaders() }
+    );
   } catch (error) {
-    throw new Error('Error updating user profile');
+    throw new Error("Error updating user profile");
   }
 };
 
 export const DeleteProfileByID = async (id) => {
-  return await axios.delete(`${backendUrl}/api/profile-admin/${id}`, { headers: getAuthHeaders() });
+  return await axios.delete(`${backendUrl}/api/profile-admin/${id}`, {
+    headers: getAuthHeaders(),
+  });
 };
