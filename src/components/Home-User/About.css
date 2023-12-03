@@ -1,5 +1,6 @@
 .container--type-4 {
     max-width: 1640px;
+    display: block;
 }
 .about-intro {
     background: rgba(0,0,0,0) !important;

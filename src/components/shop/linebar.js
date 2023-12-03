@@ -19,7 +19,7 @@ function linebar() {
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABCUlEQVR4nO2ZQU7DMBBFXRa9E3A2/7cqhWuVfcWOHqDlGiBDIlVVqJqQUk/ynzSbiWT5Zxxnvp2SmQDAUtIL8AF8lpB0kLQuz1IUgOdWQEc8pShIOpRJ55zv2xzw0FYmRYHm7V+arxYqFrIA3s6s+844HeQ433esISHp9XQCd8A2mhBgM9mlNU8harbfsuW2uZzzY5Pbpyjo5w/+2we4SsFalPVRZb4rUUSEalGMMaYXNmi1YYM2h+ZzMcRYjRXnhPAfxurWQvirsRqLyfgapiJENmiVYYNmjLkeNkG1Id9SVQYRGjxgCeyu7B1GD3UYq3Io/R5NCEOMVYilNSshsgmqDHxLZVIfvgD9PwLtQGV+DAAAAABJRU5ErkJggg=="
                 alt="FILTER"
               />{" "}
-              &nbsp; FILTER
+              &nbsp;<span> FILTER</span>
             </a>
           </p>
           <div className="sort-grid">

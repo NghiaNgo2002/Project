@@ -5,6 +5,13 @@
   padding-left: 0px;
 }
 
+.containerlinebar
+{
+  display: flex;
+  align-items: center;
+  padding-left: 100px;
+}
+
 .btn-success:hover {
   background-color: white;
   color: gray;
@@ -18,10 +25,14 @@
   border: none;
   box-shadow: none;
 }
+
 #btn-1 {
   width: 120px;
+  display: flex;
+    align-items: center;
 }
-.containerlinebar {
+
+.container {
   padding-left: 100px;
   margin-left: 0px;
   margin-right: 0px;
@@ -35,17 +46,17 @@
 }
 
 .sort-grid {
-  padding-left: 75.5%;
   display: flex;
   height: 10%;
+  padding-left: 70%;
 }
 
 .sortby {
   float: right;
   display: flex;
   align-items: flex-start;
-  padding-left: 90%;
   height: 25px;
+  padding-bottom: 16%;
 }
 
 .sortby select {
@@ -58,8 +69,9 @@
   border: none;
   cursor: none;
 }
+  
 .sortby p {
-  width: 65px;
+  width: 100%;
 }
 
 .type {

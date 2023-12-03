@@ -1,11 +1,11 @@
 import React from "react";
-import "./Footer.css";
+import "./Footer_stw.css";
 import Name from "./Name";
 
 const Footer = () => {
   return (
     <footer class="footer shoppable-footer">
-      <div className="footer-container container" id="footer">
+      <div className="footer-container container" id="footer-stw">
         {/* Newsletter */}
         <div className="blog-with-sidebar__newsletter">
           {/* Row */}

@@ -5,8 +5,10 @@
     max-width: 1640px;
 }
 
-#footer{
+#footer-stw{
     display: block;
+    padding-left: 19%;
+    padding-right: 14%;
 }
 
 .footer-container{
