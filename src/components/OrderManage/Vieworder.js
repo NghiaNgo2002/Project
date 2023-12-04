@@ -180,7 +180,7 @@ const OrderList = () => {
                 {!isEditing ? (
                   <>
                     <button
-                      type = "button"
+                     type = "button"
                       className="action-button delete"
                       onClick={(e) => handleDelete(orderData.orderID, e)}
                     >

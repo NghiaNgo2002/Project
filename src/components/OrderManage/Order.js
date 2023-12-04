@@ -8,7 +8,7 @@ import { faTrash,faSearch, faCheck, faEdit } from '@fortawesome/free-solid-svg-i
 import { ToastContainer, toast } from 'react-toastify';
 import { ListAllOrders, UpdateOrderByID, DeleteOrderByID } from '../../Service/OrderService';
 import {Link} from "react-router-dom";
-
+import { useParams, useNavigate } from 'react-router-dom';
 
 const OrderList = () => {
   const [orderData, setOrderData] = useState([]);
@@ -16,27 +16,30 @@ const OrderList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const[orderIDSearch,setOrderIDSearch] = useState('');
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await ListAllOrders(); 
-        setOrderData(response.data); 
-        console.log(response.data); // Assuming the data is in the 'data' property of the response
-      } catch (error) {
-        // Handle errors if the request fails
-        console.error('Error fetching data:', error);
-      }
-    };
+    
     fetchData(); // Call the fetchData function to execute the API call
 
   }, []); // The empty dependency array means this effect runs only once (on mount)
 
-
+  const navigate = useNavigate();
+  const fetchData = async () => {
+    try {
+      const response = await ListAllOrders(); 
+      setOrderData(response.data); 
+      console.log(response.data); // Assuming the data is in the 'data' property of the response
+    } catch (error) {
+      // Handle errors if the request fails
+      console.error('Error fetching data:', error);
+    }
+  };
   const handleDelete = async (orderID) => {
     try {
       await DeleteOrderByID(orderID);
       const updatedOrderList = orderData.filter(order => order.orderID !== order.orderID);
       setOrderData(updatedOrderList); // Update the state with the new order list (excluding the deleted order)
       toast.success('Profile deleted successfully'); // Display success toast
+      navigate('/order-manage');
+      fetchData();
     } catch (error) {
       console.error('Error deleting profile:', error);
       toast.error('Error deleting profile'); // Display error toast
@@ -221,6 +224,7 @@ const OrderList = () => {
                 {!isEditing ? (
                   <>
                     <button
+                     type = "button"
                       className="action-button delete"
                       onClick={() => handleDelete(order.orderID)}
                     >
