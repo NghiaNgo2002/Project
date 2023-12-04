@@ -20,6 +20,8 @@ import ViewProfile from "./components/ProfileManage/ViewProfile";
 import About from "./components/Home-User/About";
 import Productdetail from "./components/Product/productdetail";
 import PrivateRoutes from "./components/utils/PrivateRoute";
+import Order from "./components/OrderManage/Order";
+import ViewOrder from "./components/OrderManage/Vieworder";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
           <Route path="/profile-list" element={<UserProfileList />} exact />
           <Route path="/view-profile/:id" element={<ViewProfile />} exact />
           <Route path="/about" element={<About />} exact />
+          <Route path="/order-manage" element={<Order />} exact />
+          <Route path="/view-order/:orderID" element={<ViewOrder/>} exact/>
         </Route>
       </Routes>
     </Router>
