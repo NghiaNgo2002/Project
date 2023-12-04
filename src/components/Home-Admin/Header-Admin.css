@@ -252,6 +252,7 @@
 }
 
 .dropdown-menu.active{
+  margin-left: 85%;
   opacity: 1;
   visibility: visible;
   transform: translateY(0);

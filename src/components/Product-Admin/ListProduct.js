@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Listprofile.css"; // Import the CSS file
+import "./ListProduct.css"; // Import the CSS file
 import Sidebar from "../Dashboard/sidebar";
 import Header from "../Dashboard/Header-Admin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

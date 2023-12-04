@@ -1,25 +1,24 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import './sidebar.css';
-import { ThemeContext } from './context/ThemeContext'; // Make sure the path is correct
-
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import "./sidebar.css";
+import { ThemeContext } from "./context/ThemeContext"; // Make sure the path is correct
 
 function Dropdown({ label, children }) {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    return (
-        <li className="dropdown">
-            <button onClick={() => setIsOpen(!isOpen)}>
-                {label}
-                <span className="dropdown-icon">{isOpen ? '▲' : '▼'}</span>
-            </button>
-            {isOpen && <ul>{children}</ul>}
-        </li>
-    );
+  return (
+    <li className="dropdown">
+      <button onClick={() => setIsOpen(!isOpen)}>
+        {label}
+        <span className="dropdown-icon">{isOpen ? "▲" : "▼"}</span>
+      </button>
+      {isOpen && <ul>{children}</ul>}
+    </li>
+  );
 }
 
 function Sidebar() {
-    const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
     return (
         

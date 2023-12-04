@@ -41,6 +41,7 @@ function App() {
           <Route path="/Blog" element={[<BlogList />]} exact></Route>
           <Route path="/Profile-user" element={<ProfileUser />} exact />
           <Route path="/Profile-Update" element={<ProfileUserUpdate />} exact />
+          <Route path="/product-manage" element={<ListProduct />} exact></Route>
           <Route path="/Password" element={<Password />} exact />
           <Route path="/Dashboard" element={<Dashboard />} exact />
           <Route path="/profile-manage" element={<UserProfileManage />} exact />
