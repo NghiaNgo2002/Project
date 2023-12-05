@@ -6,7 +6,7 @@ import Header from '../Dashboard/Header-Admin';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash,faSearch, faCheck, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer, toast } from 'react-toastify';
-import { ListAllOrders, UpdateOrderByID, DeleteOrderByID } from '../../Service/OrderService';
+import {  ViewOrderDetailByID, UpdateOrderByID, DeleteOrderDetailByID } from '../../Service/OrderService';
 import {Link} from "react-router-dom";
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -14,7 +14,6 @@ const OrderList = () => {
   const [orderData, setOrderData] = useState([]);
   const [editableFields, setEditableFields] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const[orderIDSearch,setOrderIDSearch] = useState('');
   useEffect(() => {
     
     fetchData(); // Call the fetchData function to execute the API call
@@ -22,9 +21,10 @@ const OrderList = () => {
   }, []); // The empty dependency array means this effect runs only once (on mount)
 
   const navigate = useNavigate();
+  const { orderID } = useParams();
   const fetchData = async () => {
     try {
-      const response = await ListAllOrders(); 
+      const response = await  ViewOrderDetailByID( orderID ); 
       setOrderData(response.data); 
       console.log(response.data); // Assuming the data is in the 'data' property of the response
     } catch (error) {
@@ -34,15 +34,15 @@ const OrderList = () => {
   };
   const handleDelete = async (orderID) => {
     try {
-      await DeleteOrderByID(orderID);
+      await DeleteOrderDetailByID(orderID);
       const updatedOrderList = orderData.filter(order => order.orderID !== order.orderID);
       setOrderData(updatedOrderList); // Update the state with the new order list (excluding the deleted order)
-      toast.success('Order deleted successfully'); // Display success toast
+      toast.success('Order detail deleted successfully'); // Display success toast
       navigate('/order-manage');
       fetchData();
     } catch (error) {
-      console.error('Error deleting order:', error);
-      toast.error('Error deleting order'); // Display error toast
+      console.error('Error deleting Order detail:', error);
+      toast.error('Error deleting Order detail'); // Display error toast
     }
   };
 
@@ -74,10 +74,10 @@ const OrderList = () => {
       // Example: await updateProfileById(id, editableFields[id]);
   
       setIsEditing(false);
-      toast.success('Order updated successfully');
+      toast.success('Order detail updated successfully');
     } catch (error) {
-      console.error('Error updating order:', error);
-      toast.error('Error updating order');
+      console.error('Error updating Order detail:', error);
+      toast.error('Error updating Order detail');
     }
   };
   return (
@@ -85,26 +85,17 @@ const OrderList = () => {
         <Header />
         <ToastContainer />
     <div className="container-profile">
-    <div className="search">
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search Order by ID"
-              value={orderIDSearch}
-              onChange={(e) => setOrderIDSearch(e.target.value)}
-            />
-            <Link to={`/view-order/${orderIDSearch}`}>
-              <button>
-                <FontAwesomeIcon icon={faSearch} />
-              </button>
-            </Link>
-          </div>
-        </div>
       <div className="order-profile">
         <hr />
 
-        <h2>Order List</h2>
-        
+        <h2>Order Detail</h2>
+        <Link to = "/order-manage">
+                  <button
+          type = "button"
+          className="action-button detail"
+        >
+          Back to OrderList
+        </button></Link>
         <ul className="order-list">
         {orderData.map((order) => (
           <li key={order.orderID}>
@@ -116,123 +107,115 @@ const OrderList = () => {
                 </span>
               </div>   
               <div>
-                <strong> Customer ID: </strong>
-                <span onClick={() => handleEdit(order.customerid)}>
-                  {`${order.customerid}`}
+                <strong> Product ID: </strong>
+                <span onClick={() => handleEdit(order.productID)}>
+                  {`${order.productID}`}
                 </span>
               </div>   
               <div>
-                <strong> First Name: </strong>
+                <strong> Product Name: </strong>
                 {isEditing && editableFields[order.orderID] ? (
                   <input
                     type="text"
-                    value={editableFields[order.orderID].firstname || ''}
+                    value={editableFields[order.orderID].productname || ''}
                     onChange={(e) =>
                       setEditableFields({
                         ...editableFields,
                         [order.orderID]: {
                           ...editableFields[order.orderID],
-                          firstname: e.target.value,
+                          productname: e.target.value,
                         },
                       })
                     }
                   />
                 ) : (
-                  `${order.firstname}`
+                  `${order.productname}`
                 )}
               </div>
               <div>
-                <strong> Last Name: </strong>
+                <strong> Type: </strong>
                 {isEditing && editableFields[order.orderID] ? (
                   <input
                     type="text"
-                    value={editableFields[order.orderID].lastname || ''}
+                    value={editableFields[order.orderID].type || ''}
                     onChange={(e) =>
                       setEditableFields({
                         ...editableFields,
                         [order.orderID]: {
                           ...editableFields[order.orderID],
-                          lastname: e.target.value,
+                          type: e.target.value,
                         },
                       })
                     }
                   />
                 ) : (
-                  `${order.lastname}`
+                  `${order.type}`
                 )}
               </div>
               <div>
-                <strong> Email: </strong>
+                <strong> Size: </strong>
                 {isEditing && editableFields[order.orderID] ? (
                   <input
                     type="text"
-                    value={editableFields[order.orderID].email || ''}
+                    value={editableFields[order.orderID].size || ''}
                     onChange={(e) =>
                       setEditableFields({
                         ...editableFields,
                         [order.orderID]: {
                           ...editableFields[order.orderID],
-                          email: e.target.value,
+                          size: e.target.value,
                         },
                       })
                     }
                   />
                 ) : (
-                  `${order.email}`
+                  `${order.size}`
                 )}
               </div>
               <div>
-                <strong> Phone: </strong>
+                <strong> Color: </strong>
                 {isEditing && editableFields[order.orderID] ? (
                   <input
                     type="text"
-                    value={editableFields[order.orderID].phone|| ''}
+                    value={editableFields[order.orderID].color|| ''}
                     onChange={(e) =>
                       setEditableFields({
                         ...editableFields,
                         [order.orderID]: {
                           ...editableFields[order.orderID],
-                          phone: e.target.value,
+                          color: e.target.value,
                         },
                       })
                     }
                   />
                 ) : (
-                  `${order.phone}`
+                  `${order.color}`
                 )}
               </div>
               <div>
-                <strong> Address: </strong>
+                <strong> Quantity: </strong>
                 {isEditing && editableFields[order.orderID] ? (
                   <input
                     type="text"
-                    value={editableFields[order.orderID].address|| ''}
+                    value={editableFields[order.orderID].quantity|| ''}
                     onChange={(e) =>
                       setEditableFields({
                         ...editableFields,
                         [order.orderID]: {
                           ...editableFields[order.orderID],
-                          address: e.target.value,
+                          quantity: e.target.value,
                         },
                       })
                     }
                   />
                 ) : (
-                  `${order.address}`
+                  `${order.quantity}`
                 )}
               </div>
                   <div className="action-buttons">
                 {!isEditing ? (
                   <>
-                 <Link to =  {`/orderdetail-manage/${order.orderID}`}>
                   <button
-          type = "button"
-          className="action-button detail"
-
-        >
-          Show Detail
-        </button></Link>
-                    <button
                      type = "button"
                       className="action-button delete"
                       onClick={() => handleDelete(order.orderID)}

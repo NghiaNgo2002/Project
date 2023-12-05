@@ -45,3 +45,34 @@ const getToken = () => {
       headers: getAuthHeaders(),
     });
   };
+
+
+  export const ListAllOrdersDetail = async () => {
+    return await axios.get(`${backendUrl}/api/orderdetail`, {
+      headers: getAuthHeaders(),
+    });
+  };
+
+  export const ViewOrderDetailByID = async (orderID) => {
+    return await axios.get(`${backendUrl}/api/orderdetail/${orderID}`, {
+      headers: getAuthHeaders(),
+    });
+  };
+
+  export const UpdateOrderDetailByID = async (orderID, updatedData) => {
+    try {
+      return await axios.put(
+        `${backendUrl}/api/orderdetail/${orderID}`,
+        updatedData,
+        { headers: getAuthHeaders() }
+      );
+    } catch (error) {
+      throw new Error("Error updating user profile");
+    }
+  };
+
+  export const DeleteOrderDetailByID = async (orderID) => {
+    return await axios.delete(`${backendUrl}/api/orderdetail/${orderID}`, {
+      headers: getAuthHeaders(),
+    });
+  };

@@ -22,7 +22,8 @@ import PrivateRoutes from "./components/utils/PrivateRoute";
 import Order from "./components/OrderManage/Order";
 import ViewOrder from "./components/OrderManage/Vieworder";
 import ListProduct from "./components/Product-Admin/ListProduct";
-
+import OrderDetail from "./components/OrderManage/Orderdetail";
+import ViewOrderDetail from "./components/OrderManage/Vieworderdetail";
 function App() {
   return (
     <Router>
@@ -49,7 +50,9 @@ function App() {
           <Route path="/view-profile/:id" element={<ViewProfile />} exact />
           <Route path="/about" element={<About />} exact />
           <Route path="/order-manage" element={<Order />} exact />
+          <Route path="/orderdetail-manage/:orderID" element={<OrderDetail />} exact />
           <Route path="/view-order/:orderID" element={<ViewOrder/>} exact/>
+          <Route path="/view-orderdetail/:orderID" element={<ViewOrderDetail/>} exact/>
         </Route>
       </Routes>
     </Router>

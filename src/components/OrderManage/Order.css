@@ -1,107 +1,82 @@
-/* profile.css */
-
-.container-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  
-  
-  .sidebar {
-    width: 250px;
-    background-color: #363535;
-    color: white;
-    padding: 140px 20px;
-    box-sizing: border-box;
-    position: fixed;
-    overflow-y: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-  }
-  
-  .user-profile {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  .user-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .user-list li {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-  }
-  
-  .action-buttons {
-    display: flex;
-  }
-  
-  .action-button {
-    background: none;
-    border: none;
-    margin-right: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    color: #333; /* Change the color as desired */
-  }
-  
-  .action-button:hover {
-    color: red; /* Change the hover color as desired */
-  }
-  
-
 /* Order.css */
 
-/* Existing styles... */
-
-/* Order.css */
-
-/* Order.css */
-
-.container-profile {
-  display: flex;
+/* Update styles for information blocks */
+.order-list {
+  list-style: none;
+  padding: 0;
 }
 
-.sidebar {
-  width: 250px;
-  background-color: #363535;
-  color: white;
-  padding: 140px 20px;
-  box-sizing: border-box;
-  position: fixed;
-  overflow-y: auto;
-  top: 0;
-  bottom: 0;
-  left: 0;
+.order-list li {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }
 
-.user-profile {
-  width: calc(100% - 250px); /* Adjust width considering the sidebar width */
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-
-.search-bar {
-  width: 250px;
+.order-list li form {
   display: flex;
   flex-direction: column;
-  margin-left: auto; /* Move to the right side */
-  margin-right: 100px; /* Add some margin on the right */
+}
+
+.order-list li div {
+  margin-bottom: 10px;
+}
+
+.order-list li strong {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.order-list li input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+/* Update action button styles */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+}
+
+.action-button {
+  background: none;
+  border: none;
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #333; /* Change the color as desired */
+}
+
+.action-button:hover {
+  color: red; /* Change the hover color as desired */
+}
+
+.order-profile{
+  margin-top: 0px;
+}
+
+/* Order.css */
+
+/* Custom styles for the 'search' class */
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
   margin-bottom: 20px;
-  margin-top: 100px;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 300px; /* Adjust width as needed */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-bar input {
@@ -109,7 +84,7 @@
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 5px;
+  margin-right: 5px;
 }
 
 .search-bar button {
@@ -125,3 +100,58 @@
   background: #0056b3;
 }
 
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+.search-input::placeholder {
+  color: #aaa;
+}
+
+.search-input:focus::placeholder {
+  color: transparent;
+}
+/* Order.css */
+
+/* Custom styles for the "Show Detail" button */
+.action-buttons .detail {
+  background: none;
+  border: 1px solid #474748;
+  border-radius: 4px;
+  padding: 8px 15px;
+  cursor: pointer;
+  color: #515151;
+  font-size: 14px;
+  transition: background-color 0.3s, color 0.3s;
+  margin-right: 150px;
+}
+
+.action-buttons .detail:hover {
+  background: #010101;
+  color: rgb(255, 0, 0);
+}
+
+.show-detail-button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px; /* Adjust as needed */
+}
+
+.action-button.detail {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 2px solid #7a7a7a; /* Green border */
+  background-color: rgb(95, 95, 95);
+  color: #090909; /* Green text */  
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0s.3s;
+  margin-bottom: 5px;
+  width: 200px; /* Set the width to your desired length */;
+}
+
+.action-button.detail:hover {
+  background-color: #221c1c; /* Green background */
+  color: rgb(252, 4, 4); /* White text */
+}

@@ -16,18 +16,19 @@ const UserProfileList = () => {
   const [editableFields, setEditableFields] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await ListAllProfile();
-        setUserData(response.data);
-        console.log(response.data); // Assuming the data is in the 'data' property of the response
-      } catch (error) {
-        // Handle errors if the request fails
-        console.error("Error fetching data:", error);
-      }
-    };
+    
     fetchData(); // Call the fetchData function to execute the API call
   }, []); // The empty dependency array means this effect runs only once (on mount)
+  const fetchData = async () => {
+    try {
+      const response = await ListAllProfile();
+      setUserData(response.data);
+      console.log(response.data); // Assuming the data is in the 'data' property of the response
+    } catch (error) {
+      // Handle errors if the request fails
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -35,6 +36,7 @@ const UserProfileList = () => {
       const updatedUserList = userData.filter((user) => user.id !== id);
       setUserData(updatedUserList); // Update the state with the new user list (excluding the deleted user)
       toast.success("Profile deleted successfully"); // Display success toast
+      fetchData();
     } catch (error) {
       console.error("Error deleting profile:", error);
       toast.error("Error deleting profile"); // Display error toast
@@ -198,6 +200,7 @@ const UserProfileList = () => {
                     {!isEditing ? (
                       <>
                         <button
+                          type="button"
                           className="action-button delete"
                           onClick={() => handleDelete(user.id)}
                         >

@@ -28,7 +28,6 @@ function Sidebar() {
                 <li><Link to="/profile-manage">Users Management</Link></li>
                 <li><Link to="/crud">Products Management</Link></li>
                 <li><Link to="/order-manage">Order Management</Link></li>
-                <li><Link to="/payment-refund">Payment Management</Link></li>
                 <li><Link to="/">Sign Out</Link></li>
             </ul>
 
