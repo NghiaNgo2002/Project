@@ -20,6 +20,7 @@ function Dropdown({ label, children }) {
 function Sidebar() {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
+<<<<<<< HEAD
   return (
     <div className={`sidebar ${theme === "dark" ? "dark-mode" : ""}`}>
       <ul>
@@ -41,6 +42,21 @@ function Sidebar() {
       </ul>
     </div>
   );
+=======
+    return (
+        
+        <div className={`sidebar ${theme === 'dark' ? 'dark-mode' : ''}`}>
+            <ul>
+                <li><Link to="/home-admin">Home</Link></li>
+                <li><Link to="/profile-manage">Users Management</Link></li>
+                <li><Link to="/crud">Products Management</Link></li>
+                <li><Link to="/order-manage">Order Management</Link></li>
+                <li><Link to="/">Sign Out</Link></li>
+            </ul>
+
+        </div>
+    );
+>>>>>>> d57ef97315561b6ae5e5adad4fb3e65fedeaddd7
 }
 
 export default Sidebar;
