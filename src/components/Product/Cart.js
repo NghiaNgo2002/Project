@@ -3,9 +3,14 @@ import "./Cart.css";
 import { Link } from "react-router-dom";
 import Header from "../../Layout/Header";
 import Footer_stw from "../../Layout/Footer_stw";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit, faCheck } from "@fortawesome/free-solid-svg-icons";
+
 function Cart() {
   const [product, setProduct] = useState([]);
-  const [error, setError] = useState(null);
+  const [editableFields, setEditableFields] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,21 +22,97 @@ function Cart() {
         }
 
         const json = await response.json();
-        console.log("jsonnn", json);
+        console.log("Fetched data:", json);
 
         if (json.items && Array.isArray(json.items)) {
           setProduct(json.items);
         } else {
-          setError("Data structure is not as expected");
+          console.error("Data structure is not as expected");
         }
       } catch (error) {
         console.error("Error fetching data:", error.message);
-        setError("Error fetching data");
       }
     };
 
     fetchData();
   }, []); // Make sure to pass an empty dependency array to useEffect
+
+  const deleteProduct = async (productId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/cart/${productId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Remove the deleted product from the state
+      setProduct((prevProducts) =>
+        prevProducts.filter((product) => product.id !== productId)
+      );
+    } catch (error) {
+      console.error("Error deleting product:", error.message);
+    }
+  };
+
+  const handleUpdateProduct = async (id, newFields) => {
+    try {
+      console.log("Updating product:", id, newFields);
+
+      const response = await fetch(
+        `http://localhost:3001/api/cart/${id}/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newFields),
+        }
+      );
+
+      console.log("Update response:", response);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Assuming the server responds with the updated product data
+      const updatedProduct = await response.json();
+
+      // Update the product state with the new data
+      setProduct((prevProducts) =>
+        prevProducts.map((item) =>
+          item.id === id ? { ...item, ...newFields } : item
+        )
+      );
+
+      setIsEditing(false); // Reset editing state
+    } catch (error) {
+      console.error("Error updating product:", error.message);
+    }
+  };
+
+  const handleCheckboxChange = (productId) => {
+    const selectedProductIndex = selectedProducts.indexOf(productId);
+    if (selectedProductIndex === -1) {
+      // Nếu chưa tồn tại, thêm vào mảng
+      setSelectedProducts([...selectedProducts, productId]);
+    } else {
+      // Nếu đã tồn tại, loại bỏ khỏi mảng
+      const updatedSelectedProducts = [...selectedProducts];
+      updatedSelectedProducts.splice(selectedProductIndex, 1);
+      setSelectedProducts(updatedSelectedProducts);
+    }
+  };
+
+  const totalMoney = selectedProducts.reduce((total, productId) => {
+    const selectedProduct = product.find((item) => item.id === productId);
+    return total + selectedProduct.totalmoney;
+  }, 0);
 
   return (
     <div>
@@ -52,8 +133,10 @@ function Cart() {
                   <tr className="detail-product">
                     <th id="idcart">Id</th>
                     <th id="namecart">Name</th>
-                    <th id="typecart">Type</th>
-                    <th id="pricecart">Price</th>
+                    <th id="typecart">Information</th>
+                    <th id="pricecart">Total Price</th>
+                    <th id="adjust">Adjust Product</th>
+                    <th id="select">Select</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -61,35 +144,165 @@ function Cart() {
                     <tr key={item.id} className="detail-product">
                       <td>{item.id}</td>
                       <td>{item.name}</td>
-                      <td>{item.type}</td>
-                      <td>{item.price}</td>
+                      <td id="information-list">
+                        <p>
+                          Type: <span>{item.type}</span>
+                        </p>
+                        <p>
+                          Price: <span>${item.price}</span>
+                        </p>
+                        {isEditing && editableFields[item.id] ? (
+                          <>
+                            <p>
+                              Quantity:{" "}
+                              <input
+                                type="text"
+                                value={editableFields[item.id]?.quantity || ""}
+                                onChange={(e) =>
+                                  setEditableFields((prevFields) => ({
+                                    ...prevFields,
+                                    [item.id]: {
+                                      ...prevFields[item.id],
+                                      quantity: e.target.value,
+                                    },
+                                  }))
+                                }
+                              />
+                            </p>
+                            <p>
+                              Size:{" "}
+                              <input
+                                type="text"
+                                value={editableFields[item.id]?.size || ""}
+                                onChange={(e) =>
+                                  setEditableFields((prevFields) => ({
+                                    ...prevFields,
+                                    [item.id]: {
+                                      ...prevFields[item.id],
+                                      size: e.target.value,
+                                    },
+                                  }))
+                                }
+                              />
+                            </p>
+                            <p>
+                              Color:{" "}
+                              <input
+                                type="text"
+                                value={editableFields[item.id]?.color || ""}
+                                onChange={(e) =>
+                                  setEditableFields((prevFields) => ({
+                                    ...prevFields,
+                                    [item.id]: {
+                                      ...prevFields[item.id],
+                                      color: e.target.value,
+                                    },
+                                  }))
+                                }
+                              />
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p>
+                              Quantity: <span>{item.quantity}</span>
+                            </p>
+                            <p>
+                              Size: <span>{item.size}</span>
+                            </p>
+                            <p>
+                              Color: <span>{item.color}</span>
+                            </p>
+                          </>
+                        )}
+                      </td>
+                      <td className="total">
+                        {(item.totalmoney = item.price * item.quantity)}
+                      </td>
+                      <td className="adjust-btn">
+                        <div className="adjust-btn">
+                          {isEditing ? (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleUpdateProduct(
+                                  item.id,
+                                  editableFields[item.id]
+                                )
+                              }
+                            >
+                              <FontAwesomeIcon icon={faCheck} />
+                            </button>
+                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                className="action-button delete"
+                                onClick={() => deleteProduct(item.id)}
+                              >
+                                <FontAwesomeIcon icon={faTrash} />
+                              </button>
+                              <button
+                                type="button"
+                                className="action-button update"
+                                onClick={() => {
+                                  setIsEditing(true);
+                                  setEditableFields({
+                                    [item.id]: {
+                                      quantity: item.quantity,
+                                      color: item.color,
+                                      size: item.size,
+                                    },
+                                  });
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faEdit} />
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <input
+                          className="selectedbutton"
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange(item.id)}
+                          checked={selectedProducts.includes(item.id)}
+                        />
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           </div>
-          <div className="payment-cart">
-            <h4>Order Summary</h4>
-            <div className="small-line-payment"></div>
-            <div className="total-money">
-              <h4 id="sub">SUBTOTAL</h4>
-              <h4>Money</h4>
-            </div>
-            <button id="payment-btn">PROCESS TO CHECKOUT</button>
-            <div className="icon-link">
-              <div className="small-line-payment-icon"></div>
-              <span>Accept Payment Methods</span>
-              <img
-                src="https://durotan-fashion.myshopify.com/cdn/shop/files/payment_ef2dcab9-feab-4a52-80b2-d13053ddefdc_2000x.png?v=1655036319"
-                alt="Payment methods"
-              />
+          <div className="merge-block">
+            <div className="merge-block">
+              <div className="payment-cart">
+                <h4>Order Summary</h4>
+                <div className="small-line-payment"></div>
+                <div className="total-money">
+                  <h4 id="sub">SUBTOTAL</h4>
+                  <h4>{`$${totalMoney.toFixed(2)}`}</h4>
+                </div>
+                <button id="payment-btn">PROCESS TO CHECKOUT</button>
+                <div className="icon-link">
+                  <div className="small-line-payment-icon"></div>
+                  <span>Accept Payment Methods</span>
+                  <img
+                    src="https://durotan-fashion.myshopify.com/cdn/shop/files/payment_ef2dcab9-feab-4a52-80b2-d13053ddefdc_2000x.png?v=1655036319"
+                    alt="Payment methods"
+                  />
+                </div>
+              </div>
+              <div className="button-continue">
+                <Link to="/Shop">
+                  <p>CONTINUE SHOPPING</p>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-        <Link to="/Shop">
-          <p>CONTINUE SHOPPING</p>
-        </Link>
       </div>
       <div className="p-2 footer">
         <Footer_stw />
