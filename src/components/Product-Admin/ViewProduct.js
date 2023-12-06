@@ -1,211 +1,146 @@
-// UserProfilePage.js
-import React, { useState, useEffect } from 'react';
-import './Listprofile.css'; // Import the CSS file
-import Sidebar from '../Dashboard/sidebar';
-import Header from '../Dashboard/Header-Admin';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faCheck, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { DeleteProfileByID, ViewProfileByID,UpdateProfileByID } from '../../Service/UserService'; // Adjust the path as needed
-import { ToastContainer, toast } from 'react-toastify';
-import { useParams, useNavigate } from 'react-router-dom';
+// ProductViewPage.js
+import React, { useState, useEffect } from "react";
+import "./ViewProduct.css";
+import Sidebar from "../Dashboard/sidebar";
+import Header from "../Dashboard/Header-Admin";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faCheck, faEdit } from "@fortawesome/free-solid-svg-icons";
+import {
+  ViewProductbyID,
+  updateProductID,
+  deleteProduct,
+} from "../../Service/productadmin";
+import { ToastContainer, toast } from "react-toastify";
+import { useParams, useNavigate } from "react-router-dom";
 
-const UserProfileList = () => {
-  const [userData, setUserData] = useState([]);
+const ProductViewPage = () => {
+  const [productData, setProductData] = useState({});
   const [editableFields, setEditableFields] = useState({});
   const [isEditing, setIsEditing] = useState(false);
 
-
-
   const { id } = useParams();
   useEffect(() => {
-    // Make an API call using the 'id' parameter
     const fetchData = async () => {
       try {
-        const response = await ViewProfileByID(id);
-        setUserData(response.data); // Assuming 'response.data' contains the user information
-        console.log('Profile data:', response.data);
+        const response = await ViewProductbyID(id);
+        setProductData(response.data.item);
+        console.log("Product data:", response.data.item);
       } catch (error) {
-        console.error('Error fetching profile:', error);
+        console.error("Error fetching product:", error);
       }
     };
 
-    // Call the fetchData function when 'id' changes or the component mounts
     fetchData();
-  }, [id]); // Re-run the effect whenever 'id' changes
-
+  }, [id]);
 
   const navigate = useNavigate();
   const handleDelete = async (id, event) => {
-    event.preventDefault(); // Prevent default form submission behavior
-  
+    event.preventDefault();
+
     try {
-      await DeleteProfileByID(id);
-      toast.success('Profile deleted successfully');
-  
-      // Redirect to '/profile-admin' after successful deletion
-      navigate('/profile-list');
+      await deleteProduct(id);
+      toast.success("Product deleted successfully");
+      navigate("/product-list");
     } catch (error) {
-      console.error('Error deleting profile:', error);
-      toast.error('Error deleting profile: Unable to delete the profile');
+      console.error("Error deleting product:", error);
+      toast.error("Error deleting product: Unable to delete the product");
     }
   };
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditableFields({ ...editableFields});
+    setEditableFields({ ...productData });
   };
 
   const handleSave = async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
-    const id = userData.id; // Get the ID from userData
-  
+    event.preventDefault();
+    const id = productData.id;
+
     try {
-      const updatedUserData = { ...userData, ...editableFields };
-      setUserData(updatedUserData); // Update userData with the changes from editableFields
-  
-      await UpdateProfileByID(id, updatedUserData); // Perform the update API call
-  
+      const updatedProductData = { ...productData, ...editableFields };
+      setProductData(updatedProductData);
+
+      await updateProductID(id, updatedProductData);
       setIsEditing(false);
-      toast.success('Profile updated successfully');
+      toast.success("Product updated successfully");
     } catch (error) {
-      console.error('Error updating profile:', error);
-      toast.error('Error updating profile');
+      console.error("Error updating product:", error);
+      toast.error("Error updating product");
     }
   };
+
   return (
     <div>
-    <Header />
-    <ToastContainer />
-    <div className="container-profile">
-      <div className="user-profile">
-        <hr />
-        <h2>User Profiles</h2>
-        <ul className="user-list">
-          {Object.keys(userData).length > 0 && (
-            <form >
-              <div>
-                <strong>ID: </strong>
-                <span onClick={() => handleEdit(userData.id)}>
-                  {`${userData.id}`}
-                </span>
-              </div> 
-              <div>
-                <strong> First Name: </strong>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editableFields.firstname || ''}
-                    onChange={(e) =>
-                      setEditableFields({
-                        ...editableFields,
-                        firstname: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  `${userData.firstname}`
-                )}
-              </div>
-              <div>
-                <strong> Last Name: </strong>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editableFields.lastname || ''}
-                    onChange={(e) =>
-                      setEditableFields({
-                        ...editableFields,
-                        lastname: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  `${userData.lastname}`
-                )}
-              </div>
-              <div>
-                <strong> Phone: </strong>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editableFields.phone || ''}
-                    onChange={(e) =>
-                      setEditableFields({
-                        ...editableFields,
-                        phone: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  `${userData.phone}`
-                )}
-              </div>
-              <div>
-                <strong> Email: </strong>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editableFields.email|| ''}
-                    onChange={(e) =>
-                      setEditableFields({
-                        ...editableFields,
-                        email: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  `${userData.email}`
-                )}
-              </div>
-              <div>
-                <strong> Address: </strong>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editableFields.address|| ''}
-                    onChange={(e) =>
-                      setEditableFields({
-                        ...editableFields,
-                       address: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  `${userData.address}`
-                )}
-              </div>
-             
-
-              <div className="action-buttons">
-                {!isEditing ? (
-                  <>
+      <Header />
+      <ToastContainer />
+      <div className="container-profile">
+        <div className="user-profile">
+          {" "}
+          {/* Updated class name here */}
+          <hr />
+          <h2>Product Details</h2>
+          <ul className="user-list">
+            {Object.keys(productData).length > 0 && (
+              <form>
+                <div>
+                  <strong>ID: </strong>
+                  <span onClick={() => handleEdit(productData.id)}>
+                    {`${productData.id}`}
+                  </span>
+                </div>
+                <div>
+                  <strong>Product Name: </strong>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editableFields.product_name || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          product_name: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.product_name}`
+                  )}
+                </div>
+                {/* Add more fields as needed */}
+                {/* ... */}
+                <div className="action-buttons">
+                  {!isEditing ? (
+                    <>
+                      <button
+                        className="action-button delete"
+                        onClick={(e) => handleDelete(productData.id, e)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                      <button
+                        className="action-button update"
+                        onClick={() => handleEdit(productData.id)}
+                      >
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+                    </>
+                  ) : (
                     <button
-                      className="action-button delete"
-                      onClick={(e) => handleDelete(userData.id, e)}
+                      className="action-button confirm"
+                      type="submit"
+                      onClick={handleSave}
                     >
-                      <FontAwesomeIcon icon={faTrash} />
+                      <FontAwesomeIcon icon={faCheck} />
                     </button>
-                    <button
-                      className="action-button update"
-                      onClick={() => handleEdit(userData.id)}
-                    >
-                      <FontAwesomeIcon icon={faEdit} />
-                    </button>
-                  </>
-                ) : (
-                  <button className="action-button confirm" type="submit" onClick={handleSave}>
-                    <FontAwesomeIcon icon={faCheck} />
-                  </button>
-                )}
-              </div>
-            </form>
-          )}
-        </ul>
+                  )}
+                </div>
+              </form>
+            )}
+          </ul>
+        </div>
+        <Sidebar />
       </div>
-      <Sidebar />
     </div>
-  </div>
-);
+  );
 };
 
-export default UserProfileList;
+export default ProductViewPage;

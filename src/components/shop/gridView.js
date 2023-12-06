@@ -28,7 +28,6 @@ function SamplePrevArrow(props) {
     />
   );
 }
-
 function GridView() {
   const settings = {
     infinite: true,
@@ -89,9 +88,11 @@ function GridView() {
             <div className="imge">
               <Slider {...settings}>
                 <div>
+                  {/* Replace "#" with the actual URL of your product image */}
                   <img src="#" alt="product" />
                 </div>
                 <div>
+                  {/* Replace "#" with the actual URL of your product image */}
                   <img src="#" alt="product" />
                 </div>
               </Slider>
@@ -101,10 +102,12 @@ function GridView() {
             </div>
             <div className="description">
               <Link to={`/productdetail/${item.id}`}>
-                <p id="name">Name: {item.name} </p>
+                {/* Make sure that "item.name" is the correct property */}
+                <p id="name">Name: {item.product_name}</p>
               </Link>
               <Link to={`/productdetail/${item.id}`}>
-                <p id="price">Price: {item.price} </p>
+                {/* Make sure that "item.price" is the correct property */}
+                <p id="price">Price: {item.price}</p>
               </Link>
             </div>
           </div>

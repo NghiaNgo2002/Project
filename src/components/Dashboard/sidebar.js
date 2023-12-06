@@ -32,14 +32,8 @@ function Sidebar() {
         <li>
           <Link to="/product-manage">Products Management</Link>
         </li>
-        <Dropdown label="Orders Management">
-          <Link to="/place-order-emp">Add Order</Link>
-          <Link to="/get-order">Retrieve Order</Link>
-          <Link to="/update-order">Update Order</Link>
-          <Link to="/delete-order">Delete Order</Link>
-        </Dropdown>
         <li>
-          <Link to="/payment-refund">Payment Management</Link>
+          <Link to="/order-manage">Order Management</Link>
         </li>
         <li>
           <Link to="/">Sign Out</Link>

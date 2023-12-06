@@ -1,77 +1,85 @@
 import React, { useState, useEffect } from "react";
-import "./ListProduct.css"; // Import the CSS file
+import "./ListProduct.css";
 import Sidebar from "../Dashboard/sidebar";
 import Header from "../Dashboard/Header-Admin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faCheck, faEdit } from "@fortawesome/free-solid-svg-icons";
 import {
-  DeleteProfileByID,
-  ListAllProfile,
-  UpdateProfileByID,
-} from "../../Service/UserService"; // Adjust the path as needed
+  ListAllProduct,
+  deleteProduct,
+  updateProductID,
+} from "../../Service/productadmin";
 import { ToastContainer, toast } from "react-toastify";
 
-const UserProfileList = () => {
-  const [userData, setUserData] = useState([]);
+const ProductList = () => {
+  const [productData, setProductData] = useState([]);
   const [editableFields, setEditableFields] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await ListAllProfile();
-        setUserData(response.data);
-        console.log(response.data); // Assuming the data is in the 'data' property of the response
-      } catch (error) {
-        // Handle errors if the request fails
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData(); // Call the fetchData function to execute the API call
-  }, []); // The empty dependency array means this effect runs only once (on mount)
 
-  const handleDelete = async (id) => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
     try {
-      await DeleteProfileByID(id);
-      const updatedUserList = userData.filter((user) => user.id !== id);
-      setUserData(updatedUserList); // Update the state with the new user list (excluding the deleted user)
-      toast.success("Profile deleted successfully"); // Display success toast
+      const response = await ListAllProduct();
+      if (response.data.items && Array.isArray(response.data.items)) {
+        setProductData(response.data.items);
+        console.log(response.data.items);
+      } else {
+        console.error(
+          "Error: response.data.items is not an array",
+          response.data
+        );
+        toast.error("Error fetching data");
+      }
     } catch (error) {
-      console.error("Error deleting profile:", error);
-      toast.error("Error deleting profile"); // Display error toast
+      console.error("Error fetching data:", error.message);
+      toast.error("Error fetching data");
+    }
+  };
+
+  const deleteProductHandler = async (id) => {
+    try {
+      await deleteProduct(id);
+      const updateProductList = productData.filter(
+        (product) => product.id !== id
+      );
+      setProductData(updateProductList);
+      toast.success("Product deleted successfully");
+      fetchData();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      toast.error("Error deleting product");
     }
   };
 
   const handleEdit = (id) => {
     setIsEditing(true);
-    const userToEdit = userData.find((user) => user.id === id);
-    setEditableFields({ ...editableFields, [id]: { ...userToEdit } });
+    const productToEdit = productData.find((product) => product.id === id);
+    setEditableFields({ ...editableFields, [id]: { ...productToEdit } });
   };
 
   const handleSave = async (event, id) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
 
     try {
-      // Handle save functionality for the specific user (e.g., update user data in the backend)
-      const updatedUserData = userData.map((user) => {
-        if (user.id === id) {
-          return { ...user, ...editableFields[id] };
+      const updatedProductData = productData.map((product) => {
+        if (product.id === id) {
+          return { ...product, ...editableFields[id] };
         }
-        return user;
+        return product;
       });
 
-      // Update the user data state
-      setUserData(updatedUserData);
-      console.log(updatedUserData);
-      await UpdateProfileByID(id, editableFields[id]);
-
-      // Perform API call to update user data here if needed
-      // Example: await updateProfileById(id, editableFields[id]);
+      setProductData(updatedProductData);
+      console.log(updatedProductData);
+      await updateProductID(id, editableFields[id]);
 
       setIsEditing(false);
-      toast.success("Profile updated successfully");
+      toast.success("Product updated successfully");
     } catch (error) {
-      console.error("Error updating profile:", error);
-      toast.error("Error updating profile");
+      console.error("Error updating product:", error);
+      toast.error("Error updating product");
     }
   };
 
@@ -82,130 +90,154 @@ const UserProfileList = () => {
       <div className="container-profile">
         <div className="user-profile">
           <hr />
-
-          <h2>User Profiles</h2>
+          <h2>Product Information</h2>
           <ul className="user-list">
-            {userData.map((user) => (
-              <li key={user.id}>
-                <form onSubmit={(event) => handleSave(event, user.id)}>
+            {productData.map((product) => (
+              <li key={product.id}>
+                <form onSubmit={(event) => handleSave(event, product.id)}>
                   <div>
                     <strong>ID: </strong>
-                    <span onClick={() => handleEdit(user.id)}>
-                      {`${user.id}`}
-                    </span>
+                    <span>{`${product.id}`}</span>
                   </div>
+                  {/*ID */}
                   <div>
-                    <strong> First Name: </strong>
-                    {isEditing && editableFields[user.id] ? (
+                    <strong> Name: </strong>
+                    {isEditing && editableFields[product.id] ? (
                       <input
                         type="text"
-                        value={editableFields[user.id].firstname || ""}
+                        value={editableFields[product.id].product_name || ""}
                         onChange={(e) =>
                           setEditableFields({
                             ...editableFields,
-                            [user.id]: {
-                              ...editableFields[user.id],
-                              firstname: e.target.value,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              product_name: e.target.value,
                             },
                           })
                         }
                       />
                     ) : (
-                      `${user.firstname}`
+                      `${product.product_name}`
                     )}
                   </div>
+                  {/*Name */}
                   <div>
-                    <strong> Last Name: </strong>
-                    {isEditing && editableFields[user.id] ? (
+                    <strong> Type: </strong>
+                    {isEditing && editableFields[product.id] ? (
                       <input
                         type="text"
-                        value={editableFields[user.id].lastname || ""}
+                        value={editableFields[product.id].product_type || ""}
                         onChange={(e) =>
                           setEditableFields({
                             ...editableFields,
-                            [user.id]: {
-                              ...editableFields[user.id],
-                              lastname: e.target.value,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              product_type: e.target.value,
                             },
                           })
                         }
                       />
                     ) : (
-                      `${user.lastname}`
+                      `${product.product_type}`
                     )}
                   </div>
+                  {/*Price */}
                   <div>
-                    <strong> Email: </strong>
-                    {isEditing && editableFields[user.id] ? (
+                    <strong> Price: </strong>
+                    {isEditing && editableFields[product.id] ? (
                       <input
                         type="text"
-                        value={editableFields[user.id].email || ""}
+                        value={editableFields[product.id].price || ""}
                         onChange={(e) =>
                           setEditableFields({
                             ...editableFields,
-                            [user.id]: {
-                              ...editableFields[user.id],
-                              email: e.target.value,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              price: e.target.value,
                             },
                           })
                         }
                       />
                     ) : (
-                      `${user.email}`
+                      `${product.price}`
                     )}
                   </div>
+                  {/*Quantity */}
                   <div>
-                    <strong> Phone: </strong>
-                    {isEditing && editableFields[user.id] ? (
+                    <strong> Quantity: </strong>
+                    {isEditing && editableFields[product.id] ? (
                       <input
                         type="text"
-                        value={editableFields[user.id].phone || ""}
+                        value={editableFields[product.id].quantity || ""}
                         onChange={(e) =>
                           setEditableFields({
                             ...editableFields,
-                            [user.id]: {
-                              ...editableFields[user.id],
-                              phone: e.target.value,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              quantity: e.target.value,
                             },
                           })
                         }
                       />
                     ) : (
-                      `${user.phone}`
+                      `${product.quantity}`
                     )}
                   </div>
+                  {/*Color */}
                   <div>
-                    <strong> Address: </strong>
-                    {isEditing && editableFields[user.id] ? (
+                    <strong> Color: </strong>
+                    {isEditing && editableFields[product.id] ? (
                       <input
                         type="text"
-                        value={editableFields[user.id].address || ""}
+                        value={editableFields[product.id].color || ""}
                         onChange={(e) =>
                           setEditableFields({
                             ...editableFields,
-                            [user.id]: {
-                              ...editableFields[user.id],
-                              address: e.target.value,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              color: e.target.value,
                             },
                           })
                         }
                       />
                     ) : (
-                      `${user.address}`
+                      `${product.color}`
+                    )}
+                  </div>
+                  {/*Size */}
+                  <div>
+                    <strong> Size: </strong>
+                    {isEditing && editableFields[product.id] ? (
+                      <input
+                        type="text"
+                        value={editableFields[product.id].size || ""}
+                        onChange={(e) =>
+                          setEditableFields({
+                            ...editableFields,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              size: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                    ) : (
+                      `${product.size}`
                     )}
                   </div>
                   <div className="action-buttons">
                     {!isEditing ? (
                       <>
                         <button
+                          type="button"
                           className="action-button delete"
-                          onClick={() => handleDelete(user.id)}
+                          onClick={() => deleteProductHandler(product.id)}
                         >
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
                         <button
                           className="action-button update"
-                          onClick={() => handleEdit(user.id)}
+                          onClick={() => handleEdit(product.id)}
                         >
                           <FontAwesomeIcon icon={faEdit} />
                         </button>
@@ -227,4 +259,4 @@ const UserProfileList = () => {
   );
 };
 
-export default UserProfileList;
+export default ProductList;

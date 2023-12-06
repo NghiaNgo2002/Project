@@ -64,8 +64,8 @@ function ProductDetail() {
         },
         body: JSON.stringify({
           product_id: id,
-          name: product.name,
-          type: product.type,
+          name: product.product_name,
+          type: product.product_type,
           price: product.price,
           quantity: 1,
           size: selectedSize,
@@ -107,9 +107,9 @@ function ProductDetail() {
       </div>
       <div className="right">
         <div key={product.id} className="info-container">
-          <h1>Name: {product.name}</h1>
+          <h1>Name: {product.product_name}</h1>
           <div className="description">
-            <p id="desc">Product: {product.type}</p>
+            <p id="desc">Product: {product.product_type}</p>
             <p id="price">Price: {product.price}</p>
             <p id="description">Description: {productDescription}</p>
           </div>

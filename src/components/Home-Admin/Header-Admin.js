@@ -105,7 +105,6 @@ function Header() {
             </div>
             <div className={`dropdown-menu ${openMenu2 ? 'active' : 'inactive'}`} ref={menuRef2}>
               <ul>
-                <DropdownItem img={user} text={"My Profile"} />
                 <Link to="/" style={{ textDecoration: 'none' }}>
                   <DropdownItem img={logout} text={"Logout"} />
                 </Link>
@@ -122,7 +121,7 @@ function Header() {
           <div className="menu-bar">
             <ul>
               <li>
-              <Link to="/home" className="home-link">
+              <Link to="/home-admin" className="home-link">
               HOME
              </Link> 
               

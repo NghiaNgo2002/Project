@@ -1,84 +1,75 @@
-// ProfileManage.js
-import React from 'react';
-import './ProfileManage.css'; // Import the CSS file
-import Sidebar from '../Dashboard/sidebar';
-import Header from '../Dashboard/Header-Admin';
-import {Link} from "react-router-dom";
-import { ListAllProfile, AddNewUser } from '../../Service/UserService'; // Import ListAllProfile function
-import {useState,useEffect} from "react";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {  useNavigate } from 'react-router-dom';
+// ProductManage.js
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ListAllProduct, addNewProduct } from "../../Service/productadmin";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Sidebar from "../Dashboard/sidebar";
+import Header from "../Dashboard/Header-Admin";
 
-
-const ProfileManage = () => {
-  const [profiles, setProfiles] = useState([]);
-  const[idSearch,setIDSearch] = useState('');
-  const [id, setID] = useState('');
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [email, setEmail] = useState('');
-  const navigate = useNavigate(); 
-
-
-
-  const fetchProfiles = async () => {
-    try {
-      const response = await ListAllProfile(); // Call the ListAllProfile function
-      setProfiles(response.data); // Set the fetched profiles in state
-    } catch (error) {
-      console.error('Error fetching profiles:', error);
-    }
-  };
+const ProductManage = () => {
+  const [products, setProducts] = useState([]);
+  const [productName, setProductName] = useState("");
+  const [productType, setProductType] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const [idSearch, setIDSearch] = useState(""); // Added state for ID search
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch profiles when the component mounts
-    fetchProfiles();
-  }, []); // Empty dependency array ensures this runs only once
+    const fetchProducts = async () => {
+      try {
+        const response = await ListAllProduct();
+        // Ensure that the response.data.items is an array before setting state
+        if (Array.isArray(response.data.items)) {
+          setProducts(response.data.items);
+        } else {
+          console.error("Invalid data format for products:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
 
+    fetchProducts();
+  }, []);
 
-  const insertUser = async () => {
+  const insertProduct = async () => {
     try {
-
-      // Make sure all fields are filled before inserting
-      if ( 
-      id &&
-      firstname &&
-      lastname &&
-      phone &&
-      address &&
-      email) 
-        {
-    
-       const response = await AddNewUser(
-            id,
-            firstname,
-            lastname,
-            phone,
-            address,
-            email
+      if (productName && productType && price && quantity && color && size) {
+        await addNewProduct(
+          productName,
+          productType,
+          price,
+          quantity,
+          size,
+          color
         );
-         // Call the function to insert user profile
 
-          // Show toast notification
-        toast.success('User inserted successfully!', {
-          position: toast.POSITION.TOP_CENTER
+        toast.success("Product inserted successfully!", {
+          position: toast.POSITION.TOP_CENTER,
         });
-        navigate('/profile-list');
+
+        // Refresh the product list after inserting
+        const response = await ListAllProduct();
+        // Ensure that the response.data.items is an array before setting state
+        if (Array.isArray(response.data.items)) {
+          setProducts(response.data.items);
+        } else {
+          console.error("Invalid data format for products:", response.data);
+        }
       } else {
-        alert('Please fill in all fields');
+        alert("Please fill in all fields");
       }
     } catch (error) {
-      console.error('Error inserting user:', error);
-      toast.error('Failed to insert user!', {
-        position: toast.POSITION.TOP_CENTER
+      console.error("Error inserting product:", error);
+      toast.error("Failed to insert product!", {
+        position: toast.POSITION.TOP_CENTER,
       });
     }
   };
-
-
 
   return (
     <div>
@@ -86,34 +77,68 @@ const ProfileManage = () => {
       <div className="main-content44">
         <div className="card-container44">
           <div className="card44">
-            <h3>View User</h3>
+            <h3>Product List</h3>
             <div className="input-group44">
-              <input 
-              type="text" 
-              placeholder="Enter User ID" 
-              value={idSearch}
-              onChange={(e) => setIDSearch(e.target.value)}
+              <input
+                type="text"
+                placeholder="Enter Product ID"
+                value={idSearch}
+                onChange={(e) => setIDSearch(e.target.value)}
               />
-             <Link to={`/view-profile/${idSearch}`}><button >View User</button></Link>
+              <Link to={`/product-view/${idSearch}`}>
+                <button>View Product</button>
+              </Link>
+            </div>
+          </div>
+
+          <div className="card44">
+            <h3>Add Product</h3>
+            <div className="input-group44">
+              <input
+                type="text"
+                placeholder="Product Name"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Product Type"
+                value={productType}
+                onChange={(e) => setProductType(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Quantity"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Size"
+                value={size}
+                onChange={(e) => setSize(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Color"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+              />
+              <button onClick={insertProduct}>Insert Product</button>
             </div>
           </div>
           <div className="card44">
-            <h3>Add User</h3>
+            <h3>List Product</h3>
             <div className="input-group44">
-              <input type="text" placeholder="ID" value={id}        onChange={(e) => setID(e.target.value)}/>
-              <input type="text" placeholder="First Name"  value={firstname}         onChange={(e) => setFirstName(e.target.value)}/>
-              <input type="text" placeholder="Last Name" value={lastname}     onChange={(e) => setLastName(e.target.value)} />
-              <input type="text" placeholder="Phone"  value={phone}        onChange={(e) => setPhone(e.target.value)}/>
-              <input type="text" placeholder="Address" value={address}          onChange={(e) => setAddress(e.target.value)}/>
-              <input type="text" placeholder="Email" value={email}      onChange={(e) => setEmail(e.target.value)}/>
-              {/* Add other input fields for last name, phone, address, email */}
-              <button onClick={insertUser}>Insert User</button>
-            </div>
-          </div>
-          <div className="card44">
-            <h3>List User</h3>
-            <div className="input-group44">
-              <Link to = '/profile-list'><button>List All Users</button></Link>
+              <Link to="/product-list">
+                <button>List All Product</button>
+              </Link>
             </div>
           </div>
         </div>
@@ -123,4 +148,4 @@ const ProfileManage = () => {
   );
 };
 
-export default ProfileManage;
+export default ProductManage;
