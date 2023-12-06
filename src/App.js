@@ -54,7 +54,6 @@ function App() {
           <Route path="/view-profile/:id" element={<ViewProfile />} exact />
           <Route path="/about" element={<About />} exact />
           <Route path="/order-manage" element={<Order />} exact />
-<<<<<<< HEAD
           <Route
             path="/orderdetail-manage/:orderID"
             element={<OrderDetail />}
@@ -66,11 +65,6 @@ function App() {
             element={<ViewOrderDetail />}
             exact
           />
-=======
-          <Route path="/orderdetail-manage/:orderID" element={<OrderDetail />} exact />
-          <Route path="/view-order/:orderID" element={<ViewOrder/>} exact/>
-          <Route path="/view-orderdetail/:orderID" element={<ViewOrderDetail/>} exact/>
->>>>>>> d57ef97315561b6ae5e5adad4fb3e65fedeaddd7
         </Route>
       </Routes>
     </Router>
