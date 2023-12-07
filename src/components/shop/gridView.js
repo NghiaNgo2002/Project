@@ -87,12 +87,13 @@ function GridView() {
             <div className="imge">
               <Slider {...settings}>
                 <div>
-                  {/* Replace "#" with the actual URL of your product image */}
-                  <img src="#" alt="product" />
+                  <img src={item.picture_one} alt="product" />
                 </div>
                 <div>
-                  {/* Replace "#" with the actual URL of your product image */}
-                  <img src="#" alt="product" />
+                  <img src={item.picture_two} alt="product" />
+                </div>
+                <div>
+                  <img src={item.picture_three} alt="product" />
                 </div>
               </Slider>
               <div className="info">

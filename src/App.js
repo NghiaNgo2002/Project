@@ -40,7 +40,7 @@ function App() {
             path="/productdetail/:id"
             element={[<Header />, <Productdetail />, <Footer />]}
           />{" "}
-          <Route path="/Cart" element={[<Cart />]} exact></Route>
+          <Route path="/cart/:user_id" element={[<Cart />]} exact></Route>
           <Route path="/Blog" element={[<BlogList />]} exact></Route>
           <Route path="/Profile-user" element={<ProfileUser />} exact />
           <Route path="/Profile-Update" element={<ProfileUserUpdate />} exact />

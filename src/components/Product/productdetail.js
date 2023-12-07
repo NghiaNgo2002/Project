@@ -1,40 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ViewProductById } from "../../Service/productService";
-import { AddNewProduct } from "../../Service/CartService";
 import "./productdetail.css";
+import { ViewProductById } from "../../Service/productService";
+import { AddProduct } from "../../Service/CartService";
 
 function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState(null);
-  const [productDescription, setProductDescription] = useState("");
-  const [error, setError] = useState(null);
-  const [clicked, setClicked] = useState(false);
-
-  const { id } = useParams();
+  const { id, user_id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await ViewProductById(id);
-
-        console.log("Received product data:", response.data);
-
-        if (!response.data || !response.data.item) {
-          throw new Error(
-            "Product data is missing or not in the expected format"
-          );
-        }
-
-        setProduct(response.data.item);
-        setProductDescription(response.data.item.description);
+        setProduct(response.data);
+        console.log("Product data:", response.data);
       } catch (error) {
-        console.error("Error fetching data:", error.message);
-        setError("Error fetching data. Please try again later.");
+        console.error("Error fetching product", error);
       }
     };
-
     fetchData();
   }, [id]);
 
@@ -49,105 +34,98 @@ function ProductDetail() {
     setSelectedSize(size);
   };
 
-  const addToCart = async () => {
-    try {
-      if (!selectedSize || !selectedColor) {
-        console.error("Size and color must be selected.");
-        return;
-      }
-
-      const result = await AddNewProduct(
-        product.product_name,
-        product.product_type,
-        product.price,
-        1, // Quantity (you may want to update this)
-        selectedSize,
-        selectedColor
-      );
-
-      console.log("Add to cart result:", result);
-
-      setClicked(true);
-
-      // Redirect to "/Cart"
-      window.location.href = "/Cart";
-    } catch (error) {
-      console.error("Error adding to cart:", error.message);
+  const addtoCart = () => {
+    if (!selectedSize || !selectedColor || !product.item) {
+      // Ensure that all necessary data is available
+      alert("Color or size is missing");
+      return;
     }
+
+    const cartItem = {
+      user_id: user_id, // Use the user_id from useParams
+      name: product.item.product_name,
+      price: product.item.price,
+      type: product.item.product_type,
+      quantity: 1, // You can adjust the quantity as needed
+      size: selectedSize,
+      color: selectedColor,
+    };
+
+    AddProduct(cartItem)
+      .then((response) => {
+        console.log("Product added to cart:", response.data);
+        // Optionally, you can redirect the user after adding to the cart
+        // Example: history.push("/cart");
+      })
+      .catch((error) => {
+        console.error("Error adding product to cart", error);
+      });
   };
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!product) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="whole">
-      <div className="left">
-        <img
-          src="https://ydbrand.imgix.net/YD/PWA-Products/Y233FC11_WHT_CROP.png?bg=e6e6e6&fm=jpg&format=pjpg&h=425&q=75&rect=440%2C0%2C2120%2C3000&w=300&auto=format%2Ccompress&fit=cover&cs=tinysrgb&dpr=2&ch=Width%2CDPR"
-          alt={product.name}
-        />
-      </div>
-      <div className="right">
-        <div key={product.id} className="info-container">
-          <h1>Name: {product.product_name}</h1>
-          <div className="description">
-            <p id="desc">Product: {product.product_type}</p>
-            <p id="price">Price: {product.price}</p>
-            <p id="description">Description: {productDescription}</p>
+      {product && (
+        <>
+          <div className="left">
+            <img
+              src="https://ydbrand.imgix.net/YD/PWA-Products/Y233FC11_WHT_CROP.png?bg=e6e6e6&fm=jpg&format=pjpg&h=425&q=75&rect=440%2C0%2C2120%2C3000&w=300&auto=format%2Ccompress&fit=cover&cs=tinysrgb&dpr=2&ch=Width%2CDPR"
+              alt={product.item.product_name}
+            />
           </div>
-        </div>
+          <div className="right">
+            <div key={product.item.id} className="info-container">
+              <h1>Name: {product.item.product_name}</h1>
+              <div className="description">
+                <p id="desc">Product: {product.item.product_type}</p>
+                <p id="price">Price: {product.item.price}</p>
+              </div>
+            </div>
 
-        <div className="filtercontainer">
-          <div className="filtercontainer">
-            <div className="filter">
-              <div className="filtercolor">
-                <p>Color</p>
-                <div
-                  className="color-wrapper"
-                  onClick={() => handleColorClick("black")}
-                  style={{
-                    borderColor:
-                      selectedColor === "black" ? "black" : "transparent",
-                  }}
-                >
+            <div className="filtercontainer">
+              <div className="filter">
+                <div className="filtercolor">
+                  <p>Color</p>
                   <div
-                    id="black"
-                    className="color"
+                    className="color-wrapper"
+                    onClick={() => handleColorClick("black")}
                     style={{
-                      backgroundColor: "black",
+                      borderColor:
+                        selectedColor === "black" ? "black" : "transparent",
                     }}
-                  ></div>
+                  >
+                    <div
+                      id="black"
+                      className="color"
+                      style={{
+                        backgroundColor: "black",
+                      }}
+                    ></div>
+                  </div>
                 </div>
-                {/* Add similar blocks for other colors */}
+              </div>
+              <div className="filter">
+                <div className="filtersize">
+                  <p id="size">Size</p>
+                  <select onChange={handleSizeChange}>
+                    <option>XS</option>
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                    <option>XL</option>
+                  </select>
+                </div>
               </div>
             </div>
-            <div className="filter">
-              <div className="filtersize">
-                <p id="size">Size</p>
-                <select onChange={handleSizeChange}>
-                  <option>XS</option>
-                  <option>S</option>
-                  <option>M</option>
-                  <option>L</option>
-                  <option>XL</option>
-                </select>
-              </div>
+            <div>
+              <Link to={`/cart/${user_id}`}>
+                <button className="addcontainer" onClick={addtoCart}>
+                  ADD TO CART
+                </button>
+              </Link>
             </div>
           </div>
-        </div>
-        <div>
-          <Link to="/Cart">
-            <button onClick={addToCart} className="addcontainer">
-              ADD TO CART
-            </button>
-          </Link>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

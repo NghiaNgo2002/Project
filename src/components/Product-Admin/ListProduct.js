@@ -225,6 +225,69 @@ const ProductList = () => {
                       `${product.size}`
                     )}
                   </div>
+                  {/*Picture_one */}
+                  <div>
+                    <strong> Picture One: </strong>
+                    {isEditing && editableFields[product.id] ? (
+                      <input
+                        type="text"
+                        value={editableFields[product.id].picture_one || ""}
+                        onChange={(e) =>
+                          setEditableFields({
+                            ...editableFields,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              picture_one: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                    ) : (
+                      `${product.picture_one}`
+                    )}
+                  </div>
+                  {/*Picture_Two */}
+                  <div>
+                    <strong> Picture Two: </strong>
+                    {isEditing && editableFields[product.id] ? (
+                      <input
+                        type="text"
+                        value={editableFields[product.id].picture_two || ""}
+                        onChange={(e) =>
+                          setEditableFields({
+                            ...editableFields,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              picture_two: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                    ) : (
+                      `${product.picture_two}`
+                    )}
+                  </div>
+                  {/*Size */}
+                  <div>
+                    <strong> Picture Three: </strong>
+                    {isEditing && editableFields[product.id] ? (
+                      <input
+                        type="text"
+                        value={editableFields[product.id].picture_three || ""}
+                        onChange={(e) =>
+                          setEditableFields({
+                            ...editableFields,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              picture_three: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                    ) : (
+                      `${product.picture_three}`
+                    )}
+                  </div>
                   <div className="action-buttons">
                     {!isEditing ? (
                       <>
