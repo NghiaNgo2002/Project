@@ -6,16 +6,30 @@ import { AddProduct } from "../../Service/CartService";
 
 function ProductDetail() {
   const [product, setProduct] = useState(null);
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedColor, setSelectedColor] = useState(null);
-  const { id, user_id } = useParams();
+  const [selectedSize, setSelectedSize] = useState("S");
+  const [selectedColor, setSelectedColor] = useState("black");
+  const [productDescription, setProductDescription] = useState("");
+  const [error, setError] = useState(null);
+  const [clicked, setClicked] = useState(false);
+
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await ViewProductById(id);
-        setProduct(response.data);
-        console.log("Product data:", response.data);
+
+        console.log("Received product data:", response.data);
+
+        if (!response.data || !response.data.item) {
+          throw new Error(
+            "Product data is missing or not in the expected format"
+          );
+        }
+
+        setProduct(response.data.item);
+   
+        setProductDescription(response.data.item.description);
       } catch (error) {
         console.error("Error fetching product", error);
       }
@@ -24,13 +38,11 @@ function ProductDetail() {
   }, [id]);
 
   const handleColorClick = (color) => {
-    console.log("Selected color:", color);
     setSelectedColor(color);
   };
 
   const handleSizeChange = (e) => {
     const size = e.target.value;
-    console.log("Selected size:", size);
     setSelectedSize(size);
   };
 
@@ -41,26 +53,43 @@ function ProductDetail() {
       return;
     }
 
-    const cartItem = {
-      user_id: user_id, // Use the user_id from useParams
-      name: product.item.product_name,
-      price: product.item.price,
-      type: product.item.product_type,
-      quantity: 1, // You can adjust the quantity as needed
-      size: selectedSize,
-      color: selectedColor,
-    };
+    // Retrieve existing cart items from localStorage or initialize an empty array
+const existingCartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
-    AddProduct(cartItem)
-      .then((response) => {
-        console.log("Product added to cart:", response.data);
-        // Optionally, you can redirect the user after adding to the cart
-        // Example: history.push("/cart");
-      })
-      .catch((error) => {
-        console.error("Error adding product to cart", error);
-      });
+// Function to check if a product exists in the cart
+const findProductIndex = (cartItems, product) => {
+    return cartItems.findIndex(item => item.id === product.id); // Assuming product has an 'id' property
+};
+
+// Find the index of the product in the existing cart items
+const productIndex = findProductIndex(existingCartItems, product);
+
+if (productIndex !== -1) {
+    // If the product is already in the cart, update its quantity
+    existingCartItems[productIndex].quantity += 1;
+} else {
+    // If the product is not in the cart, add it with a quantity of 1
+    product.quantity = 1;
+    existingCartItems.push(product);
+}
+
+// Store the updated cart items back in localStorage
+localStorage.setItem("cart", JSON.stringify(existingCartItems));
+
+      setClicked(true);
+
+    } catch (error) {
+      console.error("Error adding to cart:", error.message);
+    }
   };
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="whole">

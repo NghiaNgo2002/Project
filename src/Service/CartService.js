@@ -15,15 +15,15 @@ const getAuthHeaders = () => {
   };
 };
 
-export const ListAllCart = async (user_id) => {
-  return await axios.get(`${backendUrl}/api/cart/${user_id}`, {
+export const ListAllCart = async (userID) => {
+  return await axios.get(`${backendUrl}/api/cart/${userID}`, {
     headers: getAuthHeaders(),
   });
 };
 
-export const AddProduct = async (
-  id,
-  user_id,
+export const AddNewProduct = async (
+  userID,
+  productID,
   name,
   type,
   price,
@@ -31,12 +31,13 @@ export const AddProduct = async (
   size,
   color
 ) => {
+  console.log(name,type,price,quantity,size,color)
   try {
     return await axios.post(
       `${backendUrl}/api/cart/${user_id}`,
       {
-        id: id,
-        user_id: user_id,
+        userID:userID,
+        productID:productID,
         name: name,
         type: type,
         price: price,

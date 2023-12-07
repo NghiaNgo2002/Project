@@ -6,41 +6,88 @@ import Footer_stw from "../../Layout/Footer_stw";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit, faCheck } from "@fortawesome/free-solid-svg-icons";
 import {
-  ListAllCart,
   UpdateProductByID,
   DeleteProduct,
 } from "../../Service/CartService";
-
+import { useNavigate } from 'react-router-dom';
+import { InsertNewOrder, InsertNewOrderDetail } from "../../Service/OrderService";
 function Cart() {
   const [products, setProducts] = useState([]);
   const [editableFields, setEditableFields] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
-
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await ListAllCart();
+      const existingCartItems = JSON.parse(localStorage.getItem("cart")) || [];
+      setProducts(existingCartItems);
 
-        console.log("API Response:", response);
-        console.log("Response Data Structure:", response.data);
+  }, [orderPlaced]); // Make sure to pass an empty dependency array to useEffect
 
-        const responseData = response.data?.items;
 
-        if (Array.isArray(responseData)) {
-          setProducts(responseData);
+
+
+  const handleCheckoutClick = () => {
+    setShowCheckoutModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowCheckoutModal(false);
+  };
+
+  const handleShipCodePayment = async () => {
+    try {
+      const userData = JSON.parse(localStorage.getItem('User'));
+      const profileData = JSON.parse(localStorage.getItem('Profile'));
+      const user = { ...userData, ...profileData };
+  
+      if (user) {
+        const phoneAsString = String(user.phone);
+  
+        const orderResponse = await InsertNewOrder({
+          customerid: user.accounts.id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          phone: phoneAsString,
+          address: user.address,
+          email: user.email,
+        });
+  
+        if (orderResponse && orderResponse.orderId) {
+          const orderID = orderResponse.orderId;
+
+  // ****************************************************************************** //
+  
+          // Use 'product' directly without parsing it as JSON
+          const orderDetails = JSON.parse(localStorage.getItem('cart'));
+  
+          // Call InsertNewOrderDetail API to insert order details
+          for (const detail of orderDetails) {
+            const orderDetailResponse = await InsertNewOrderDetail(orderID,detail);
+  
+      
+          }
+  
+          setOrderPlaced(true);
+          setShowCheckoutModal(false);
+          localStorage.removeItem('cart');
         } else {
-          console.error("Data structure is not as expected");
+          throw new Error('Error placing order: Order ID not received');
         }
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
+      } else {
+        throw new Error('User data not found in localStorage');
       }
-    };
+    } catch (error) {
+      console.error('Error placing order:', error.message);
+      // Handle errors as needed
+    }
+  };
+  
+  const handleResetOrder = () => {
+    setOrderPlaced(false);
 
-    fetchData();
-  }, []);
-
-  // Make sure to pass an empty dependency array to useEffect
+  };
+  
 
   const deleteProduct = async (productId) => {
     try {
@@ -256,37 +303,63 @@ function Cart() {
               </table>
             </div>
           </div>
-          <div className="merge-block">
-            <div className="merge-block">
-              <div className="payment-cart">
-                <h4>Order Summary</h4>
-                <div className="small-line-payment"></div>
-                <div className="total-money">
-                  <h4 id="sub">SUBTOTAL</h4>
-                  <h4>{`$${totalMoney.toFixed(2)}`}</h4>
-                </div>
-                <button id="payment-btn">PROCESS TO CHECKOUT</button>
-                <div className="icon-link">
-                  <div className="small-line-payment-icon"></div>
-                  <span>Accept Payment Methods</span>
-                  <img
-                    src="https://durotan-fashion.myshopify.com/cdn/shop/files/payment_ef2dcab9-feab-4a52-80b2-d13053ddefdc_2000x.png?v=1655036319"
-                    alt="Payment methods"
-                  />
-                </div>
-              </div>
-              <div className="button-continue">
-                <Link to="/Shop">
-                  <p>CONTINUE SHOPPING</p>
-                </Link>
-              </div>
+          <div className="payment-cart">
+            <h4>Order Summary</h4>
+            <div className="small-line-payment"></div>
+            <div className="total-money">
+              <h4 id="sub">SUBTOTAL</h4>
+              <h4>Money</h4>
+            </div>
+            <button id="payment-btn" onClick={handleCheckoutClick}>PROCESS TO CHECKOUT</button>
+            <div className="icon-link">
+              <div className="small-line-payment-icon"></div>
+              <span>Accept Payment Methods</span>
+              <img
+                src="https://durotan-fashion.myshopify.com/cdn/shop/files/payment_ef2dcab9-feab-4a52-80b2-d13053ddefdc_2000x.png?v=1655036319"
+                alt="Payment methods"
+              />
             </div>
           </div>
         </div>
+        <Link to="/Shop">
+          <p>CONTINUE SHOPPING</p>
+        </Link>
       </div>
       <div className="p-2 footer">
         <Footer_stw />
       </div>
+       {/* Checkout Modal */}
+       {showCheckoutModal && (
+        <div className="checkout-modal">
+          <div className="modal-content">
+            <h2>Choose an option:</h2>
+            <div className="options">
+              <button onClick={handleCloseModal}>Close</button>
+              <button onClick={handleShipCodePayment}>Ship COD, Direct payment</button>
+              <button>Transfer method</button>
+            </div>
+          </div>
+        </div>
+      )}
+        {orderPlaced && (
+        <div className="order-success">
+          <h2>Successfully placed your order!</h2>
+          {/* Render order details here */}
+          {/* Example: Display order details from 'product' state */}
+          <div>
+            <h3>Order Details:</h3>
+            <ul>
+              {products.map((item) => (
+                <li key={item.id}>
+                  Item: {item.name}, Type: {item.type}, Price: {item.price}
+                </li>
+              ))}
+            </ul>
+            {/* Display other order information as needed */}
+          </div>
+          <button onClick={handleResetOrder}>Close Notification</button>
+        </div>
+      )}
     </div>
   );
 }
