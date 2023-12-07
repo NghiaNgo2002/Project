@@ -5,9 +5,14 @@ import Header from "../../Layout/Header";
 import Footer_stw from "../../Layout/Footer_stw";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit, faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  ListAllCart,
+  UpdateProductByID,
+  DeleteProduct,
+} from "../../Service/CartService";
 
 function Cart() {
-  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
   const [editableFields, setEditableFields] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -15,17 +20,15 @@ function Cart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/cart");
+        const response = await ListAllCart();
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        console.log("API Response:", response);
+        console.log("Response Data Structure:", response.data);
 
-        const json = await response.json();
-        console.log("Fetched data:", json);
+        const responseData = response.data?.items;
 
-        if (json.items && Array.isArray(json.items)) {
-          setProduct(json.items);
+        if (Array.isArray(responseData)) {
+          setProducts(responseData);
         } else {
           console.error("Data structure is not as expected");
         }
@@ -35,23 +38,16 @@ function Cart() {
     };
 
     fetchData();
-  }, []); // Make sure to pass an empty dependency array to useEffect
+  }, []);
+
+  // Make sure to pass an empty dependency array to useEffect
 
   const deleteProduct = async (productId) => {
     try {
-      const response = await fetch(
-        `http://localhost:3001/api/cart/${productId}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      await DeleteProduct(productId);
 
       // Remove the deleted product from the state
-      setProduct((prevProducts) =>
+      setProducts((prevProducts) =>
         prevProducts.filter((product) => product.id !== productId)
       );
     } catch (error) {
@@ -63,31 +59,17 @@ function Cart() {
     try {
       console.log("Updating product:", id, newFields);
 
-      const response = await fetch(
-        `http://localhost:3001/api/cart/${id}/update`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newFields),
-        }
-      );
-
-      console.log("Update response:", response);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      await UpdateProductByID(id, newFields);
 
       // Assuming the server responds with the updated product data
-      const updatedProduct = await response.json();
+      const updatedProduct = {
+        ...products.find((item) => item.id === id),
+        ...newFields,
+      };
 
       // Update the product state with the new data
-      setProduct((prevProducts) =>
-        prevProducts.map((item) =>
-          item.id === id ? { ...item, ...newFields } : item
-        )
+      setProducts((prevProducts) =>
+        prevProducts.map((item) => (item.id === id ? updatedProduct : item))
       );
 
       setIsEditing(false); // Reset editing state
@@ -99,10 +81,10 @@ function Cart() {
   const handleCheckboxChange = (productId) => {
     const selectedProductIndex = selectedProducts.indexOf(productId);
     if (selectedProductIndex === -1) {
-      // Nếu chưa tồn tại, thêm vào mảng
+      // If not exists, add to the array
       setSelectedProducts([...selectedProducts, productId]);
     } else {
-      // Nếu đã tồn tại, loại bỏ khỏi mảng
+      // If exists, remove from the array
       const updatedSelectedProducts = [...selectedProducts];
       updatedSelectedProducts.splice(selectedProductIndex, 1);
       setSelectedProducts(updatedSelectedProducts);
@@ -110,10 +92,9 @@ function Cart() {
   };
 
   const totalMoney = selectedProducts.reduce((total, productId) => {
-    const selectedProduct = product.find((item) => item.id === productId);
+    const selectedProduct = products.find((item) => item.id === productId);
     return total + selectedProduct.totalmoney;
   }, 0);
-
   return (
     <div>
       <div className="p-2 header">
@@ -140,7 +121,7 @@ function Cart() {
                   </tr>
                 </thead>
                 <tbody>
-                  {product.map((item) => (
+                  {products.map((item) => (
                     <tr key={item.id} className="detail-product">
                       <td>{item.id}</td>
                       <td>{item.name}</td>
@@ -264,7 +245,6 @@ function Cart() {
                       </td>
                       <td>
                         <input
-                          className="selectedbutton"
                           type="checkbox"
                           onChange={() => handleCheckboxChange(item.id)}
                           checked={selectedProducts.includes(item.id)}

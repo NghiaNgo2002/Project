@@ -3,20 +3,26 @@ import axios from "axios";
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-export const getAllProducts = async () => {
-  try {
-    const response = await axios.get(`${backendUrl}/api/product`);
-    return response;
-  } catch (error) {
-    throw new Error("Error fetching products");
-  }
+const getToken = () => {
+  return JSON.parse(localStorage.getItem("User")).token;
 };
 
-export const getProductById = async (productId) => {
-  try {
-    const response = await axios.get(`${backendUrl}/api/product/${productId}`);
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching product by ID");
-  }
+const getAuthHeaders = () => {
+  const token = getToken();
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+export const ListAllProduct = async () => {
+  return await axios.get(`${backendUrl}/api/product`, {
+    headers: getAuthHeaders(),
+  });
+};
+
+export const ViewProductById = async (id) => {
+  return await axios.get(`${backendUrl}/api/productdetail/${id}`, {
+    headers: getAuthHeaders(),
+  });
 };

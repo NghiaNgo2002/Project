@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { ViewProductById } from "../../Service/productService";
+import { AddNewProduct } from "../../Service/CartService";
 import "./productdetail.css";
 
 function ProductDetail() {
@@ -15,27 +17,24 @@ function ProductDetail() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3001/api/productdetail/${id}`
-        );
+        const response = await ViewProductById(id);
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status : ${response.status}`);
+        console.log("Received product data:", response.data);
+
+        if (!response.data || !response.data.item) {
+          throw new Error(
+            "Product data is missing or not in the expected format"
+          );
         }
 
-        const json = await response.json();
-
-        if (json.item) {
-          setProduct(json.item);
-          setProductDescription(json.item.description);
-        } else {
-          setError("Data structure is not as expected");
-        }
+        setProduct(response.data.item);
+        setProductDescription(response.data.item.description);
       } catch (error) {
         console.error("Error fetching data:", error.message);
-        setError("Error fetching data");
+        setError("Error fetching data. Please try again later.");
       }
     };
+
     fetchData();
   }, [id]);
 
@@ -57,28 +56,16 @@ function ProductDetail() {
         return;
       }
 
-      const response = await fetch("http://localhost:3001/api/cart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          product_id: id,
-          name: product.product_name,
-          type: product.product_type,
-          price: product.price,
-          quantity: 1,
-          size: selectedSize,
-          color: selectedColor,
-        }),
-      });
+      const result = await AddNewProduct(
+        product.product_name,
+        product.product_type,
+        product.price,
+        1, // Quantity (you may want to update this)
+        selectedSize,
+        selectedColor
+      );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log(result.message);
+      console.log("Add to cart result:", result);
 
       setClicked(true);
 
@@ -136,38 +123,7 @@ function ProductDetail() {
                     }}
                   ></div>
                 </div>
-                <div
-                  className="color-wrapper"
-                  onClick={() => handleColorClick("darkblue")}
-                  style={{
-                    borderColor:
-                      selectedColor === "darkblue" ? "black" : "transparent",
-                  }}
-                >
-                  <div
-                    id="darkblue"
-                    className="color"
-                    style={{
-                      backgroundColor: "darkblue",
-                    }}
-                  ></div>
-                </div>
-                <div
-                  className="color-wrapper"
-                  onClick={() => handleColorClick("gray")}
-                  style={{
-                    borderColor:
-                      selectedColor === "gray" ? "black" : "transparent",
-                  }}
-                >
-                  <div
-                    id="gray"
-                    className="color"
-                    style={{
-                      backgroundColor: "gray",
-                    }}
-                  ></div>
-                </div>
+                {/* Add similar blocks for other colors */}
               </div>
             </div>
             <div className="filter">

@@ -1,11 +1,10 @@
-// gridView.js
 import React, { useState, useEffect } from "react";
 import "./gridview.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import * as productService from "../../Service/productService";
+import * as productProfileService from "../../Service/productService";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -28,6 +27,7 @@ function SamplePrevArrow(props) {
     />
   );
 }
+
 function GridView() {
   const settings = {
     infinite: true,
@@ -44,18 +44,13 @@ function GridView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await productService.getAllProducts();
-        console.log("Response:", response);
-
-        if (response.status === 200) {
-          setProducts(response.data.items);
-          setLoading(false);
-        } else {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        const response = await productProfileService.ListAllProduct();
+        console.log("API Response:", response);
+        setProducts(response.data.items ?? []); // Adjust the property based on your API response
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error.message);
-        setError("Error fetching data: " + error.message);
+        console.error("Error fetching product data:", error.message);
+        setError("Error fetching product data: " + error.message);
         setLoading(false);
       }
     };
@@ -72,13 +67,17 @@ function GridView() {
       return <div>Error: {error}</div>;
     }
 
-    if (products.length === 0) {
-      return <div>No products available.</div>;
-    }
+    const groupedProducts = (products ?? []).reduce((acc, curr, index) => {
+      if (index % 2 === 0) {
+        acc.push([curr]);
+      } else {
+        acc[acc.length - 1].push(curr);
+      }
+      return acc;
+    }, []);
 
-    const groupedProducts = [];
-    for (let i = 0; i < products.length; i += 2) {
-      groupedProducts.push(products.slice(i, i + 2));
+    if (groupedProducts.length === 0) {
+      return <div>No products available.</div>;
     }
 
     return groupedProducts.map((group, index) => (
