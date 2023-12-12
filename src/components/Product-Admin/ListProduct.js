@@ -225,6 +225,27 @@ const ProductList = () => {
                       `${product.size}`
                     )}
                   </div>
+                  {/*Material */}
+                  <div>
+                    <strong> Material: </strong>
+                    {isEditing && editableFields[product.id] ? (
+                      <input
+                        type="text"
+                        value={editableFields[product.id].material || ""}
+                        onChange={(e) =>
+                          setEditableFields({
+                            ...editableFields,
+                            [product.id]: {
+                              ...editableFields[product.id],
+                              material: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                    ) : (
+                      `${product.material}`
+                    )}
+                  </div>
                   {/*Picture_one */}
                   <div>
                     <strong> Picture One: </strong>
@@ -267,7 +288,7 @@ const ProductList = () => {
                       `${product.picture_two}`
                     )}
                   </div>
-                  {/*Size */}
+                  {/*Picture Three */}
                   <div>
                     <strong> Picture Three: </strong>
                     {isEditing && editableFields[product.id] ? (
@@ -288,6 +309,7 @@ const ProductList = () => {
                       `${product.picture_three}`
                     )}
                   </div>
+
                   <div className="action-buttons">
                     {!isEditing ? (
                       <>

@@ -34,7 +34,8 @@
 
 .container {
   padding-left: 100px;
-
+  margin-left: 0px;
+  margin-right: 0px;
   display: flex;
 }
 
@@ -47,7 +48,7 @@
 .sort-grid {
   display: flex;
   height: 10%;
-  padding-left: 70%;
+  padding-left: 45%;
 }
 
 .sortby {
@@ -73,7 +74,7 @@
   width: 100%;
 }
 
-.type {
+.typetype {
   padding-left: 100px;
   display: block;
   margin-right: -5%;
@@ -84,24 +85,33 @@
 }
 
 .content-line-bar {
+  display: block;
+}
+
+.content-line-bar .typetype {
+  padding-left: 0%;
+  width: 100%;
+  display: flex;
+  padding-right: 13%;
+  align-items: flex-start;
+}
+
+span.catbig {
+  width: 100%;
+}
+
+.typetype input {
+  float: right;
+  margin-top: 8px;
+  padding-left: 100%;
+}
+
+.typeorsomethingelse
+{
   display: flex;
 }
 
-.content-line-bar .type {
-  padding-right: 10%;
-  width: 30%;
-}
-
-.type input {
-  float: right;
-  margin-top: 8px;
-}
-
-#catbig {
-  margin-right: -10%;
-}
-
-.type input:checked ~ .checkmark {
+.typetype input:checked ~ .checkmark {
   color: red;
   background-color: red;
 }

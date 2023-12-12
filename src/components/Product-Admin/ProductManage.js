@@ -15,6 +15,11 @@ const ProductManage = () => {
   const [quantity, setQuantity] = useState("");
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const [material, setMaterial] = useState("");
+  const [picone, setPicone] = useState("");
+  const [pictwo, setPictwo] = useState("");
+  const [picthree, setPicthree] = useState("");
+
   const [idSearch, setIDSearch] = useState(""); // Added state for ID search
   const navigate = useNavigate();
 
@@ -38,14 +43,29 @@ const ProductManage = () => {
 
   const insertProduct = async () => {
     try {
-      if (productName && productType && price && quantity && color && size) {
+      if (
+        productName &&
+        productType &&
+        price &&
+        quantity &&
+        color &&
+        size &&
+        material &&
+        picone &&
+        pictwo &&
+        picthree
+      ) {
         await addNewProduct(
           productName,
           productType,
           price,
           quantity,
           size,
-          color
+          color,
+          material,
+          picone,
+          pictwo,
+          picthree
         );
 
         toast.success("Product inserted successfully!", {
@@ -94,41 +114,75 @@ const ProductManage = () => {
           <div className="card44">
             <h3>Add Product</h3>
             <div className="input-group44">
+              {/*Product Name */}
               <input
                 type="text"
                 placeholder="Product Name"
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
               />
+              {/*Product Type */}
               <input
                 type="text"
                 placeholder="Product Type"
                 value={productType}
                 onChange={(e) => setProductType(e.target.value)}
               />
+              {/*Product Price */}
               <input
                 type="text"
                 placeholder="Price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
+              {/*Product Quantity */}
               <input
                 type="number"
                 placeholder="Quantity"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
               />
+              {/*Product Size */}
               <input
                 type="text"
                 placeholder="Size"
                 value={size}
                 onChange={(e) => setSize(e.target.value)}
               />
+              {/*Product Color */}
               <input
                 type="text"
                 placeholder="Color"
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
+              />
+              {/*Product Material */}
+              <input
+                type="text"
+                placeholder="Material"
+                value={material}
+                onChange={(e) => setMaterial(e.target.value)}
+              />
+              {/*Product One */}
+              <input
+                type="text"
+                placeholder="Picture one"
+                value={picone}
+                onChange={(e) => setPicone(e.target.value)}
+              />
+              {/*Product Two */}
+              <input
+                type="text"
+                placeholder="Picture two"
+                value={pictwo}
+                onChange={(e) => setPictwo(e.target.value)}
+              />
+              {/*Product Three */}
+              <input
+                type="text"
+                placeholder="Picture three"
+                value={picthree}
+                onChange={(e) => setPicthree(e.target.value)}
               />
               <button onClick={insertProduct}>Insert Product</button>
             </div>

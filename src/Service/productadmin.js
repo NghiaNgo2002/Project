@@ -24,7 +24,11 @@ export const addNewProduct = async (
   price,
   quantity,
   size,
-  color
+  color,
+  material,
+  picture_one,
+  picture_two,
+  picture_three
 ) => {
   try {
     return await axios.post(
@@ -36,6 +40,10 @@ export const addNewProduct = async (
         quantity: quantity,
         size: size,
         color: color,
+        material: material,
+        picture_one: picture_one,
+        picture_two: picture_two,
+        picture_three: picture_three,
       },
       { headers: getHeaders() }
     );

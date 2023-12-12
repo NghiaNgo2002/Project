@@ -26,9 +26,6 @@ import ViewOrder from "./components/OrderManage/Vieworder";
 import ListProduct from "./components/Product-Admin/ListProduct";
 import OrderDetail from "./components/OrderManage/Orderdetail";
 import ViewOrderDetail from "./components/OrderManage/Vieworderdetail";
-import BlogAdmin from "./components/BlogAdmin/Blog";
-import AboutAdmin from "./components/Home-Admin/About";
-import ForgotPassword from "./components/LogIn/ForgotPassword";
 function App() {
   return (
     <Router>
@@ -37,14 +34,16 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route element={<Home />} path="/home" exact />
           <Route element={<HomeAdmin />} path="/home-admin" exact />
-          <Route element={<BlogAdmin />} path="/blog-admin" exact />
-          <Route element={<AboutAdmin />} path="/About-admin" exact />
           <Route path="/register" element={<Register />} exact />
           <Route path="/Shop" element={<Shop />} />
           <Route
             path="/productdetail/:id"
             element={[<Header />, <Productdetail />, <Footer />]}
-          />{" "}
+          />
+          <Route
+            path="/productdetail/:product_name"
+            element={[<Header />, <Productdetail />, <Footer />]}
+          />
           <Route path="/cart/:user_id" element={[<Cart />]} exact></Route>
           <Route path="/Blog" element={[<BlogList />]} exact></Route>
           <Route path="/Profile-user" element={<ProfileUser />} exact />
@@ -70,10 +69,6 @@ function App() {
             element={<ViewOrderDetail />}
             exact
           />
-          <Route path="/orderdetail-manage/:orderID" element={<OrderDetail />} exact />
-          <Route path="/view-order/:orderID" element={<ViewOrder/>} exact/>
-          <Route path="/view-orderdetail/:orderID" element={<ViewOrderDetail/>} exact/>
-          <Route path= "/forgot" element= {<ForgotPassword/>} exact/>
         </Route>
       </Routes>
     </Router>

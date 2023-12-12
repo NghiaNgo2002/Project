@@ -7,7 +7,6 @@ import Name from "./Name";
 import React, {useState, useRef, useEffect} from "react";
 import { Search, Person, Cart} from 'react-bootstrap-icons';
 import {Link} from "react-router-dom";
-import { AddNewProduct, DeleteProduct } from '../Service/CartService';
 
 function DropdownItem(props){
   return(
@@ -41,17 +40,9 @@ function Header() {
     };
   }, [menuRef]);
 
-  const handleLogout = async () => {
-    const user = JSON.parse(localStorage.getItem('User'));
-    const cart = JSON.parse(localStorage.getItem('cart')); 
-    if (cart){
-      await DeleteProduct(user.accounts.id)
-    for(const item of cart) {
-   const response = await AddNewProduct(user.accounts.id,item.id,item.product_name,item.product_type,item.price,item.quantity,item.size,item.color);
-  }    
-}
+  const handleLogout = () => {
+    // Remove 'User' from localStorage
     localStorage.removeItem('User');
-    localStorage.removeItem('cart');
     // Additional logic (if needed) such as redirecting to another page after logout
   };
   return (

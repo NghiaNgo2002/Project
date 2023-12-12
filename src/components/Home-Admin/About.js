@@ -1,4 +1,4 @@
-import Header from '../Home-Admin/Header-Admin';
+import Header from '../../Layout/Header';
 import Footer from '../../Layout/Footer';
 import "./About.css";
 

@@ -1,23 +1,36 @@
-import React from "react";
+// ShopPage.js
+import React, { useState } from "react";
+import Linebar from "./linebar";
+import GridView from "./gridView";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
-import GridView from "./gridView";
 import Title from "./title";
-import Linebar from "./linebar";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Stack from 'react-bootstrap/Stack';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Stack from "react-bootstrap/Stack";
 
-function Shop() {
+function ShopPage() {
+  const [filters, setFilters] = useState({
+    selectedCategories: [],
+    selectedColors: [],
+  });
+  const [sortType, setSortType] = useState("product_name");
+
   return (
     <Stack gap={5} className="stack">
-    <div className="p-2 header"><Header /></div>
-    <div className="p-2 Title"><Title /></div>
-    <div className="p-2 linebar "><Linebar /></div>
-    <div className="p-2 GridView"><GridView /></div>
-    <div className="p-2 footer d-flex align-items-center justify-content-center"><Footer/></div>
-  </Stack>
-
+      <div className="p-2 header">
+        <Header />
+      </div>
+      <div className="p-2 Title">
+        <Title />
+      </div>
+      <div className="p-2 GridView">
+        <GridView setFilters={setFilters} sortType={sortType} />
+      </div>
+      <div className="p-2 footer d-flex align-items-center justify-content-center">
+        <Footer />
+      </div>
+    </Stack>
   );
 }
 
-export default Shop;
+export default ShopPage;

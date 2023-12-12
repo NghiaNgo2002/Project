@@ -88,8 +88,9 @@ const ProductViewPage = () => {
                     {`${productData.id}`}
                   </span>
                 </div>
+                {/*Product Name */}
                 <div>
-                  <strong>Product Name: </strong>
+                  <strong>Name: </strong>
                   {isEditing ? (
                     <input
                       type="text"
@@ -105,8 +106,169 @@ const ProductViewPage = () => {
                     `${productData.product_name}`
                   )}
                 </div>
-                {/* Add more fields as needed */}
-                {/* ... */}
+                {/*Product Type */}
+                <div>
+                  <strong>Type: </strong>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editableFields.product_type || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          product_type: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.product_type}`
+                  )}
+                </div>
+                {/*Product Price */}
+                <div>
+                  <strong>Price: </strong>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editableFields.price || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          price: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.price}`
+                  )}
+                </div>
+                {/*Product Quantity */}
+                <div>
+                  <strong>Product Quantity: </strong>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editableFields.quantity || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          quantity: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.quantity}`
+                  )}
+                </div>
+                {/*Product Material */}
+                <div>
+                  <strong>Material: </strong>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editableFields.material || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          material: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.material}`
+                  )}
+                </div>
+                {/*Product Color */}
+                <div>
+                  <strong>Color: </strong>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editableFields.color || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          color: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.color}`
+                  )}
+                </div>
+                {/*Product Size */}
+                <div>
+                  <strong>Size: </strong>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editableFields.size || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          size: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.size}`
+                  )}
+                </div>
+                {/*Picture One */}
+                <div>
+                  <strong>Picture one: </strong>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editableFields.picture_one || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          color: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.picture_one}`
+                  )}
+                </div>
+                {/*Picture Two */}
+                <div className="pic">
+                  <strong>Picture two: </strong>
+                  {isEditing ? (
+                    <input
+                      className="pic"
+                      type="text"
+                      value={editableFields.picture_two || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          picture_two: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.picture_two}`
+                  )}
+                </div>
+                {/*Picture Three */}
+                <div>
+                  <strong>Picture three: </strong>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editableFields.picture_three || ""}
+                      onChange={(e) =>
+                        setEditableFields({
+                          ...editableFields,
+                          picture_three: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    `${productData.picture_three}`
+                  )}
+                </div>
                 <div className="action-buttons">
                   {!isEditing ? (
                     <>

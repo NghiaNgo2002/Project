@@ -1,13 +1,213 @@
-import React from "react";
+// Linebar.js
+import React, { useEffect, useState } from "react";
 import "./linebar.css";
-function linebar() {
+import { Link } from "react-router-dom";
+import { ViewProductByName } from "../../Service/productService";
+
+function Linebar({ onCategoryChange, onSortChange }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [api, setApi] = useState([]);
+  const [selectedColors, setSelectedColors] = useState([]);
+  const [uniqueColors, setUniqueColors] = useState([]);
+  const [selected, setSelected] = useState([]);
+  const [uniqueProductTypes, setUniqueProductTypes] = useState(new Set());
+  const [sortBy, setSortBy] = useState("name");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
+
+  const handleSortChange = (value) => {
+    let sortedProducts = [...api];
+    let sortBy = "name"; // Giá trị mặc định nếu không có lựa chọn nào phù hợp
+    let sortOrder = "asc"; // Giá trị mặc định nếu không có lựa chọn nào phù hợp
+
+    switch (value) {
+      case "priceLowToHigh":
+        sortBy = "price";
+        sortOrder = "asc";
+        break;
+      case "priceHighToLow":
+        sortBy = "price";
+        sortOrder = "desc";
+        break;
+      case "nameAsc":
+        sortBy = "product_name";
+        sortOrder = "asc";
+        break;
+      case "nameDesc":
+        sortBy = "product_name";
+        sortOrder = "desc";
+        break;
+      default:
+        break;
+    }
+
+    sortedProducts = applySorting(sortedProducts, sortBy, sortOrder);
+
+    onSortChange(sortedProducts);
+  };
+
+  const applySorting = (products, sortBy, sortOrder) => {
+    if (sortBy === "product_name") {
+      return products.sort((a, b) => {
+        const nameA = a.product_name.toUpperCase();
+        const nameB = b.product_name.toUpperCase();
+
+        return sortOrder === "asc"
+          ? nameA.localeCompare(nameB)
+          : nameB.localeCompare(nameA);
+      });
+    }
+
+    if (sortBy === "price") {
+      return products.sort((a, b) =>
+        sortOrder === "asc" ? a.price - b.price : b.price - a.price
+      );
+    }
+
+    // Handle other sorting criteria if needed
+
+    return products;
+  };
+
+  const handleSearch = async () => {
+    try {
+      const encodedSearchTerm = encodeURIComponent(searchTerm);
+      const response = await ViewProductByName(encodedSearchTerm);
+      const { item } = response.data;
+      console.log(item);
+    } catch (error) {
+      console.error("Error searching for product:", error);
+    }
+  };
+
+  const getToken = () => {
+    return JSON.parse(localStorage.getItem("User")).token;
+  };
+
+  const getAuthHeaders = () => {
+    const token = getToken();
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = getToken();
+        const response = await fetch("http://localhost:3001/api/product", {
+          method: "GET",
+          headers: getAuthHeaders(),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setApi(data.items);
+
+        const allColors = data.items.flatMap((product) =>
+          product.color.split(", ").map((color) => color.trim())
+        );
+        const colorsSet = new Set(allColors);
+        const uniqueColorsArray = Array.from(colorsSet);
+        setUniqueColors(uniqueColorsArray);
+
+        const typesSet = new Set(
+          data.items.map((product) => product.product_type)
+        );
+        setUniqueProductTypes(typesSet);
+      } catch (error) {
+        console.error("Error fetching product data:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleColorChange = (e) => {
+    const color = e.target.value;
+
+    if (selectedColors.includes(color)) {
+      setSelectedColors((prevColors) =>
+        prevColors.filter((prevColor) => prevColor !== color)
+      );
+    } else {
+      setSelectedColors((prevColors) => [...prevColors, color]);
+    }
+
+    console.log("Filters Changed:", { selected, selectedColors });
+  };
+
+  useEffect(() => {
+    const filteredProducts = api.filter((product) =>
+      selectedColors.some((selectedColor) =>
+        product.color.includes(selectedColor)
+      )
+    );
+
+    console.log("Filtered Products:", filteredProducts);
+
+    onCategoryChange({
+      selectedCategories: selected,
+      selectedColors: selectedColors,
+    });
+  }, [selectedColors, api, onCategoryChange]);
+
+  const handleChange = (e, type) => {
+    const activeData = document.getElementById(type).checked;
+
+    if (activeData) {
+      setSelected((oldData) => [...oldData, type]);
+    } else {
+      setSelected((oldData) => oldData.filter((value) => value !== type));
+    }
+  };
+
+  const handlePriceFilter = () => {
+    if (minPrice !== null && maxPrice !== null) {
+      const filteredProducts = api.filter(
+        (product) => product.price >= minPrice && product.price <= maxPrice
+      );
+
+      onCategoryChange({
+        selectedCategories: selected,
+        selectedColors: selectedColors,
+      });
+
+      let sortedProducts = applySorting(filteredProducts);
+      onSortChange(sortedProducts);
+    }
+  };
+
+  useEffect(() => {
+    const filteredProducts = api.filter((product) => {
+      const categoryMatch = selected.includes(product.product_type);
+      const colorMatch = selectedColors.some((selectedColor) =>
+        product.color.includes(selectedColor)
+      );
+
+      return categoryMatch || colorMatch;
+    });
+
+    console.log("Filtered Products:", filteredProducts);
+
+    onCategoryChange({
+      selectedCategories: selected,
+      selectedColors: selectedColors,
+    });
+  }, [selected, selectedColors, api, onCategoryChange]);
+
   return (
     <div>
       <div className="linebbar">
-        <div class="containerlinebar">
+        <div className="containerlinebar">
           <p>
             <a
-              class="btn btn-success"
+              className="btn btn-success"
               data-toggle="collapse"
               href="#example_1"
               role="button"
@@ -22,152 +222,90 @@ function linebar() {
               &nbsp;<span> FILTER</span>
             </a>
           </p>
+          <p style={{ display: "flex", paddingLeft: "10%" }}>
+            <input
+              type="text"
+              placeholder="Search product"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <span>
+              <Link to={`/productdetail/${encodeURIComponent(searchTerm)}`}>
+                <button onClick={handleSearch}>
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </Link>
+            </span>
+          </p>
           <div className="sort-grid">
             <div className="sortby">
               <p>SORT BY</p>
-              <select>
-                <option>FEATURED</option>
-                <option>BEST SELLING</option>
-                <option>A - Z</option>
-                <option>Z - A</option>
-                <option>PRICE, LOW - HIGH</option>
-                <option>PRICE, HIGH - LOW</option>
-                <option>DATE, OLD - NEW</option>
-                <option>DATE, NEW - OLD</option>
+              <select onChange={(e) => handleSortChange(e.target.value)}>
+                <option value="nameAsc">A - Z</option>
+                <option value="nameDesc">Z - A</option>
+                <option value="priceLowToHigh">PRICE, LOW - HIGH</option>
+                <option value="priceHighToLow">PRICE, HIGH - LOW</option>
               </select>
             </div>
           </div>
         </div>
       </div>
-      <div class="collapse" id="example_1">
-        <div class="card card-body">
+      <div className="collapse" id="example_1">
+        <div className="card card-body">
           <div className="content-line-bar">
-            <div className="type" id="catbig">
+            <div>
               <p id="cat">CATEGORY</p>
-              <p>Nike</p>
-              <p>Adidas</p>
-              <p>Vans</p>
-              <p>Puma</p>
-              <p>Skechers</p>
-              <p>Converse</p>
+              <div className="typeorsomethingelse">
+                {[...uniqueProductTypes].map((type, i) => (
+                  <div className="typetype" key={i}>
+                    <span className="catbig">{type}</span>
+                    <input
+                      id={type}
+                      type="checkbox"
+                      value={type}
+                      checked={selected.includes(type)}
+                      onChange={(e) => handleChange(e, type)}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="type">
-              <p id="mat">MATERIALS</p>
-              <p>
-                Cotton{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                Down
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                Houndstooth{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                Leather{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                Nappa{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                Leather{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
+            <div>
+              <p id="cat">COLOR</p>
+              <div className="typeorsomethingelse">
+                {Array.isArray(uniqueColors) && uniqueColors.length > 0 ? (
+                  uniqueColors.map((color, i) => (
+                    <div className="typetype" key={i}>
+                      <span className="catbig">{color}</span>
+                      <input
+                        id={i}
+                        type="checkbox"
+                        value={color}
+                        checked={selectedColors.includes(color)}
+                        onChange={handleColorChange}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <p>No colors available</p>
+                )}
+              </div>
             </div>
-
-            <div className="type">
-              <p id="colors">COLORS</p>
-              <p>
-                Red{" "}
-                <span>
-                  <input type="checkbox" />
-                  <span class="checkmark" checked="checked"></span>
-                </span>
-              </p>
-              <p>
-                Orange
-                <span>
-                  <input type="checkbox" />
-                  <span class="checkmark"></span>
-                </span>
-              </p>
-              <p>
-                Yellow{" "}
-                <span>
-                  <input type="checkbox" />
-                  <span class="checkmark"></span>
-                </span>
-              </p>
-              <p>
-                Green{" "}
-                <span>
-                  <input type="checkbox" />
-                  <span class="checkmark"></span>
-                </span>
-              </p>
-              <p>
-                Blue{" "}
-                <span>
-                  <input type="checkbox" />
-                  <span class="checkmark"></span>
-                </span>
-              </p>
-            </div>
-
-            <div className="type">
-              <p id="size">SIZE</p>
-              <p>
-                XS{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                S
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                M{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                L{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                XL{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
-              <p>
-                XXL{" "}
-                <span>
-                  <input type="checkbox" />
-                </span>
-              </p>
+            <div>
+              <p id="cat">PRICE RANGE</p>
+              <div className="typeorsomethingelse">
+                <input
+                  type="number"
+                  placeholder="Min"
+                  onChange={(e) => setMinPrice(parseInt(e.target.value))}
+                />
+                <input
+                  type="number"
+                  placeholder="Max"
+                  onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                />
+                <button onClick={handlePriceFilter}>Apply</button>
+              </div>
             </div>
           </div>
         </div>
@@ -176,4 +314,4 @@ function linebar() {
   );
 }
 
-export default linebar;
+export default Linebar;

@@ -4,7 +4,6 @@
   justify-content: space-around;
   padding-bottom: 100px;
 }
-
 .left img {
   height: 500px;
   width: 400px;
@@ -19,7 +18,7 @@
 .filtercontainer {
   width: 50%;
   margin: 30px 0px;
-  display: flex;
+  display: block;
   justify-content: space-between;
 }
 
@@ -29,18 +28,28 @@
 }
 
 .filtercolor {
-  display: flex;
+  display: block;
   align-items: center;
 }
 
 .filtercolor .color-wrapper {
-  display: inline-block;
-  border: 2px solid transparent;
-  border-radius: 50%;
-  padding: 2px;
+  display: flex;
+  border: 2px solid lightgoldenrodyellow;
+  padding: 0px;
   margin-right: 10px;
   cursor: pointer;
+  width: 150px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
+
+.filtercolor .color-wrapper.selected {
+  border: 2px solid teal;
+}
+
+
 
 .filtercolor .color {
   width: 20px;
@@ -53,12 +62,13 @@
   font-weight: 200;
   padding-right: 10px;
   margin: 0px;
+  width: 200%;
 }
 
 .filtersize {
-  display: flex;
+  display: block;
   align-items: center;
-  margin-left: 100px;
+  margin-left: 0px;
 }
 
 .filtersize p {
@@ -83,4 +93,27 @@
     background-color: darkblue;
     color: white;
   }
+}
+
+.customcolor {
+  padding-right: 30%;
+  cursor: pointer;
+}
+
+.filtersize .size-wrapper {
+  display: flex;
+  border: 2px solid lightgoldenrodyellow;
+  border-radius: 4px; /* Optionally add some border-radius for rounded corners */
+  padding: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+  width: 30px; /* Adjust the width to create a square shape */
+  height: 30px; /* Adjust the height to create a square shape */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.filtersize .size-wrapper.selected {
+  border: 2px solid teal;
 }

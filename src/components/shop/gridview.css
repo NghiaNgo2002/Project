@@ -1,3 +1,4 @@
+/* gridview.css */
 .imge {
   position: relative;
   margin-bottom: 20px;
@@ -30,13 +31,16 @@ button:hover {
 }
 
 .qview {
-  padding-right: 5%;
+  width: 30%;
+  margin-bottom: 20px;
+  margin-right: 8%;
 }
+
 .qview .info {
   opacity: 0;
   position: absolute;
-  bottom: -15px; /* Bắt đầu ẩn phần tử bên dưới */
-  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
+  bottom: -15px;
+  transform: translateX(-50%);
   background-color: rgb(0, 0, 0);
   z-index: 3;
   display: flex;
@@ -66,10 +70,10 @@ button:hover {
 
 .quickviewpage :hover .info {
   opacity: 1;
-  bottom: 0; /* Hiển thị phần tử từ dưới lên */
+  bottom: 0;
   color: white;
   background-color: black;
-  transition: bottom 0.3s ease; /* Áp dụng hiệu ứng di chuyển từ dưới lên */
+  transition: bottom 0.3s ease;
 }
 
 .slick-arrow.slick-prev::before {

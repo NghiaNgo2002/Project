@@ -22,7 +22,13 @@ export const ListAllProduct = async () => {
 };
 
 export const ViewProductById = async (id) => {
-  return await axios.get(`${backendUrl}/api/productdetail/${id}`, {
+  return await axios.get(`${backendUrl}/api/productdetails/${id}`, {
+    headers: getAuthHeaders(),
+  });
+};
+
+export const ViewProductByName = async (product_name) => {
+  return await axios.get(`${backendUrl}/api/productdetail/${product_name}`, {
     headers: getAuthHeaders(),
   });
 };

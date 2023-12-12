@@ -130,12 +130,12 @@ function Header() {
                 <Link to = '/shop' className="home-link">SHOP </Link>
               </li>
               <li>
-              <Link to="/blog-admin" className="home-link">
+              <Link to="/blog" className="home-link">
              BLOG
              </Link>
               </li>
               <li>
-              <Link to="/about-admin" className="home-link">
+              <Link to="/about" className="home-link">
              ABOUT
              </Link>
               </li>

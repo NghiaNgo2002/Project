@@ -1,3 +1,4 @@
+// GridView.js
 import React, { useState, useEffect } from "react";
 import "./gridview.css";
 import "slick-carousel/slick/slick.css";
@@ -5,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import * as productProfileService from "../../Service/productService";
+import Linebar from "./linebar";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -40,13 +42,22 @@ function GridView() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 3;
+  const [filters, setFilters] = useState({
+    selectedCategories: [],
+    selectedColors: [],
+  });
+  const [sortType, setSortType] = useState("product_name");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await productProfileService.ListAllProduct();
         console.log("API Response:", response);
-        setProducts(response.data.items ?? []); // Adjust the property based on your API response
+        setProducts(response.data.items ?? []);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching product data:", error.message);
@@ -58,6 +69,44 @@ function GridView() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const sortedProducts = [...products].sort((a, b) => {
+      const valueA = a[sortType].toUpperCase();
+      const valueB = b[sortType].toUpperCase();
+
+      return sortOrder === "asc"
+        ? valueA.localeCompare(valueB)
+        : valueB.localeCompare(valueA);
+    });
+
+    setFilteredProducts(sortedProducts);
+  }, [products, sortType, sortOrder]);
+
+  useEffect(() => {
+    const { selectedCategories, selectedColors } = filters;
+    const filtersSelected =
+      selectedCategories.length > 0 || selectedColors.length > 0;
+
+    const updatedProducts = products.filter((product) => {
+      const categoryMatch =
+        filtersSelected && selectedCategories.includes(product.product_type);
+
+      const colorMatch =
+        filtersSelected &&
+        selectedColors.some((selectedColor) =>
+          product.color.includes(selectedColor)
+        );
+
+      return filtersSelected ? categoryMatch || colorMatch : true;
+    });
+
+    setFilteredProducts(updatedProducts);
+  }, [products, filters]);
+
+  const sortProducts = (sortedProducts) => {
+    setFilteredProducts(sortedProducts);
+  };
+
   const renderProducts = () => {
     if (loading) {
       return <div>Loading...</div>;
@@ -67,22 +116,17 @@ function GridView() {
       return <div>Error: {error}</div>;
     }
 
-    const groupedProducts = (products ?? []).reduce((acc, curr, index) => {
-      if (index % 2 === 0) {
-        acc.push([curr]);
-      } else {
-        acc[acc.length - 1].push(curr);
-      }
-      return acc;
-    }, []);
+    const { selectedCategories, selectedColors } = filters;
+    const filtersSelected =
+      selectedCategories.length > 0 || selectedColors.length > 0;
 
-    if (groupedProducts.length === 0) {
-      return <div>No products available.</div>;
-    }
+    const startIndex = (currentPage - 1) * recordsPerPage;
+    const endIndex = startIndex + recordsPerPage;
+    const rowProducts = filteredProducts.slice(startIndex, endIndex);
 
-    return groupedProducts.map((group, index) => (
-      <div key={index} className="row">
-        {group.map((item) => (
+    return (
+      <div style={{ display: "flex" }}>
+        {rowProducts.map((item) => (
           <div key={item.id} className="qview">
             <div className="imge">
               <Slider {...settings}>
@@ -102,21 +146,60 @@ function GridView() {
             </div>
             <div className="description">
               <Link to={`/productdetail/${item.id}`}>
-                {/* Make sure that "item.name" is the correct property */}
                 <p id="name">Name: {item.product_name}</p>
               </Link>
               <Link to={`/productdetail/${item.id}`}>
-                {/* Make sure that "item.price" is the correct property */}
                 <p id="price">Price: {item.price}</p>
               </Link>
             </div>
           </div>
         ))}
       </div>
-    ));
+    );
   };
 
-  return <div className="quickviewpage">{renderProducts()}</div>;
+  const prePage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const changeCPage = (id) => {
+    setCurrentPage(id);
+  };
+
+  const nextPage = () => {
+    const maxPage = Math.ceil(filteredProducts.length / recordsPerPage);
+    if (currentPage < maxPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  return (
+    <div>
+      <Linebar onCategoryChange={setFilters} onSortChange={sortProducts} />
+      <div className="quickviewpage">{renderProducts()}</div>
+      <nav className="pagination" style={{ marginLeft: "40%" }}>
+        <button className="page-link" onClick={prePage}>
+          Prev
+        </button>
+        {[
+          ...Array(Math.ceil(filteredProducts.length / recordsPerPage)).keys(),
+        ].map((n, i) => (
+          <button
+            key={i}
+            className={`page-link ${currentPage === n + 1 ? "active" : ""}`}
+            onClick={() => changeCPage(n + 1)}
+          >
+            {n + 1}
+          </button>
+        ))}
+        <button className="page-link" onClick={nextPage}>
+          Next
+        </button>
+      </nav>
+    </div>
+  );
 }
 
 export default GridView;

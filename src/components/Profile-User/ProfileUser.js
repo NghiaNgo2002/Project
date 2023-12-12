@@ -40,7 +40,6 @@ export default function ProfilePage() {
         const response = await fetch(`${backendUrl}/api/profile/${id}`, requestOptions);
         if (response.ok) {
           const data = await response.json();
-          localStorage.setItem('Profile', JSON.stringify(data));
           setProfile(data);
           console.log(data);
         } else {
