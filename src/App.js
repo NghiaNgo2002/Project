@@ -26,6 +26,8 @@ import ViewOrder from "./components/OrderManage/Vieworder";
 import ListProduct from "./components/Product-Admin/ListProduct";
 import OrderDetail from "./components/OrderManage/Orderdetail";
 import ViewOrderDetail from "./components/OrderManage/Vieworderdetail";
+import AboutAdmin from "./components/Home-Admin/AboutAdmin";
+import BlogAdmin from "./components/BlogAdmin/Blog";
 function App() {
   return (
     <Router>
@@ -70,6 +72,8 @@ function App() {
             exact
           />
         </Route>
+        <Route path="/about-admin" element={<AboutAdmin/>} exact />
+        <Route path="/blog-admin" element={<BlogAdmin/>} exact />
       </Routes>
     </Router>
   );

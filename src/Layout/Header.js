@@ -7,7 +7,8 @@ import Name from "./Name";
 import React, {useState, useRef, useEffect} from "react";
 import { Search, Person, Cart} from 'react-bootstrap-icons';
 import {Link} from "react-router-dom";
-
+import { getUserIdFromLocalStorage } from '../Service/CartService';
+import { AddNewProduct, DeleteProduct } from '../Service/CartService';
 function DropdownItem(props){
   return(
     <li className = 'dropdownItem'>
@@ -17,12 +18,13 @@ function DropdownItem(props){
   );
 }
 
-
 function Header() {
   const [open, setOpen] = useState(false);
 
   const menuRef = useRef();
 
+  const user_id = getUserIdFromLocalStorage();
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -40,9 +42,18 @@ function Header() {
     };
   }, [menuRef]);
 
-  const handleLogout = () => {
-    // Remove 'User' from localStorage
+  const handleLogout = async () => {
+    const user = JSON.parse(localStorage.getItem('User'));
+    const cart = JSON.parse(localStorage.getItem('cart')); 
+    if (cart){
+      await DeleteProduct(user.accounts.id)
+    for(const item of cart) {
+   const response = await AddNewProduct(item);
+  }    
+}
     localStorage.removeItem('User');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('Profile');
     // Additional logic (if needed) such as redirecting to another page after logout
   };
   return (
@@ -91,7 +102,7 @@ function Header() {
           <div className="link">
           {/* Wrap the Search component with Link */}
           <div className="horizontal-link">
-          <Link to = '/cart'><Cart/></Link>
+          <Link to={`/cart/${user_id}`}><Cart/></Link>
           </div>
           </div>
         </div>

@@ -1,5 +1,4 @@
 // Cart.js
-
 import React, { useEffect, useState } from "react";
 import "./Cart.css";
 import { Link } from "react-router-dom";
@@ -9,10 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit, faCheck } from "@fortawesome/free-solid-svg-icons";
 import {
   ListAllCart,
-  UpdateProduct,
+  UpdateProductByID,
   DeleteProductByID,
   getUserIdFromLocalStorage,
 } from "../../Service/CartService";
+import {InsertNewOrder, InsertNewOrderDetail} from "../../Service/OrderService";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Cart() {
@@ -30,15 +30,21 @@ function Cart() {
   const npage = Math.ceil(cartItems.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
 
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await ListAllCart();
         console.log("API Response:", response);
 
-        const items = response.items || [];
+        // const items = response.items || [];
+        const items = JSON.parse(localStorage.getItem("cart")) || [];
+     
+
 
         setCartItems(items);
+       
         setLoading(false);
       } catch (error) {
         console.error("Error fetching cart data:", error);
@@ -48,8 +54,7 @@ function Cart() {
     };
 
     fetchData();
-  }, []);
-
+  }, [orderPlaced]);
   const deleteProduct = async (productId) => {
     try {
       await DeleteProductByID(productId);
@@ -72,7 +77,7 @@ function Cart() {
 
       console.log("Updating product:", id, newFields);
 
-      await UpdateProduct(id, newFields);
+      await UpdateProductByID(id, newFields);
 
       setCartItems((prevItems) =>
         prevItems.map((item) =>
@@ -102,6 +107,64 @@ function Cart() {
     return total + selectedProduct.totalmoney;
   }, 0);
 
+  const handleCheckoutClick = () => {
+    setShowCheckoutModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowCheckoutModal(false);
+  };
+
+  const handleResetOrder = () => {
+    setOrderPlaced(false);
+  };
+
+  const handleShipCodePayment = async () => {
+    try {
+      const userData = JSON.parse(localStorage.getItem('User'));
+      const profileData = JSON.parse(localStorage.getItem('Profile'));
+      const user = { ...userData, ...profileData };
+  
+      if (user) {
+        const phoneAsString = String(user.phone);
+  
+        const orderResponse = await InsertNewOrder({
+          customerid: user.accounts.id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          phone: phoneAsString,
+          address: user.address,
+          email: user.email,
+        });
+ 
+        if (orderResponse && orderResponse.orderId) {
+          const orderID = orderResponse.orderId;
+  
+          // Retrieve 'cart' from localStorage directly without parsing as JSON
+          const orderDetails = JSON.parse(localStorage.getItem('cart'));
+          console.log(orderDetails);
+          // Call InsertNewOrderDetail API to insert order details
+          for (const detail of orderDetails) {
+            const orderDetailResponse = await InsertNewOrderDetail(orderID, detail);
+            // Handle orderDetailResponse as needed
+          }
+
+          setOrderPlaced(true);
+          setShowCheckoutModal(false);
+          localStorage.removeItem('cart');
+        } else {
+          console.error("Data structure is not as expected");
+          throw new Error('Error placing order: Order ID not received');
+        }
+      } else {
+        throw new Error('User data not found in localStorage');
+      }
+    } catch (error) {
+      console.error('Error placing order:', error.message);
+      // Handle errors as needed
+    }
+  };
+  
   return (
     <div>
       <div className="p-2 header">
@@ -281,7 +344,7 @@ function Cart() {
                   <h4 id="sub">SUBTOTAL</h4>
                   <h4>{`$${totalMoney.toFixed(2)}`}</h4>
                 </div>
-                <button id="payment-btn">PROCESS TO CHECKOUT</button>
+                <button id="payment-btn" onClick={handleCheckoutClick}>PROCESS TO CHECKOUT</button>
                 <div className="icon-link">
                   <div className="small-line-payment-icon"></div>
                   <span>Accept Payment Methods</span>
@@ -327,6 +390,38 @@ function Cart() {
       <div className="p-2 footer">
         <Footer_stw />
       </div>
+       {/* Checkout Modal */}
+       {showCheckoutModal && (
+        <div className="checkout-modal">
+          <div className="modal-content">
+            <h2>Choose an option:</h2>
+            <div className="options">
+              <button onClick={handleCloseModal}>Close</button>
+              <button onClick={handleShipCodePayment}>Ship COD, Direct payment</button>
+              <button>Transfer method</button>
+            </div>
+          </div>
+        </div>
+      )}
+        {orderPlaced && (
+        <div className="order-success">
+          <h2>Successfully placed your order!</h2>
+          {/* Render order details here */}
+          {/* Example: Display order details from 'product' state */}
+          <div>
+            <h3>Order Details:</h3>
+            <ul>
+              {cartItems.map((item) => (
+                <li key={item.id}>
+                  Item: {item.name}, Type: {item.type}, Price: {item.price}
+                </li>
+              ))}
+            </ul>
+            {/* Display other order information as needed */}
+          </div>
+          <button onClick={handleResetOrder}>Close Notification</button>
+        </div>
+      )}
     </div>
   );
   function prePage() {

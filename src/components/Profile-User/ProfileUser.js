@@ -41,6 +41,7 @@ export default function ProfilePage() {
         if (response.ok) {
           const data = await response.json();
           setProfile(data);
+          localStorage.setItem('Profile', JSON.stringify(data)); // Save the profile data
           console.log(data);
         } else {
           throw new Error('Failed to fetch profile data');

@@ -3,6 +3,9 @@ import "./LogIn.css";
 import Footer from "../../Layout/Footer";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { ListAllCart } from "../../Service/CartService";
+
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 function LogIn() {
   const [email, setEmail] = useState("");
@@ -27,6 +30,36 @@ function LogIn() {
       if (response.ok) {
         setIsLoggedIn(true);
         localStorage.setItem("User", JSON.stringify(data));
+        const fetchUserProfile = async () => {
+          try {
+            if (!data.accounts.id) return; // If userEmail is empty, exit early
+            const requestOptions = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${data.token}` // Add authorization header with token
+              }
+            };
+    
+            
+            const response = await fetch(`${backendUrl}/api/profile/${data.accounts.id}`, requestOptions);
+            if (response.ok) {
+              const data = await response.json();
+              localStorage.setItem('Profile', JSON.stringify(data)); // Save the profile data
+              console.log(data);
+            } else {
+              throw new Error('Failed to fetch profile data');
+            }
+          } catch (error) {
+            console.error('Error fetching profile:', error);
+          } 
+        };
+        fetchUserProfile();
+        const historyCart = await ListAllCart(data.accounts.id)
+        console.log(historyCart.data);
+        if(historyCart.data){
+          localStorage.setItem("cart", JSON.stringify(historyCart.items));
+        }
         toast.success("Login successful! Redirecting...", {
           autoClose: 3000,
           onClose: () => {

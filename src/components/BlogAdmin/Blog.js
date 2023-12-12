@@ -58,7 +58,7 @@ const BlogArticle = ({ link, imageSrc, date, author, title }) => (
   </div>
 );
 
-const BlogList = () => (
+const BlogListAdmin = () => (
   <div>
     <div className="p-2 header">
       <Header />
@@ -122,4 +122,4 @@ const BlogList = () => (
   </div>
 );
 
-export default BlogList;
+export default BlogListAdmin;

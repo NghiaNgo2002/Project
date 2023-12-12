@@ -1,8 +1,8 @@
-import Header from "../../Layout/Header";
+import Header from "./Header-Admin";
 import Footer_stw from "../../Layout/Footer_stw";
 import "./About.css";
 
-function About() {
+function AboutAdmin() {
   return (
     <div>
       <div className="p-2 header">
@@ -232,4 +232,4 @@ function About() {
   );
 }
 
-export default About;
+export default AboutAdmin;

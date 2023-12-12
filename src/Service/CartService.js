@@ -38,7 +38,7 @@ export const ListAllCart = async () => {
   }
 };
 
-export const AddProduct = async (cartItem) => {
+export const AddNewProduct = async (cartItem) => {
   try {
     const user_id = getUserIdFromLocalStorage();
     if (!user_id) {
@@ -72,7 +72,7 @@ export const AddProduct = async (cartItem) => {
   }
 };
 
-export const UpdateProduct = async (id, updateData) => {
+export const UpdateProductByID = async (id, user_id, updateData) => {
   try {
     const user_id = getUserIdFromLocalStorage();
     if (!user_id) {
@@ -127,4 +127,10 @@ export const DeleteProductByID = async (id) => {
     console.error("Error deleting product:", error.message);
     throw new Error("Error deleting product");
   }
+};
+
+export const DeleteProduct = async (id) => {
+  return await axios.delete(`${backendUrl}/api/cart/delete/${id}/${id}`, {
+    headers: getAuthHeaders(),
+  });
 };

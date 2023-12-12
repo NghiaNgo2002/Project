@@ -1,10 +1,10 @@
 import React from "react";
 import "./Footer.css";
 import Name from "./Name";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 const Footer = () => {
   return (
-    <footer class="footer shoppable-footer">
+    <footer class="footer shoppable-footer d-flex align-items-center justify-content-center">
       <div className="footer-container container" id="footer">
         {/* Newsletter */}
         <div className="blog-with-sidebar__newsletter">
@@ -190,7 +190,9 @@ const Footer = () => {
           {/* End row */}
         </div>
       </div>
+      
     </footer>
+   
   );
 };
 

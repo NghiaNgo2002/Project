@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import "./productdetail.css";
 import { ViewProductById } from "../../Service/productService";
 import {
-  AddProduct,
+  AddNewProduct,
   getUserIdFromLocalStorage,
 } from "../../Service/CartService";
 
@@ -65,17 +65,26 @@ function ProductDetail() {
         console.error("Size and color must be selected.");
         return;
       }
-
+  
       const cartItem = {
         name: product.product_name,
+        id:product.id,
         type: product.product_type,
         price: product.price,
         quantity: 1,
         size: selectedSize,
         color: selectedColor,
       };
-
-      const response = await AddProduct(cartItem);
+  
+      // Retrieve existing cart items from localStorage or initialize an empty array
+      const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+      // Add the new cart item to the existing cart items
+      existingCart.push(cartItem);
+  
+      // Store the updated cart items back into localStorage
+      localStorage.setItem('cart', JSON.stringify(existingCart));
+  
       setClicked(true);
     } catch (error) {
       console.error("Error adding to cart:", error.message);

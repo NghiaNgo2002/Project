@@ -4,10 +4,8 @@ function title() {
   return (
     <div>
       <div className="title-content">
-        <p>
-          <a>HOME &nbsp;/ &nbsp;</a>&nbsp;SHOES
-        </p>
-        <h1>Shoes's Shop</h1>
+        
+        <h1>Fashion's shop</h1>
       </div>
     </div>
   );
