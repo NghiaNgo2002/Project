@@ -7,20 +7,35 @@ function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [showTokenForm, setShowTokenForm] = useState(false);
 
-  async function handleForgotPassword(event) {
-    event.preventDefault();
-    // Implement the logic for handling forgot password functionality
-    // This function will send a reset link to the provided email
-    // Add your fetch logic or API calls here
-    // Example:
-    // try {
-    //   // Call API to send reset link
-    //   // Update state variables based on API response
-    // } catch (error) {
-    //   // Handle errors and update state variables accordingly
-    // }
-  }
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleEmailSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Make a POST request to your backend API to check if the email exists
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/getPasswordToken`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.status === 200) {
+        setShowTokenForm(true);
+        setMessage('');
+      } else {
+        setMessage('Error: Email not found. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div className="login js-login">
@@ -32,7 +47,7 @@ function ForgotPassword() {
           </p>
           {error && <div className="error-message">{error}</div>}
           {message && <div className="info-message">{message}</div>}
-          <form onSubmit={handleForgotPassword}>
+          <form onSubmit={handleEmailSubmit}>
             <div className="login__inputs">
               <div className="form-group required">
                 <input
@@ -41,12 +56,12 @@ function ForgotPassword() {
                   className="login__input"
                   placeholder="Enter your email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleEmailChange} 
                 />
               </div>
             </div>
             <div className="login__button">
-              <input className="button" type="submit" value="Reset Password" />
+            <Link to="/reset-password">   <input className="button" type="submit" value="Confirm Email" />  </Link>  
             </div>
           </form>
           <div className="login__forgot-password">

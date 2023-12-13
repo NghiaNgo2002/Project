@@ -176,7 +176,11 @@ function Cart() {
         </div>
         <div className="main-product">
           <div className="detail-cart">
+            
             <h4>Product</h4>
+            <Link to="/shopping-history">
+          <button className="view-history-btn">View Shopping History</button>
+        </Link>
             <div className="small-line-main"></div>
             <div className="main-des">
               <table>

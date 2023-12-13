@@ -261,3 +261,18 @@
 .order-success .success-notification button:hover {
   background-color: #2980b9;
 }
+/* ... (existing styles) */
+
+.view-history-btn {
+  /* Define your styles for the button */
+  background-color: #898282; /* Example background color */
+  color: #0c0b0b; /* Text color */
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  /* Add more styles as needed */
+}
+
+/* Additional styles for specific positioning or hover effects */

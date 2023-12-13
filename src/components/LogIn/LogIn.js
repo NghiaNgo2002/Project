@@ -131,14 +131,16 @@ function LogIn() {
               </div>
 
               <div className="login__forgot-password" id="forgot-password">
+                <Link to = "/forgot-password">
                 <a href="#recover" className="js-go-to-forgotten-password">
                   Forgotten your password?
                 </a>
+                </Link>
               </div>
               <div className="login__register">
-                <Link to="/register">
-                  <a>I don’t have an account</a>
-                </Link>
+         <Link to ="/register">
+                  <a>I don't have an account</a>
+                  </Link>
               </div>
               <input type="hidden" name="return_url" value="/account" />
             </form>

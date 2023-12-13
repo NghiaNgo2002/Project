@@ -28,15 +28,19 @@ import OrderDetail from "./components/OrderManage/Orderdetail";
 import ViewOrderDetail from "./components/OrderManage/Vieworderdetail";
 import AboutAdmin from "./components/Home-Admin/AboutAdmin";
 import BlogAdmin from "./components/BlogAdmin/Blog";
+import History from "./components/Product/ShopHistory";
+import ForgotPassword from "./components/LogIn/ForgotPassword";
+import ResetPassword from "./components/LogIn/ResetPassword";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LogIn />} />
+        <Route path="/register" element={<Register />}/>
         <Route element={<PrivateRoutes />}>
           <Route element={<Home />} path="/home" exact />
           <Route element={<HomeAdmin />} path="/home-admin" exact />
-          <Route path="/register" element={<Register />} exact />
+     
           <Route path="/Shop" element={<Shop />} />
           <Route
             path="/productdetail/:id"
@@ -74,6 +78,9 @@ function App() {
         </Route>
         <Route path="/about-admin" element={<AboutAdmin/>} exact />
         <Route path="/blog-admin" element={<BlogAdmin/>} exact />
+        <Route path="/shopping-history" element={<History/>} exact />
+        <Route path="/forgot-password" element={<ForgotPassword/>} exact />
+        <Route path="/reset-password" element={<ResetPassword/>} exact />
       </Routes>
     </Router>
   );

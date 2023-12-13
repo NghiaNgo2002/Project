@@ -122,3 +122,10 @@ const getToken = () => {
       throw new Error("Error adding new Order detail");
     }
   };
+
+
+  export const ListOrderDetailByUserID = async (id) => {
+    return await axios.get(`${backendUrl}/api/orderdetail/user/${id}`, {
+      headers: getAuthHeaders(),
+    });
+  };

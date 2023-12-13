@@ -1,0 +1,91 @@
+/* Styles for the order history section */
+.order-history {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+  }
+  
+  .order-block {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .order-block h3 {
+    margin-bottom: 10px;
+  }
+  
+  .order-block ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .order-block li {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+  
+  /* Optional: Styles for specific elements within the order details */
+  .order-block li p {
+    margin: 5px 0;
+  }
+  .order-block {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-block h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .order-block ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-block ul li {
+    margin-bottom: 10px;
+  }
+  
+  .order-block ul li p {
+    margin: 0;
+    padding: 5px 0;
+  }
+  
+ /* Updated styles for the order block, making it smaller and more compact */
+.order-block {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-block h3 {
+  font-size: 16px; /* Smaller header font size */
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.order-block ul {
+  list-style: none;
+  padding: 0;
+}
+
+.order-block ul li {
+  margin-bottom: 6px;
+}
+
+.order-block ul li p {
+  margin: 0;
+  padding: 3px 0;
+  font-size: 14px; /* Smaller font size for content */
+}
+
+
+  
