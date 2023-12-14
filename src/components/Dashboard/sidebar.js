@@ -16,6 +16,16 @@ function Dropdown({ label, children }) {
     </li>
   );
 }
+const handleSignOut = () => {
+  // Remove items from localStorage
+  localStorage.removeItem('User');
+  localStorage.removeItem('cart');
+  localStorage.removeItem('Profile');
+  
+  // Redirect to the sign-in page or perform other actions after sign-out
+  // Example: Redirecting to the sign-in page
+  // window.location.href = '/signin'; // Replace '/signin' with your sign-in page URL
+};
 
 function Sidebar() {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -36,7 +46,7 @@ function Sidebar() {
           <Link to="/order-manage">Order Management</Link>
         </li>
         <li>
-          <Link to="/">Sign Out</Link>
+          <Link to="/" onClick={handleSignOut}>Sign Out</Link>
         </li>
       </ul>
     </div>

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {Link} from 'react-router-dom';
 import "./styles.css";
 
 const Slider = () => {
@@ -66,7 +67,7 @@ const Slider = () => {
             <div className="content">
               <div className="name">{item.name}</div>
               <div className="des">{item.desc}</div>
-              <button>See more</button>
+              <Link to ='/blog'><button>See more</button></Link>
             </div>
           </div>
         ))}

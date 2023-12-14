@@ -95,7 +95,7 @@ const UserProfileList = () => {
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editableFields.firstname || ""}
+                      value={editableFields.firstname ||userData.firstname }
                       onChange={(e) =>
                         setEditableFields({
                           ...editableFields,
@@ -112,7 +112,7 @@ const UserProfileList = () => {
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editableFields.lastname || ""}
+                      value={editableFields.lastname || userData.lastname}
                       onChange={(e) =>
                         setEditableFields({
                           ...editableFields,
@@ -129,7 +129,7 @@ const UserProfileList = () => {
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editableFields.phone || ""}
+                      value={editableFields.phone || userData.phone}
                       onChange={(e) =>
                         setEditableFields({
                           ...editableFields,
@@ -146,7 +146,7 @@ const UserProfileList = () => {
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editableFields.email || ""}
+                      value={editableFields.email || userData.email}
                       onChange={(e) =>
                         setEditableFields({
                           ...editableFields,
@@ -163,7 +163,7 @@ const UserProfileList = () => {
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editableFields.address || ""}
+                      value={editableFields.address || userData.address}
                       onChange={(e) =>
                         setEditableFields({
                           ...editableFields,

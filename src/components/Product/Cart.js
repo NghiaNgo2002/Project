@@ -1,5 +1,7 @@
 // Cart.js
 import React, { useEffect, useState } from "react";
+import logo from './logo_VCB_828891.jpg'; // Import the image file
+import logo1 from './2.jpg';
 import "./Cart.css";
 import { Link } from "react-router-dom";
 import Header from "../../Layout/Header";
@@ -32,6 +34,7 @@ function Cart() {
 
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [showTransferMethod, setShowTransferMethod] = useState(false); // Define showTransferMethod state
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -55,16 +58,28 @@ function Cart() {
 
     fetchData();
   }, [orderPlaced]);
-  const deleteProduct = async (productId) => {
+
+  const deleteProduct = (productId, size, color) => {
     try {
-      await DeleteProductByID(productId);
-      setCartItems((prevItems) =>
-        prevItems.filter((item) => item.id !== productId)
+  
+      // Get the existing cart items from localStorage
+  
+      
+      // Update the existing cart items in localStorage by filtering out the deleted product
+      const updatedCart = cartItems.filter(
+        (item) =>
+          !(item.id === productId && item.size === size && item.color === color)
       );
+      
+      // Update localStorage with the updated cart items
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      setCartItems(updatedCart);
     } catch (error) {
       console.error("Error deleting product:", error.message);
     }
   };
+  
+
 
   const handleUpdateProduct = async (id, newFields) => {
     try {
@@ -91,15 +106,10 @@ function Cart() {
     }
   };
 
-  const handleCheckboxChange = (productId) => {
-    const selectedProductIndex = selectedProducts.indexOf(productId);
-    if (selectedProductIndex === -1) {
-      setSelectedProducts([...selectedProducts, productId]);
-    } else {
-      const updatedSelectedProducts = [...selectedProducts];
-      updatedSelectedProducts.splice(selectedProductIndex, 1);
-      setSelectedProducts(updatedSelectedProducts);
-    }
+  const calculateSubtotal = () => {
+    return cartItems.reduce((subtotal, item) => {
+      return subtotal + (item.price * item.quantity);
+    }, 0);
   };
 
   const totalMoney = selectedProducts.reduce((total, productId) => {
@@ -191,7 +201,7 @@ function Cart() {
                     <th id="typecart">Information</th>
                     <th id="pricecart">Total Price</th>
                     <th id="adjust">Adjust Product</th>
-                    <th id="select">Select</th>
+                 
                   </tr>
                 </thead>
                 <tbody>
@@ -297,37 +307,16 @@ function Cart() {
                                 <button
                                   type="button"
                                   className="action-button delete"
-                                  onClick={() => deleteProduct(item.id)}
+                                  onClick={() => deleteProduct(item.id,item.size,item.color)}
                                 >
                                   <FontAwesomeIcon icon={faTrash} />
                                 </button>
-                                <button
-                                  type="button"
-                                  className="action-button update"
-                                  onClick={() => {
-                                    setIsEditing(true);
-                                    setEditableFields({
-                                      [item.id]: {
-                                        quantity: item.quantity,
-                                        color: item.color,
-                                        size: item.size,
-                                      },
-                                    });
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faEdit} />
-                                </button>
+                                
                               </>
                             )}
                           </div>
                         </td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            onChange={() => handleCheckboxChange(item.id)}
-                            checked={selectedProducts.includes(item.id)}
-                          />
-                        </td>
+                       
                       </tr>
                     ))
                   ) : (
@@ -346,7 +335,7 @@ function Cart() {
                 <div className="small-line-payment"></div>
                 <div className="total-money">
                   <h4 id="sub">SUBTOTAL</h4>
-                  <h4>{`$${totalMoney.toFixed(2)}`}</h4>
+                  <h4>{`$${calculateSubtotal().toFixed(2)}`}</h4>
                 </div>
                 <button id="payment-btn" onClick={handleCheckoutClick}>PROCESS TO CHECKOUT</button>
                 <div className="icon-link">
@@ -402,11 +391,33 @@ function Cart() {
             <div className="options">
               <button onClick={handleCloseModal}>Close</button>
               <button onClick={handleShipCodePayment}>Ship COD, Direct payment</button>
-              <button>Transfer method</button>
+              <button onClick={() => setShowTransferMethod(true)}>Transfer method</button>
             </div>
           </div>
         </div>
       )}
+      {showTransferMethod && (
+    <div className="transfer-method-modal">
+      <div className="modal-content">
+        <h2>Transfer Method</h2>
+        <div className="transfer-details">
+          <img
+            src={logo}
+            alt="Vietcombank"
+          />
+          <p>Account Number: 1016311913</p>
+          <p>Account Name: Ngo Ba Trong Nghia</p>
+          <p>Content: Write your name and your products</p>
+          <p>OR you can pay by QR</p>
+        <img
+          src={logo1} // Replace 'path_to_your_QR_code_image.png' with the path to your QR code image
+          alt="QR Code"
+        />
+        </div>
+        <button onClick={() => setShowTransferMethod(false)}>Close</button>
+      </div>
+    </div>
+  )}
         {orderPlaced && (
         <div className="order-success">
           <h2>Successfully placed your order!</h2>

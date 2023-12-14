@@ -39,6 +39,7 @@ export const ListAllCart = async () => {
 };
 
 export const AddNewProduct = async (cartItem) => {
+  console.log(cartItem)
   try {
     const user_id = getUserIdFromLocalStorage();
     if (!user_id) {

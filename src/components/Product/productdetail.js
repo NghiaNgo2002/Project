@@ -27,6 +27,7 @@ function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(null);
   const [clicked, setClicked] = useState(false);
   const { id } = useParams();
+  const [error, setError] = useState(null);
   const user_id = getUserIdFromLocalStorage();
 
   useEffect(() => {
@@ -58,7 +59,6 @@ function ProductDetail() {
   const handleSizeClick = (size) => {
     setSelectedSize(size);
   };
-
   const addToCart = async () => {
     try {
       if (!selectedSize || !selectedColor) {
@@ -68,7 +68,7 @@ function ProductDetail() {
   
       const cartItem = {
         name: product.product_name,
-        id:product.id,
+        id: product.id,
         type: product.product_type,
         price: product.price,
         quantity: 1,
@@ -79,17 +79,51 @@ function ProductDetail() {
       // Retrieve existing cart items from localStorage or initialize an empty array
       const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
   
-      // Add the new cart item to the existing cart items
-      existingCart.push(cartItem);
+      // Function to find the index of a product in the cart by its ID and size
+      const findProductIndex = (cartItems, product) => {
+        return cartItems.findIndex(
+          item =>
+            item.id === product.id &&
+            item.size === product.size &&
+            item.color === product.color
+        );
+      };
   
-      // Store the updated cart items back into localStorage
-      localStorage.setItem('cart', JSON.stringify(existingCart));
+      // Find the index of the product in the existing cart items based on ID and size
+      const productIndex = findProductIndex(existingCart, cartItem);
+  
+      if (productIndex !== -1) {
+        // If the product with the same ID and size is in the cart
+        const existingProduct = existingCart[productIndex];
+  
+        // Check if the color already exists for the same size
+        const colorExists = existingProduct.colors && existingProduct.colors.includes(selectedColor);
+  
+        if (!colorExists) {
+          // If the color doesn't exist for the same size, add it
+          existingProduct.colors = [...(existingProduct.colors || []), selectedColor];
+        }
+  
+        // Increment the quantity of the existing product by 1
+        existingProduct.quantity += 1;
+      } else {
+        // If the product is not in the cart, add it with a quantity of 1
+        cartItem.colors = [selectedColor]; // Add the color to the new item
+        existingCart.push(cartItem);
+      }
+  
+      // Store the updated cart items back in localStorage
+      localStorage.setItem("cart", JSON.stringify(existingCart));
   
       setClicked(true);
+  
     } catch (error) {
       console.error("Error adding to cart:", error.message);
     }
   };
+  
+  
+
 
   return (
     <div className="whole">
@@ -171,6 +205,6 @@ function ProductDetail() {
       )}
     </div>
   );
-}
+      }
 
 export default ProductDetail;
