@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import Footer from "../../Layout/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './LogIn.css';
+
 
 function ResetPassword() {
   const [token, setToken] = useState('');
@@ -9,7 +12,7 @@ function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-
+  const navigate = useNavigate();
   const handleTokenChange = (e) => {
     setToken(e.target.value);
   };
@@ -22,35 +25,38 @@ function ResetPassword() {
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleTokenSubmit = async (e) => {
     e.preventDefault();
 
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match');
+      setMessage('Error: Passwords do not match.');
       return;
     }
 
     try {
-      // Make a POST request to your backend API to reset the password
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/resetPassword`, {
+      // Make a POST request to your backend API to reset the password with token and new password
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token, newPassword }),
+        body: JSON.stringify({ resetToken: token, newPassword, confirmPassword }),
       });
 
       if (response.status === 200) {
         setMessage('Password reset successful. You can now login with your new password.');
-        setError('');
+        toast.success('Password reset successful. You can now login with your new password.');
+        navigate('/');
       } else {
-        setError('Error resetting password. Please try again.');
-        setMessage('');
+        setMessage('Error: Could not reset password. Please try again later.');
+        toast.error('Error: Could not reset password. Please try again later.');
       }
     } catch (error) {
       console.error('Error:', error);
+      toast.error('An error occurred. Please try again later.');
     }
   };
+
 
   return (
     <div className="login js-login">
@@ -62,7 +68,7 @@ function ResetPassword() {
           </p>
           {error && <div className="error-message">{error}</div>}
           {message && <div className="info-message">{message}</div>}
-       <form onSubmit={handleSubmit}>
+       <form onSubmit={handleTokenSubmit}>
             <div className="login__inputs">
               <div className="form-group required">
                 <input
@@ -105,6 +111,7 @@ function ResetPassword() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

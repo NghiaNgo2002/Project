@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import "./LogIn"; // Create a new CSS file for styling this page
 import Footer from "../../Layout/Footer";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
+
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [showTokenForm, setShowTokenForm] = useState(false);
-
+  const navigate = useNavigate();
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -29,6 +30,7 @@ function ForgotPassword() {
       if (response.status === 200) {
         setShowTokenForm(true);
         setMessage('');
+        navigate('/reset-password');
       } else {
         setMessage('Error: Email not found. Please try again.');
       }
@@ -61,7 +63,7 @@ function ForgotPassword() {
               </div>
             </div>
             <div className="login__button">
-            <Link to="/reset-password">   <input className="button" type="submit" value="Confirm Email" />  </Link>  
+             <input className="button" type="submit" value="Confirm Email" />
             </div>
           </form>
           <div className="login__forgot-password">
