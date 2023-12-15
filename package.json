@@ -68,6 +68,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ],
+    "proxy": "https://project-be-t8n9.onrender.com"
+  },
    
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6"
