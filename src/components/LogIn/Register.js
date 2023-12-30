@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./LogIn.css";
 import Footer from "../../Layout/Footer";
 import { Link } from "react-router-dom";
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 function Register() {
   const [firstname,SetFirstName] = useState('');
   const[lastname,SetLastName] = useState('');
@@ -16,7 +16,7 @@ function Register() {
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3001/api/register", {
+      const response = await fetch(`${backendUrl}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -17,7 +17,7 @@ function LogIn() {
   async function handleLogin(event) {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/api/login", {
+      const response = await fetch(`${backendUrl}/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
